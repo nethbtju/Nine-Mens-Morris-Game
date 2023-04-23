@@ -6,13 +6,12 @@ public class Image extends JFrame {
     JLabel displayField;
     ImageIcon image;
 
-    public void Image(){
+    public Image(){
         boardImage = new JFrame("Image Display Text");
         boardImage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         try{
-            image = new ImageIcon(Objects.requireNonNull(getClass().getResource("/Users/nethbotheju/Desktop/Engineering/2023/S1/FIT3077/Project/img/BoardImages/board600pxls.png")));
-            displayField = new JLabel(image);
-            boardImage.add(displayField);
+            displayField = new JLabel();
+            displayField.setIcon(new ImageIcon("src/board600pxls.png"));
 
         } catch(Exception e) {
             System.out.println("Image Could Not Be Found");
