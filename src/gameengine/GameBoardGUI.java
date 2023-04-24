@@ -1,4 +1,4 @@
-package GameEngine;
+package gameengine;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.Stack;
 
 public class GameBoardGUI extends JPanel {
     private final Image backgroundImage;

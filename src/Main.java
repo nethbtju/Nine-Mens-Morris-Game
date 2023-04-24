@@ -1,4 +1,4 @@
-import GameEngine.Game;
+import gameengine.Game;
 
 import java.io.IOException;
 

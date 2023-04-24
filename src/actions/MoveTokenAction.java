@@ -1,6 +1,6 @@
-package Actions;
+package actions;
 
-import GameEngine.Intersection;
+import gameengine.Intersection;
 
 public class MoveTokenAction extends Action{
     @Override

@@ -1,4 +1,4 @@
-package GamePlayers;
+package gameplayers;
 
 public class Player {
     String tokenType;

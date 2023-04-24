@@ -1,9 +1,9 @@
-package GameEngine;
+package gameengine;
 
-import Actions.Action;
-import Actions.MoveTokenAction;
-import Actions.PlaceTokenAction;
-import GamePlayers.Player;
+import actions.Action;
+import actions.MoveTokenAction;
+import actions.PlaceTokenAction;
+import gameplayers.Player;
 
 import java.io.IOException;
 

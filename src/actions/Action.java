@@ -1,5 +1,5 @@
-package Actions;
-import GameEngine.Intersection;
+package actions;
+import gameengine.Intersection;
 
 
 public abstract class Action {

@@ -1,8 +1,8 @@
-package Actions;
+package actions;
 
-import GameEngine.Game;
-import GameEngine.Intersection;
-import GamePlayers.Player;
+import gameengine.Game;
+import gameengine.Intersection;
+import gameplayers.Player;
 
 public class PlaceTokenAction extends Action {
     String blackToken = "img/BoardImages/BlackTokenPlain.png";
