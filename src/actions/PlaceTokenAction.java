@@ -7,7 +7,16 @@ import gameplayers.Player;
 /** Places a token on a given intersection. */
 public class PlaceTokenAction extends Action {
     @Override
-    public void execute(Intersection selectedIntersection, Player player) {
-        selectedIntersection.updateState(player.getTokenImagePath());
+    public boolean execute(Intersection selectedIntersection, Player player) {
+        if (selectedIntersection.isOccupied()) {
+            System.out.println("Intersection is occupied!");
+            return false;
+        }
+        else {
+            selectedIntersection.updateState(player.getTokenImagePath());
+            player.incrementTokenCount();
+            selectedIntersection.setOccupied();
+            return true;
+        }
     }
 }

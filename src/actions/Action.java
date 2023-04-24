@@ -11,6 +11,7 @@ public abstract class Action {
      *
      * @param selectedIntersection The intersection which is having its state changed.
      * @param player The player performing the Action.
+     * @return False if the execution failed (invalid move), true if successful.
      */
-    public abstract void execute(Intersection selectedIntersection, Player player);
+    public abstract boolean execute(Intersection selectedIntersection, Player player);
 }

@@ -31,24 +31,19 @@ public class Game {
      */
     public void playTurn(Intersection selectedIntersection) {
         Action currentAction = this.processPlayerAction(this.currentPlayer);
-        currentAction.execute(selectedIntersection, this.currentPlayer);
-        this.swapCurrentPlayer();
+        boolean actionExecuted = currentAction.execute(selectedIntersection, this.currentPlayer);
+        if (actionExecuted) { this.swapCurrentPlayer(); }
     }
 
     private Action processPlayerAction(Player currentPlayer) {
         String currentCapability = currentPlayer.getCurrentCapability();
         if (currentCapability.equals("PLACE_TOKEN")) {
-            currentPlayer.incrementTokenCount();
             return new PlaceTokenAction();
         } else if (currentCapability.equals("MOVE_TOKEN")) {
             System.out.println("Player can move!");
             return new MoveTokenAction();
         }
         return new MoveTokenAction();
-    }
-
-    public GameBoardGui getGameBoard() {
-        return this.gameBoard;
     }
 
     private void swapCurrentPlayer() {
