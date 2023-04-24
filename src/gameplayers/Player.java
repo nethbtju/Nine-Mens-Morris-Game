@@ -1,38 +1,52 @@
 package gameplayers;
 
+/**
+ * Represents a player in the Nine Man's Morris game.
+ */
 public class Player {
     String tokenType;
     String tokenImagePath;
     int tokenCount = 0;
     String currentCapability;
-    public Player(String tokenType, String tokenImagePath){
+
+    /**
+     * Constructor for Players.
+     *
+     * @param tokenType A string descriptor of the colour of token that the player places.
+     * @param tokenImagePath A path to the image used for the player's tokens.
+     */
+    public Player(String tokenType, String tokenImagePath) {
         this.tokenType = tokenType;
         this.tokenImagePath = tokenImagePath;
         this.currentCapability = "PLACE_TOKEN";
     }
 
-    public String getCurrentCapability(){
+    /**
+     * Get the capability of the Player that determines what Actions it can take.
+     * @return The capability of the player as a string.
+     */
+    public String getCurrentCapability() {
         //get player capability
         return this.currentCapability;
     }
 
-    public void incrementTokenCount(){
-        this.tokenCount = this.tokenCount + 1;
-        //if token count is nine, give place move capability
-        if (this.tokenCount == 9){
+    /** Increment the number of tokens the player has on the board. */
+    public void incrementTokenCount() {
+        this.tokenCount += 1;
+        if (this.tokenCount == 9) {
             this.currentCapability = "MOVE_TOKEN";
         }
     }
 
-    public void decrementTokenCount(){
+    /** Decrement the number of tokens the player has on the board. */
+    public void decrementTokenCount() {
         this.tokenCount = this.tokenCount - 1;
-        //if token count == 3 and current capability is move, give player jump
-        if(this.tokenCount  == 3 && this.currentCapability == "MOVE_TOKE"){
+        if (this.tokenCount  == 3 && this.currentCapability.equals("MOVE_TOKEN")) {
             this.currentCapability = "JUMP_TOKEN";
         }
     }
 
-    public String getTokenPath(){
+    public String getTokenPath() {
         return this.tokenImagePath;
     }
 }
