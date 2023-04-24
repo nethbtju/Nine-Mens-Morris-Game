@@ -4,10 +4,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import tokens.Token;
+import tokens.TokenSource;
 
 /** Represents a single intersection on the GameBoard. */
-public class Intersection extends JButton implements ActionListener {
-  private boolean occupied = false;
+public class Intersection extends JButton implements ActionListener, TokenSource {
+  private Token token;
   Game currentGame;
 
   /**
@@ -19,32 +21,38 @@ public class Intersection extends JButton implements ActionListener {
     this.currentGame = currentGame;
   }
 
-  /**
-   * Listens for button activations on the Intersection.
-   *
-   * @param e the event to be processed (A button activation).
-   */
   @Override
   public void actionPerformed(ActionEvent e) {
     this.currentGame.playTurn(this);
   }
 
+  @Override
+  public Token getToken() {
+    if (this.token != null) {
+      Token token = this.token;
+      this.token = null;
+      this.updateImagePath(null);
+      return token;
+    }
+    return null;
+  }
+
+  @Override
+  public boolean isEmpty() {
+    return (this.token == null);
+  }
+
   /**
-   * Update the icon of the Intersection.
+   * Set the Token on this Intersection.
    *
-   * @param imagePath The filepath of the icon to be used.
+   * @param token The Token to place on the Intersection. If null, the Intersection becomes empty.
    */
-  public void updateState(String imagePath) {
+  public void setToken(Token token) {
+    this.token = token;
+    this.updateImagePath(token.getTokenImagePath());
+  }
+
+  private void updateImagePath(String imagePath) {
     this.setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-  }
-
-  /** Set the Intersection as occupied, preventing the placement of another token. */
-  public void setOccupied() {
-    this.occupied = true;
-  }
-
-  /** Check if the Intersection is occupied. */
-  public boolean isOccupied() {
-    return this.occupied;
   }
 }

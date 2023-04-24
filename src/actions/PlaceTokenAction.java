@@ -2,18 +2,20 @@ package actions;
 
 import gameengine.Intersection;
 import gameplayers.Player;
+import tokens.Token;
+import tokens.TokenSource;
 
 /** Places a token on a given intersection. */
 public class PlaceTokenAction extends Action {
   @Override
   public boolean execute(Intersection selectedIntersection, Player player) {
-    if (selectedIntersection.isOccupied()) {
+    if (!selectedIntersection.isEmpty()) {
       System.out.println("Intersection is occupied!");
       return false;
     } else {
-      selectedIntersection.updateState(player.getTokenImagePath());
+      Token token = player.getTokenBank().getToken();
+      selectedIntersection.setToken(token);
       player.incrementTokenCount();
-      selectedIntersection.setOccupied();
       return true;
     }
   }

@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 

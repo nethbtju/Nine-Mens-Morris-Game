@@ -9,7 +9,7 @@ public abstract class Action {
   /**
    * Execute the Action, changing the state of an intersection.
    *
-   * @param selectedIntersection The intersection which is having its state changed.
+   * @param selectedIntersection The intersection selected by the user on the frontend.
    * @param player The player performing the Action.
    * @return False if the execution failed (invalid move), true if successful.
    */
