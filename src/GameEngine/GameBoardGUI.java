@@ -6,11 +6,13 @@ import java.awt.Image;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Stack;
 
 public class GameBoardGUI extends JPanel {
-    private Image backgroundImage;
-
-    private Game currentGame;
+    private final Image backgroundImage;
+    private final int[] X = {208,208,208,265,265,265,320,320,320,375,542,430,487,542,375,375,430,430,375,375,375,542,487,487};
+    private final int[] Y = {178,343,508,234,343,452,288,343,398,178,178,343,343,343,234,288,288,398,398,452,508,508,452,234};
+    private final Game currentGame;
 
     /**
      * Constructor for the Gameboard, puts everything together.
@@ -25,33 +27,12 @@ public class GameBoardGUI extends JPanel {
         ImageIcon boardImage = this.getScaledImage(path, 600, 600);
         JLabel boardImageLabel = new JLabel(boardImage);
 
-        Intersection button00 = this.newButton(208,178);
-        Intersection button01 = this.newButton(208,343);
-        Intersection button02 = this.newButton(208,508);
-        Intersection button03 = this.newButton(375,178);
-        Intersection button04 = this.newButton(542,178);
-
-        button00.setIcon(new ImageIcon(new ImageIcon("").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        button00.addActionListener(button00);
-        button01.setIcon(new ImageIcon(new ImageIcon("").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        button01.addActionListener(button01);
-        button02.setIcon(new ImageIcon(new ImageIcon("").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        button02.addActionListener(button02);
-        button03.setIcon(new ImageIcon(new ImageIcon("").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        button03.addActionListener(button03);
-        button04.setIcon(new ImageIcon(new ImageIcon("").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
-        button04.addActionListener(button04);
-
+        for (int i = 0; i < X.length; i++) {
+            Intersection button = this.newButton(X[i],Y[i]);
+            add(button);
+        }
         this.setLayout(null);
-        add(button00,0,0);
-        add(button01,0,1);
-        add(button02,0,2);
-        add(button03,0,3);
-        add(button04,0,4);
-
-
     }
-
 
     public Intersection newButton(int x, int y){
         Intersection button = new Intersection(this.currentGame);
@@ -63,6 +44,8 @@ public class GameBoardGUI extends JPanel {
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
         button.setFocusPainted(false);
+        button.setIcon(new ImageIcon(new ImageIcon("").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+        button.addActionListener(button);
         //button.setMargin(new Insets(top, left, bottom, right));
         return button;
     }
@@ -124,7 +107,6 @@ public class GameBoardGUI extends JPanel {
     /**
      * Invoked when an action occurs.
      *
-     * @param e the event to be processed
      */
 
     public void updateBlackTokenCount(){
