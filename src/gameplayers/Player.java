@@ -58,12 +58,12 @@ public class Player {
   }
 
   /**
-   * Peek at the Token the player has currently selected without removing it.
+   * Check if the Player has selected a Token. Do not remove the Token from the Player.
    *
-   * @return The Token the player has selected.
+   * @return true if the Player has a Token, false if not.
    */
-  public Token peekTokenInHand() {
-    return this.tokenInHand;
+  public boolean hasTokenInHand() {
+    return (this.tokenInHand != null);
   }
 
   /**
@@ -83,12 +83,11 @@ public class Player {
   public String getCurrentCapability() {
     if (!this.tokenBank.isEmpty()) {
       return "PLACE_TOKEN";
-    } else if (this.tokenInHand != null) {
-      return "MOVE_TOKEN";
     } else if (this.tokenCount == 3 && this.tokenBank.isEmpty()) {
       return "JUMP_TOKEN";
+    } else {
+      return "MOVE_TOKEN";
     }
-    return "SELECT_TOKEN";
   }
 
   /** Increment the number of tokens the player has on the board. */

@@ -47,11 +47,16 @@ public class Game {
    */
   private Action processPlayerAction(Player currentPlayer) {
     String currentCapability = currentPlayer.getCurrentCapability();
-    return switch (currentCapability) {
-      case "PLACE_TOKEN" -> new PlaceTokenAction();
-      case "SELECT_TOKEN" -> new SelectTokenAction();
-      default -> new MoveTokenAction();
-    };
+    if (currentCapability.equals("PLACE_TOKEN")) {
+      return new PlaceTokenAction();
+    } else if (currentCapability.equals("MOVE_TOKEN")) {
+      if (!currentPlayer.hasTokenInHand()) {
+        return new SelectTokenAction();
+      } else {
+        return new MoveTokenAction();
+      }
+    }
+    return new SelectTokenAction();
   }
 
   /**
@@ -62,7 +67,7 @@ public class Game {
    */
   private boolean checkForTurnEnd(Player currentPlayer) {
     // Can be extended next sprint to continue turn if Player has formed a mill.
-    return currentPlayer.peekTokenInHand() == null;
+    return !currentPlayer.hasTokenInHand();
   }
 
   /** Swap the current player with the other player. */
