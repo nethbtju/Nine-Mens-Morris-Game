@@ -9,7 +9,7 @@ public class MyFrame extends JFrame implements ActionListener {
     JButton button2;
     MyFrame(){
 
-        JFrame frame = new JFrame("Nine Man's Morris Game");
+        JFrame frame = new JFrame("Nine Man's Morris Game.Game");
         frame.setSize(1000, 750);
         JLabel label = new JLabel();
         label.setIcon(new ImageIcon(new ImageIcon("rough_work/Project Inception Java/Images/test_board.jpeg").getImage().getScaledInstance(1000, 750, Image.SCALE_SMOOTH)));

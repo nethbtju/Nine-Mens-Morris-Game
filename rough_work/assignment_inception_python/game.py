@@ -1,7 +1,7 @@
 from player import Player
 
 
-class Game:
+class GameEngine.GameEngine:
     "The main game engine."
 
     def __init__(self, players: list[Player]):

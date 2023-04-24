@@ -58,7 +58,7 @@ public class LayeredPaneDemo extends JPanel
     private JCheckBox onTop;
     private JComboBox layerList;
 
-    //Action commands
+    //Actions.Action commands
     private static String ON_TOP_COMMAND = "ontop";
     private static String LAYER_COMMAND = "layer";
 

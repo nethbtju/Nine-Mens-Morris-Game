@@ -1,4 +1,4 @@
-from game import Game
+from game import GameEngine.GameEngine
 from gameboard import Gameboard
 from game_token import GameToken
 from mill_observer import MillObserver
@@ -106,7 +106,7 @@ def main():
     player_one = Player("white", gameboard)
     player_two = Player("black", gameboard)
 
-    game = Game([player_one, player_two])
+    game = GameEngine.GameEngine([player_one, player_two])
     game.run()
 
 

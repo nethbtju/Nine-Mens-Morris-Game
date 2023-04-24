@@ -16,7 +16,7 @@ public class GameBoardUI extends JPanel {
         BoardImage.setVisible(true);
         /*layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(new Dimension(550, 600));
-        layeredPane.setBorder(BorderFactory.createTitledBorder("New Game"));
+        layeredPane.setBorder(BorderFactory.createTitledBorder("New Game.Game"));
         layeredPane.add(BoardImage,0);
         add(layeredPane);*/
     }
