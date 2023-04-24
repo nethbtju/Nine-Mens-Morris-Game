@@ -8,7 +8,6 @@ import java.util.Stack;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-
 /**
  * Represents the GameBoard in which Intersections exist.
  */
@@ -73,7 +72,7 @@ public class GameBoardGui extends JPanel {
     }
 
     /**
-     * Created the GUI by creating a new frame and adding the constraints
+     * Create the GUI by creating a new frame and adding the constraints.
      *
      * @throws IOException Throws exception upstream from GameBoardGui.
      */
@@ -86,19 +85,12 @@ public class GameBoardGui extends JPanel {
         frame.getContentPane().add(new GameBoardGui(this.currentGame));
         frame.setSize(800, 800);
 
-        // JComponent newContentPane = new Game.GameBoardGUI();
-        // newContentPane.setOpaque(true); //content panes must be opaque
-        //frame.add(newContentPane);
-
-        //Display the window.
-        //frame.pack();
+        // Display the window.
         frame.setVisible(true);
-
-        // created Button
     }
 
     /**
-     * Allows to scale an image to whichever size is needed
+     * Scale an image to whichever size is needed.
      *
      * @param path The path to the image resource for the ImageIcon.
      * @param width The scaled width of the ImageIcon.
@@ -113,13 +105,6 @@ public class GameBoardGui extends JPanel {
                 width, height, java.awt.Image.SCALE_SMOOTH);
         imageIcon = new ImageIcon(newImage);
         return imageIcon;
-    }
-
-    /** Invoked when an action occurs. */
-    public void updateBlackTokenCount() {
-    }
-
-    public void updateWhiteTokenCount() {
     }
 }
 

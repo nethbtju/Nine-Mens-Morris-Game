@@ -26,7 +26,6 @@ public class Player {
      * @return The capability of the player as a string.
      */
     public String getCurrentCapability() {
-        //get player capability
         return this.currentCapability;
     }
 
@@ -46,7 +45,8 @@ public class Player {
         }
     }
 
-    public String getTokenPath() {
+    /** Get the image path used for the Player's tokens. */
+    public String getTokenImagePath() {
         return this.tokenImagePath;
     }
 }

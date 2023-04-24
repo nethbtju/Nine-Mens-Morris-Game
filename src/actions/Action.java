@@ -1,6 +1,7 @@
 package actions;
 
 import gameengine.Intersection;
+import gameplayers.Player;
 
 /** An abstract class for actions, which allow the player to change the state of an intersection. */
 public abstract class Action {
@@ -11,5 +12,5 @@ public abstract class Action {
      * @param selectedIntersection The intersection which is having its state changed.
      * @param player The player performing the Action.
      */
-    public abstract void execute(Intersection selectedIntersection, boolean player);
+    public abstract void execute(Intersection selectedIntersection, Player player);
 }
