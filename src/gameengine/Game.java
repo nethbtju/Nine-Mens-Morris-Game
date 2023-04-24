@@ -39,6 +39,12 @@ public class Game {
     }
   }
 
+  /**
+   * Determine the Action that the Player is currently capable of taking.
+   *
+   * @param currentPlayer The Player whose turn it is.
+   * @return The Action that the Player can currently take based on their Capability.
+   */
   private Action processPlayerAction(Player currentPlayer) {
     String currentCapability = currentPlayer.getCurrentCapability();
     return switch (currentCapability) {
@@ -48,17 +54,25 @@ public class Game {
     };
   }
 
+  /**
+   * Checks if the Player is done with their turn or whether they have more Actions remaining.
+   *
+   * @param currentPlayer The Player whose turn it is.
+   * @return true if the turn is over, false if not.
+   */
   private boolean checkForTurnEnd(Player currentPlayer) {
     // Can be extended next sprint to continue turn if Player has formed a mill.
     return currentPlayer.peekTokenInHand() == null;
   }
 
+  /** Swap the current player with the other player. */
   private void swapCurrentPlayer() {
     Player tempPlayer = this.currentPlayer;
     this.currentPlayer = this.nonCurrentPlayer;
     this.nonCurrentPlayer = tempPlayer;
   }
 
+  /** Construct a new Player with associated Tokens. */
   private Player playerFactoryMethod(String tokenType, String tokenImagePath) {
     TokenBank tokenBank = new TokenBank(tokenType, tokenImagePath);
     return new Player(tokenType, tokenBank);
