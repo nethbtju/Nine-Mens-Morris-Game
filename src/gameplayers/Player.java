@@ -13,11 +13,9 @@ public class Player {
 
   /**
    * Constructor for Players.
-   *
    * @param tokenType A string identifier of the Player's tokens, used to identify which Tokens
    *                  belong to the Player.
    * @param tokenBank A TokenSource from which the Player can draw Tokens while using the
-   *                  PLACE_TOKEN capability at the beginning of the game.
    */
   public Player(String tokenType, TokenBank tokenBank) {
     this.tokenType = tokenType;

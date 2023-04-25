@@ -11,7 +11,7 @@ import java.util.Stack;
 
 public class Game {
 
-    GameBoardGui gameBoard;
+    GameBoardGUI gameBoard;
 
     Queue<Player> playerQueue = new LinkedList<>();
 
@@ -21,8 +21,8 @@ public class Game {
      * @throws IOException
      */
     public Game() throws IOException {
-        gameBoard = new GameBoardGui(this);
-        gameBoard.createGui();
+        gameBoard = new GameBoardGUI(this);
+        gameBoard.createGUI();
         this.initialisePlayers();
     }
 
@@ -49,7 +49,7 @@ public class Game {
 
     }
 
-    public GameBoardGui getGameBoard(){
+    public GameBoardGUI getGameBoard(){
         return this.gameBoard;
     }
 

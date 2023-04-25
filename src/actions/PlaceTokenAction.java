@@ -1,12 +1,8 @@
 package actions;
 
-import gameengine.GameBoardGui;
 import gameengine.Intersection;
 import gameplayers.Player;
 import tokens.Token;
-import tokens.TokenType;
-
-import javax.swing.*;
 
 /** Places a token on a given intersection. */
 public class PlaceTokenAction extends Action {
