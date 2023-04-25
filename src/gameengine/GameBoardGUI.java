@@ -10,7 +10,7 @@ import javax.swing.*;
 /**
  * Represents the GameBoard in which Intersections exist.
  */
-public class GameBoardGui extends JPanel {
+public class GameBoardGUI extends JPanel {
   private final Image backgroundImage;
   private final int[] X = {208,208,208,265,265,265,320,320,320,375,542,430,487,542,375,375,430,430,375,375,375,542,487,487};
   private final int[] Y = {178,343,508,234,343,452,288,343,398,178,178,343,343,343,234,288,288,398,398,452,508,508,452,234};
@@ -20,7 +20,7 @@ public class GameBoardGui extends JPanel {
    * Constructor for the GameBoard, puts everything together.
    * @throws IOException Exception if the background image resource is not found.
    */
-  public GameBoardGui(Game newGame) throws IOException {
+  public GameBoardGUI(Game newGame) throws IOException {
     this.currentGame = newGame;
 
     setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -80,13 +80,13 @@ public class GameBoardGui extends JPanel {
    *
    * @throws IOException Throws exception upstream from GameBoardGui.
    */
-  public void createGui() throws IOException {
+  public void createGUI() throws IOException {
     JFrame frame = new JFrame("Nine Men's Morris");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(false);
 
     // Create and set up the content pane.
-    frame.getContentPane().add(new GameBoardGui(this.currentGame));
+    frame.getContentPane().add(new GameBoardGUI(this.currentGame));
     frame.setSize(800, 800);
 
     // Display the window.
