@@ -4,27 +4,38 @@ import actions.Action;
 import actions.MoveTokenAction;
 import actions.PlaceTokenAction;
 import gameplayers.Player;
+import tokens.Token;
 import tokens.TokenBank;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Game {
+
     GameBoardGui gameBoard;
-    boolean currentPlayer = true;
+
+    Queue<Player> playerQueue = new LinkedList<>();
 
     Player tempPlayer;
+
+    /**
+     * Constructor for the Game, initialises game backend
+     * @throws IOException
+     */
     public Game() throws IOException {
         gameBoard = new GameBoardGui(this);
         gameBoard.createGui();
-        tempPlayer = new Player("White", new TokenBank("White", "img/BoardImages/BlackTokenPlain.png"));
+        this.initialisePlayers();
     }
 
     public void playTurn(Intersection selectedIntersection){
+        Player currentPlayer = this.playerQueue.peek();
         //System.out.println("hello");
-        Action currentAction = this.processPlayerAction(this.tempPlayer);
-        currentAction.execute(selectedIntersection, tempPlayer);
-        this.currentPlayer = !this.currentPlayer;
-
+        Action currentAction = this.processPlayerAction(currentPlayer);
+        currentAction.execute(selectedIntersection, currentPlayer);
+        this.playerQueue.add(this.playerQueue.remove());
 
     }
 
@@ -47,8 +58,10 @@ public class Game {
     }
 
     public void initialisePlayers(){
-        //create two players
-
+        Player player1 = new Player("White", new TokenBank("White", "img/BoardImages/WhiteTokenPlain.png"));
+        Player player2 = new Player("Black", new TokenBank("White", "img/BoardImages/BlackTokenPlain.png"));
+        this.playerQueue.add(player1);
+        this.playerQueue.add(player2);
     }
 
 
