@@ -9,15 +9,13 @@ public class TokenBank implements TokenSource {
 
   /**
    * Constructor for a TokenBank.
-   *
-   * @param tokenType A string descriptor of the Token's type, which is shared with the Player
+   *  @param tokenType A string descriptor of the Token's type, which is shared with the Player
    *                  to whom the Token belongs. Used to identify who a Token belongs to.
    * @param tokenImagePath The image path used to represent Tokens in this TokenBank. Note that this
    *                       is a stopgap measure until dependency injection is introduced, at which
    *                       point tokens can be initialised and passed to the TokenBank rather than
-   *                       being produced by the TokenBank itself.
    */
-  public TokenBank(String tokenType, String tokenImagePath) {
+  public TokenBank(TokenType tokenType, String tokenImagePath) {
     int maximumTokens = 9;
     for (int i = 0; i < maximumTokens; i++) {
       Token token = new Token(tokenType, tokenImagePath);

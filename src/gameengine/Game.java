@@ -1,11 +1,8 @@
 package gameengine;
 
-import actions.Action;
-import actions.MoveTokenAction;
-import actions.PlaceTokenAction;
+import actions.*;
 import gameplayers.Player;
-import tokens.Token;
-import tokens.TokenBank;
+import tokens.*;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -58,8 +55,8 @@ public class Game {
     }
 
     public void initialisePlayers(){
-        Player player1 = new Player("White", new TokenBank("White", "img/BoardImages/WhiteTokenPlain.png"));
-        Player player2 = new Player("Black", new TokenBank("White", "img/BoardImages/BlackTokenPlain.png"));
+        Player player1 = new Player("White", new TokenBank(TokenType.WHITE, "img/BoardImages/WhiteTokenPlain.png"));
+        Player player2 = new Player("Black", new TokenBank(TokenType.BLACK, "img/BoardImages/BlackTokenPlain.png"));
         this.playerQueue.add(player1);
         this.playerQueue.add(player2);
     }

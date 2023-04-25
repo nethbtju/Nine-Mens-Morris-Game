@@ -26,8 +26,6 @@ public class GameBoardGui extends JPanel {
     setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     String path = "img/BoardImages/board600pxls.png";
     backgroundImage = ImageIO.read(new File(path));
-    ImageIcon boardImage = this.getScaledImage(path, 600, 600);
-    JLabel boardImageLabel = new JLabel(boardImage);
 
     for (int i = 0; i < X.length; i++) {
       Intersection button = this.newButton(X[i],Y[i]);
@@ -105,5 +103,6 @@ public class GameBoardGui extends JPanel {
     imageIcon = new ImageIcon(newImage);
     return imageIcon;
   }
+
 }
 

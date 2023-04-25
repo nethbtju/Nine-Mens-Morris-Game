@@ -1,7 +1,6 @@
 package gameplayers;
 
-import tokens.Token;
-import tokens.TokenBank;
+import tokens.*;
 
 /**
  * Represents a player in the Nine Man's Morris game.
@@ -99,4 +98,9 @@ public class Player {
   public void decrementTokenCount() {
     this.tokenCount -= 1;
   }
+
+  public int getTokenCount(){
+    return this.tokenCount;
+  }
+
 }

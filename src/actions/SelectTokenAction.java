@@ -8,6 +8,7 @@ import tokens.Token;
 public class SelectTokenAction extends Action {
   @Override
   public boolean execute(Intersection selectedIntersection, Player player) {
+
     if (selectedIntersection.isEmpty()) {
       System.out.println("Intersection is empty!");
       return false;

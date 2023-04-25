@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import tokens.Token;
 import tokens.TokenSource;
+import tokens.TokenType;
 
 /** Represents a single intersection on the GameBoard. */
 public class Intersection extends JButton implements ActionListener, TokenSource {
@@ -55,4 +56,5 @@ public class Intersection extends JButton implements ActionListener, TokenSource
   private void updateImagePath(String imagePath) {
     this.setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
   }
+
 }
