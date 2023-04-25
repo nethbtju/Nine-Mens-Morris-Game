@@ -43,6 +43,13 @@ public class GameBoardGUI extends JPanel {
       add(button);
     }
 
+    JButton label = this.newButton(115,282);
+    label.setIcon(new ImageIcon(new ImageIcon("img/BoardImages/cover.png").getImage().getScaledInstance(70, 50, Image.SCALE_SMOOTH)));
+    JButton label2 = this.newButton(115,297);
+    label2.setIcon(new ImageIcon(new ImageIcon("img/BoardImages/cover.png").getImage().getScaledInstance(70, 50, Image.SCALE_SMOOTH)));
+    add(label);
+    add(label2);
+
     this.setLayout(null);
   }
 
@@ -56,7 +63,7 @@ public class GameBoardGUI extends JPanel {
   public Intersection newButton(int x, int y) {
     Intersection button = new Intersection(this.currentGame);
     button.setLocation(x, y);
-    button.setSize(50,50);
+    button.setSize(70,50);
     button.setOpaque(false);
     button.setContentAreaFilled(false);
     button.setBorderPainted(false);
