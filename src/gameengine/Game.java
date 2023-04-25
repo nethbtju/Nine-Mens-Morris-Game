@@ -59,8 +59,4 @@ public class Game {
         this.playerQueue.add(player1);
         this.playerQueue.add(player2);
     }
-
-
-
-
 }

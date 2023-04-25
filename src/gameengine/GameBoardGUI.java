@@ -1,5 +1,9 @@
 package gameengine;
 
+import gameplayers.Player;
+import tokens.Token;
+import tokens.TokenType;
+
 import java.awt.*;
 import java.awt.Image;
 import java.io.File;
@@ -111,6 +115,31 @@ public class GameBoardGUI extends JPanel {
     return imageIcon;
   }
 
+  private void decreasePlayerTokens(Token token, Player player){
+    int whiteTokenCount = 0;
+    int blackTokenCount = 0;
+    int current = 0;
 
+    int X = 140;
+    int Y = 288;
+    int dist = 10;
+
+    if (token.getTokenType() == TokenType.WHITE){
+      X = 640;
+      whiteTokenCount = player.getTokenCount();
+      current = whiteTokenCount;
+    }
+    else {
+      blackTokenCount = player.getTokenCount();
+      current = blackTokenCount;
+    }
+
+    for (int i = 0; i < current; i++) {
+      JLabel label = new JLabel();
+      label.setLocation(X,Y+(current * dist));
+      label.setIcon(new ImageIcon("img/BoardImages/cover.png"));
+      add(label);
+    }
+  }
 }
 
