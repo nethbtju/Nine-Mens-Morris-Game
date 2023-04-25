@@ -7,11 +7,10 @@ import tokens.*;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Stack;
 
 public class Game {
 
-    GameBoardGUI gameBoard;
+    GameBoardGui gameBoard;
 
     Queue<Player> playerQueue = new LinkedList<>();
 
@@ -21,7 +20,7 @@ public class Game {
      * @throws IOException
      */
     public Game() throws IOException {
-        gameBoard = new GameBoardGUI(this);
+        gameBoard = new GameBoardGui(this);
         gameBoard.createGUI();
         this.initialisePlayers();
         this.updatePlayTurnDisplay();
@@ -54,7 +53,7 @@ public class Game {
 
     }
 
-    public GameBoardGUI getGameBoard(){
+    public GameBoardGui getGameBoard(){
         return this.gameBoard;
     }
 

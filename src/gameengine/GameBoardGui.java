@@ -14,7 +14,7 @@ import javax.swing.*;
 /**
  * Represents the GameBoard in which Intersections exist.
  */
-public class GameBoardGUI extends JPanel {
+public class GameBoardGui extends JPanel {
   private final Image backgroundImage;
   private final int[] X = {208,208,208,265,265,265,320,320,320,375,542,430,487,542,375,375,430,430,375,375,375,542,487,487};
   private final int[] Y = {178,343,508,234,343,452,288,343,398,178,178,343,343,343,234,288,288,398,398,452,508,508,452,234};
@@ -25,7 +25,7 @@ public class GameBoardGUI extends JPanel {
    * Constructor for the GameBoard, puts everything together.
    * @throws IOException Exception if the background image resource is not found.
    */
-  public GameBoardGUI(Game newGame) throws IOException {
+  public GameBoardGui(Game newGame) throws IOException {
     this.currentGame = newGame;
 
     setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -45,12 +45,12 @@ public class GameBoardGUI extends JPanel {
       add(button);
     }
 
-    JButton label = this.newButton(115,282);
+    /*JButton label = this.newButton(115,282);
     label.setIcon(new ImageIcon(new ImageIcon("img/BoardImages/cover.png").getImage().getScaledInstance(70, 50, Image.SCALE_SMOOTH)));
     JButton label2 = this.newButton(115,297);
     label2.setIcon(new ImageIcon(new ImageIcon("img/BoardImages/cover.png").getImage().getScaledInstance(70, 50, Image.SCALE_SMOOTH)));
     add(label);
-    add(label2);
+    add(label2);*/
 
     this.setLayout(null);
   }
@@ -65,7 +65,7 @@ public class GameBoardGUI extends JPanel {
   public Intersection newButton(int x, int y) {
     Intersection button = new Intersection(this.currentGame);
     button.setLocation(x, y);
-    button.setSize(70,50);
+    button.setSize(50,50);
     button.setOpaque(false);
     button.setContentAreaFilled(false);
     button.setBorderPainted(false);
@@ -99,7 +99,7 @@ public class GameBoardGUI extends JPanel {
     frame.setResizable(false);
 
     // Create and set up the content pane.
-    frame.getContentPane().add(new GameBoardGUI(this.currentGame));
+    frame.getContentPane().add(new GameBoardGui(this.currentGame));
     frame.setSize(800, 800);
 
     // Display the window.
