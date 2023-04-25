@@ -27,6 +27,13 @@ public class GameBoardGui extends JPanel {
     String path = "img/BoardImages/board600pxls.png";
     backgroundImage = ImageIO.read(new File(path));
 
+    JLabel playerTurnLabel = new JLabel();
+    playerTurnLabel.setText("Player 1 Turn");
+    playerTurnLabel.setSize(500,500);
+    playerTurnLabel.setLocation(500,500);
+    playerTurnLabel.setFont(new Font("Serif", Font.PLAIN, 14));
+    add(playerTurnLabel);
+
     for (int i = 0; i < X.length; i++) {
       Intersection button = this.newButton(X[i],Y[i]);
       add(button);
@@ -103,6 +110,7 @@ public class GameBoardGui extends JPanel {
     imageIcon = new ImageIcon(newImage);
     return imageIcon;
   }
+
 
 }
 

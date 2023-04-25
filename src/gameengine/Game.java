@@ -15,7 +15,6 @@ public class Game {
 
     Queue<Player> playerQueue = new LinkedList<>();
 
-    Player tempPlayer;
 
     /**
      * Constructor for the Game, initialises game backend
@@ -60,6 +59,8 @@ public class Game {
         this.playerQueue.add(player1);
         this.playerQueue.add(player2);
     }
+
+
 
 
 }
