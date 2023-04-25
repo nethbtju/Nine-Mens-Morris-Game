@@ -20,6 +20,7 @@ public class GameBoardGUI extends JPanel {
   private final int[] Y = {178,343,508,234,343,452,288,343,398,178,178,343,343,343,234,288,288,398,398,452,508,508,452,234};
   private final Game currentGame;
 
+  private JLabel playerTurnLabel;
   /**
    * Constructor for the GameBoard, puts everything together.
    * @throws IOException Exception if the background image resource is not found.
@@ -31,12 +32,13 @@ public class GameBoardGUI extends JPanel {
     String path = "img/BoardImages/board600pxls.png";
     backgroundImage = ImageIO.read(new File(path));
 
-    JLabel playerTurnLabel = new JLabel();
-    playerTurnLabel.setText("Player 1 Turn");
+    playerTurnLabel = new JLabel();
+    playerTurnLabel.setText("Player 1 Turn!");
     playerTurnLabel.setSize(500,500);
-    playerTurnLabel.setLocation(500,500);
-    playerTurnLabel.setFont(new Font("Serif", Font.PLAIN, 14));
+    playerTurnLabel.setLocation(280,370);
+    playerTurnLabel.setFont(new Font("BM Hanna 11Yrs Old", Font.PLAIN, 35));
     add(playerTurnLabel);
+
 
     for (int i = 0; i < X.length; i++) {
       Intersection button = this.newButton(X[i],Y[i]);
@@ -140,6 +142,11 @@ public class GameBoardGUI extends JPanel {
       label.setIcon(new ImageIcon("img/BoardImages/cover.png"));
       add(label);
     }
+  }
+
+  public void updatePlayerTurnDisplay(String newDisplay){
+
+
   }
 }
 

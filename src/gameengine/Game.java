@@ -24,14 +24,19 @@ public class Game {
         gameBoard = new GameBoardGUI(this);
         gameBoard.createGUI();
         this.initialisePlayers();
+        this.updatePlayTurnDisplay();
     }
 
     public void playTurn(Intersection selectedIntersection){
         Player currentPlayer = this.playerQueue.peek();
-        //System.out.println("hello");
+
         Action currentAction = this.processPlayerAction(currentPlayer);
-        currentAction.execute(selectedIntersection, currentPlayer);
-        this.playerQueue.add(this.playerQueue.remove());
+        boolean turncomplete = currentAction.execute(selectedIntersection, currentPlayer);
+        if(turncomplete) {
+            this.playerQueue.add(this.playerQueue.remove());
+        }
+
+        this.updatePlayTurnDisplay();
 
     }
 
@@ -58,5 +63,20 @@ public class Game {
         Player player2 = new Player("Black", new TokenBank(TokenType.BLACK, "img/BoardImages/BlackTokenPlain.png"));
         this.playerQueue.add(player1);
         this.playerQueue.add(player2);
+    }
+
+
+    public void updatePlayTurnDisplay(){
+        Player currentPlayer = playerQueue.peek();
+        String playerType = currentPlayer.getTokenType();
+
+        if(playerType == "White"){
+            System.out.println("Player 1");
+            this.gameBoard.updatePlayerTurnDisplay("Player 1 Turn!");
+        }
+        else{
+            System.out.println("Player 2");
+            this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
+        }
     }
 }
