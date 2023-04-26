@@ -2,10 +2,11 @@ package gameplayers;
 
 import tokens.Token;
 import tokens.TokenBank;
+import tokens.TokenType;
 
 /** Represents a player in the Nine Man's Morris game. */
 public class Player {
-  private final String tokenType;
+  private final TokenType tokenType;
   private final TokenBank tokenBank;
   private int tokenCount = 0;
   private Token tokenInHand;
@@ -17,7 +18,7 @@ public class Player {
    *     belong to the Player.
    * @param tokenBank A TokenSource from which the Player can draw Tokens while using the
    */
-  public Player(String tokenType, TokenBank tokenBank) {
+  public Player(TokenType tokenType, TokenBank tokenBank) {
     this.tokenType = tokenType;
     this.tokenBank = tokenBank;
   }
@@ -27,7 +28,7 @@ public class Player {
    *
    * @return The Player's tokenType, a string descriptor which represents which Tokens are theirs.
    */
-  public String getTokenType() {
+  public TokenType getTokenType() {
     return this.tokenType;
   }
 
