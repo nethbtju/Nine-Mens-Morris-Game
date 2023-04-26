@@ -1,8 +1,6 @@
 package tokens;
 
-/**
- * An interface for objects from which Tokens can be obtained.
- */
+/** An interface for objects from which Tokens can be obtained. */
 public interface TokenSource {
 
   /**

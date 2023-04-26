@@ -7,8 +7,9 @@ public class Token {
 
   /**
    * Constructor for Tokens.
-   *  @param tokenType A string descriptor of the type of Token, which identifies the Player to whom
-   *                  the token belongs.
+   *
+   * @param tokenType A string descriptor of the type of Token, which identifies the Player to whom
+   *     the token belongs.
    * @param tokenImagePath The filepath to the image used to represent the Token.
    */
   public Token(TokenType tokenType, String tokenImagePath) {
@@ -29,7 +30,7 @@ public class Token {
    * Get the Token's tokenType.
    *
    * @return A string descriptor of the Token's type, which is used to identify the Player to whom
-   *         the Token belongs.
+   *     the Token belongs.
    */
   public TokenType getTokenType() {
     return this.tokenType;

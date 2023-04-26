@@ -1,6 +1,6 @@
 package tokens;
 
 public enum TokenType {
-    WHITE,
-    BLACK
+  WHITE,
+  BLACK
 }
