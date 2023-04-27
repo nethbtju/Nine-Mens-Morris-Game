@@ -33,7 +33,7 @@ public class Intersection extends JButton implements ActionListener {
    *
    * @return Token if there is one, null if not.
    */
-  public Token popToken() {
+  public Token getToken() {
     Token token = this.tokenStack.popToken();
     this.updateImagePath(null);
     return token;

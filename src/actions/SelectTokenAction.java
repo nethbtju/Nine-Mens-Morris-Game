@@ -13,7 +13,7 @@ public class SelectTokenAction implements Action {
       System.out.println("Intersection is empty!");
       return false;
     } else {
-      Token token = selectedIntersection.popToken();
+      Token token = selectedIntersection.getToken();
       if (!token.getTokenType().equals(player.getTokenType())) {
         selectedIntersection.setToken((token));
         System.out.println("Token does not belong to player!");
