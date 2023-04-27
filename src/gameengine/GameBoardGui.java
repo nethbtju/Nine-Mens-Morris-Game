@@ -23,7 +23,6 @@ public class GameBoardGui extends JPanel {
   };
   private final Game currentGame;
 
-  private final JLabel playerTurnLabel;
 
   /**
    * Constructor for the GameBoard, puts everything together.
@@ -36,13 +35,6 @@ public class GameBoardGui extends JPanel {
     setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     String path = "img/BoardImages/board600pxls.png";
     backgroundImage = ImageIO.read(new File(path));
-
-    playerTurnLabel = new JLabel();
-    playerTurnLabel.setText("Player 1 Turn!");
-    playerTurnLabel.setSize(500, 500);
-    playerTurnLabel.setLocation(280, 370);
-    playerTurnLabel.setFont(new Font("BM Hanna 11Yrs Old", Font.PLAIN, 35));
-    add(playerTurnLabel);
 
     for (int i = 0; i < X.length; i++) {
       Intersection button = this.newButton(X[i], Y[i]);

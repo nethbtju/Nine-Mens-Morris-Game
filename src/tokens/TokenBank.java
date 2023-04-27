@@ -6,6 +6,8 @@ import java.util.Stack;
 public class TokenBank implements TokenSource {
   Stack<Token> tokens = new Stack<>();
 
+  final private int MAXIMUM_TOKENS = 9;
+
   /**
    * Constructor for a TokenBank.
    *
@@ -16,8 +18,7 @@ public class TokenBank implements TokenSource {
    *     initialised and passed to the TokenBank rather than
    */
   public TokenBank(TokenType tokenType, String tokenImagePath) {
-    int maximumTokens = 9;
-    for (int i = 0; i < maximumTokens; i++) {
+    for (int i = 0; i < MAXIMUM_TOKENS; i++) {
       Token token = new Token(tokenType, tokenImagePath);
       this.tokens.push(token);
     }

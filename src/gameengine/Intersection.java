@@ -12,6 +12,10 @@ public class Intersection extends JButton implements ActionListener, TokenSource
   Game currentGame;
   private Token token;
 
+  final private int TOKEN_HEIGHT = 50;
+
+  final private int TOKEN_WIDTH = 50;
+
   /**
    * Constructor for an Intersection.
    *
@@ -55,6 +59,6 @@ public class Intersection extends JButton implements ActionListener, TokenSource
   private void updateImagePath(String imagePath) {
     this.setIcon(
         new ImageIcon(
-            new ImageIcon(imagePath).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            new ImageIcon(imagePath).getImage().getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
   }
 }
