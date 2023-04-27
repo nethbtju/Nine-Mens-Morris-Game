@@ -34,9 +34,7 @@ public class TokenStack {
     return null;
   }
 
-  /**
-   * Check if the TokenStack is full (and cannot contain any more Tokens).
-   */
+  /** Check if the TokenStack is full (and cannot contain any more Tokens). */
   public boolean isFull() {
     return (this.tokens.size() >= this.maximumTokens);
   }

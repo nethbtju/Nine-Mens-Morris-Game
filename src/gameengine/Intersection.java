@@ -30,7 +30,7 @@ public class Intersection extends JButton implements ActionListener {
 
   /**
    * Get a Token from the Intersection.
-   * 
+   *
    * @return Token if there is one, null if not.
    */
   public Token popToken() {
@@ -49,6 +49,11 @@ public class Intersection extends JButton implements ActionListener {
     this.updateImagePath(token.getTokenImagePath());
   }
 
+  /**
+   * Checks whether the Intersection does not have a Token.
+   * 
+   * @return True if there is no Token, false if there is a Token.
+   */
   public boolean isEmpty() {
     return this.tokenStack.isEmpty();
   }
@@ -56,6 +61,8 @@ public class Intersection extends JButton implements ActionListener {
   private void updateImagePath(String imagePath) {
     this.setIcon(
         new ImageIcon(
-            new ImageIcon(imagePath).getImage().getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
+            new ImageIcon(imagePath)
+                .getImage()
+                .getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
   }
 }

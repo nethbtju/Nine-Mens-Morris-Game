@@ -1,14 +1,11 @@
 package gameengine;
 
-import gameplayers.Player;
 import java.awt.*;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import tokens.Token;
-import tokens.TokenType;
 
 /** Represents the GameBoard in which Intersections exist. */
 public class GameBoardGui extends JPanel {
@@ -22,7 +19,6 @@ public class GameBoardGui extends JPanel {
     452, 508, 508, 452, 234
   };
   private final Game currentGame;
-
 
   /**
    * Constructor for the GameBoard, puts everything together.
@@ -40,13 +36,6 @@ public class GameBoardGui extends JPanel {
       Intersection button = this.newButton(X[i], Y[i]);
       add(button);
     }
-
-    /*JButton label = this.newButton(115,282);
-    label.setIcon(new ImageIcon(new ImageIcon("img/BoardImages/cover.png").getImage().getScaledInstance(70, 50, Image.SCALE_SMOOTH)));
-    JButton label2 = this.newButton(115,297);
-    label2.setIcon(new ImageIcon(new ImageIcon("img/BoardImages/cover.png").getImage().getScaledInstance(70, 50, Image.SCALE_SMOOTH)));
-    add(label);
-    add(label2);*/
 
     this.setLayout(null);
   }
@@ -90,7 +79,7 @@ public class GameBoardGui extends JPanel {
    *
    * @throws IOException Throws exception upstream from GameBoardGui.
    */
-  public void createGUI() throws IOException {
+  public void createGui() throws IOException {
     JFrame frame = new JFrame("Nine Men's Morris");
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setResizable(false);
@@ -101,32 +90,6 @@ public class GameBoardGui extends JPanel {
 
     // Display the window.
     frame.setVisible(true);
-  }
-
-  private void decreasePlayerTokens(Token token, Player player) {
-    int whiteTokenCount = 0;
-    int blackTokenCount = 0;
-    int current = 0;
-
-    int X = 140;
-    int Y = 288;
-    int dist = 10;
-
-    if (token.getTokenType() == TokenType.WHITE) {
-      X = 640;
-      whiteTokenCount = player.getTokenCount();
-      current = whiteTokenCount;
-    } else {
-      blackTokenCount = player.getTokenCount();
-      current = blackTokenCount;
-    }
-
-    for (int i = 0; i < current; i++) {
-      JLabel label = new JLabel();
-      label.setLocation(X, Y + (current * dist));
-      label.setIcon(new ImageIcon("img/BoardImages/cover.png"));
-      add(label);
-    }
   }
 
   public void updatePlayerTurnDisplay(String newDisplay) {}

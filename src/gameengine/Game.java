@@ -27,7 +27,7 @@ public class Game {
    */
   public Game() throws IOException {
     gameBoard = new GameBoardGui(this);
-    gameBoard.createGUI();
+    gameBoard.createGui();
     this.initialisePlayers();
     this.updatePlayTurnDisplay();
   }
@@ -53,10 +53,16 @@ public class Game {
     if (this.actionQueue.isEmpty()) {
       this.playerQueue.add(this.playerQueue.remove());
     }
-    
+
     this.updatePlayTurnDisplay();
   }
 
+  /**
+   * Translates the Player's Capability into the Actions that they can take on a given turn.
+   *
+   * @param currentPlayer The Player currently taking their turn.
+   * @return A Queue of Actions that the Player can take before their turn ends.
+   */
   private Queue<Action> processPlayerActions(Player currentPlayer) {
     Capable currentCapability = currentPlayer.getCurrentCapability();
     Queue<Action> actionQueue = new LinkedList<>();
@@ -75,9 +81,11 @@ public class Game {
   /** Enqueue two players to the game. */
   private void initialisePlayers() {
     Player player1 =
-        new Player(TokenType.WHITE, new TokenBank(TokenType.WHITE, "img/BoardImages/WhiteTokenPlain.png"));
+        new Player(
+            TokenType.WHITE, new TokenBank(TokenType.WHITE, "img/BoardImages/WhiteTokenPlain.png"));
     Player player2 =
-        new Player(TokenType.BLACK, new TokenBank(TokenType.BLACK, "img/BoardImages/BlackTokenPlain.png"));
+        new Player(
+            TokenType.BLACK, new TokenBank(TokenType.BLACK, "img/BoardImages/BlackTokenPlain.png"));
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
   }

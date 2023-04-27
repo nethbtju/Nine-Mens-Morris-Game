@@ -1,6 +1,5 @@
 package tokens;
 
-
 /** A Player's initial source of Tokens while they are using the PLACE_TOKEN Capability. */
 public class TokenBank extends TokenStack {
 
