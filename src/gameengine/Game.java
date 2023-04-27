@@ -4,6 +4,7 @@ import actions.Action;
 import actions.MoveTokenAction;
 import actions.PlaceTokenAction;
 import actions.SelectTokenAction;
+import gameplayers.Capable;
 import gameplayers.Player;
 import java.io.IOException;
 import java.util.LinkedList;
@@ -57,13 +58,13 @@ public class Game {
   }
 
   private Queue<Action> processPlayerActions(Player currentPlayer) {
-    String currentCapability = currentPlayer.getCurrentCapability();
+    Capable currentCapability = currentPlayer.getCurrentCapability();
     Queue<Action> actionQueue = new LinkedList<>();
 
-    if (currentCapability.equals("PLACE_TOKEN")) {
+    if (currentCapability == Capable.PLACEABLE) {
       currentPlayer.incrementTokenCount();
       actionQueue.add(new PlaceTokenAction());
-    } else if (currentCapability.equals("MOVE_TOKEN")) {
+    } else if (currentCapability == Capable.MOVEABLE) {
       actionQueue.add(new SelectTokenAction());
       actionQueue.add(new MoveTokenAction());
     }

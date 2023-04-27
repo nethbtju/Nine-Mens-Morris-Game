@@ -78,13 +78,13 @@ public class Player {
    *
    * @return The capability of the player as a string.
    */
-  public String getCurrentCapability() {
+  public Capable getCurrentCapability() {
     if (!this.tokenBank.isEmpty()) {
-      return "PLACE_TOKEN";
+      return Capable.PLACEABLE;
     } else if (this.tokenCount == 3 && this.tokenBank.isEmpty()) {
-      return "JUMP_TOKEN";
+      return Capable.JUMPABLE;
     } else {
-      return "MOVE_TOKEN";
+      return Capable.MOVEABLE;
     }
   }
 

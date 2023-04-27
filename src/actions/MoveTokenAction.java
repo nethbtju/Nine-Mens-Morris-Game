@@ -5,7 +5,7 @@ import gameplayers.Player;
 import tokens.Token;
 
 /** Moves a token from one intersection to another. */
-public class MoveTokenAction extends Action {
+public class MoveTokenAction implements Action {
   @Override
   public boolean execute(Intersection tokenDestination, Player player) {
     if (!tokenDestination.isEmpty()) {

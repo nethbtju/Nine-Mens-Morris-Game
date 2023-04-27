@@ -111,22 +111,6 @@ public class GameBoardGui extends JPanel {
     frame.setVisible(true);
   }
 
-  /**
-   * Scale an image to whichever size is needed.
-   *
-   * @param path The path to the image resource for the ImageIcon.
-   * @param width The scaled width of the ImageIcon.
-   * @param height The scaled height of the ImageIcon.
-   * @return The scaled ImageIcon.
-   */
-  private ImageIcon getScaledImage(String path, int width, int height) {
-    ImageIcon imageIcon = new ImageIcon(path);
-    Image image = imageIcon.getImage();
-    Image newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
-    imageIcon = new ImageIcon(newImage);
-    return imageIcon;
-  }
-
   private void decreasePlayerTokens(Token token, Player player) {
     int whiteTokenCount = 0;
     int blackTokenCount = 0;

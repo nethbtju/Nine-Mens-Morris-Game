@@ -5,7 +5,7 @@ import gameplayers.Player;
 import tokens.Token;
 
 /** Selects a token for a Player to act upon. */
-public class SelectTokenAction extends Action {
+public class SelectTokenAction implements Action {
   @Override
   public boolean execute(Intersection selectedIntersection, Player player) {
 
