@@ -72,10 +72,6 @@ public class Game {
     return actionQueue;
   }
 
-  public GameBoardGui getGameBoard() {
-    return this.gameBoard;
-  }
-
   /** Enqueue two players to the game. */
   private void initialisePlayers() {
     Player player1 =
