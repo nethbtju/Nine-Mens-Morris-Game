@@ -1,12 +1,8 @@
 package tokens;
 
-import java.util.Stack;
 
 /** A Player's initial source of Tokens while they are using the PLACE_TOKEN Capability. */
-public class TokenBank implements TokenSource {
-  Stack<Token> tokens = new Stack<>();
-
-  final private int MAXIMUM_TOKENS = 9;
+public class TokenBank extends TokenStack {
 
   /**
    * Constructor for a TokenBank.
@@ -18,22 +14,10 @@ public class TokenBank implements TokenSource {
    *     initialised and passed to the TokenBank rather than
    */
   public TokenBank(TokenType tokenType, String tokenImagePath) {
-    for (int i = 0; i < MAXIMUM_TOKENS; i++) {
+    super(9);
+    for (int i = 0; i < this.maximumTokens; i++) {
       Token token = new Token(tokenType, tokenImagePath);
       this.tokens.push(token);
     }
-  }
-
-  @Override
-  public Token getToken() {
-    if (!this.tokens.isEmpty()) {
-      return this.tokens.pop();
-    }
-    return null;
-  }
-
-  @Override
-  public boolean isEmpty() {
-    return this.tokens.isEmpty();
   }
 }

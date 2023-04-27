@@ -13,7 +13,7 @@ public class PlaceTokenAction implements Action {
       System.out.println("Intersection is occupied!");
       return false;
     } else {
-      Token token = player.getTokenBank().getToken();
+      Token token = player.getTokenBank().popToken();
       selectedIntersection.setToken(token);
       player.incrementTokenCount();
       return true;

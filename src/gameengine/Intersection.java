@@ -5,14 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import tokens.Token;
-import tokens.TokenSource;
+import tokens.TokenStack;
 
 /** Represents a single intersection on the GameBoard. */
-public class Intersection extends JButton implements ActionListener, TokenSource {
+public class Intersection extends JButton implements ActionListener {
   private final int TOKEN_HEIGHT = 50;
   private final int TOKEN_WIDTH = 50;
+  private final TokenStack tokenStack = new TokenStack(1);
   Game currentGame;
-  private Token token;
 
   /**
    * Constructor for an Intersection.
@@ -28,15 +28,15 @@ public class Intersection extends JButton implements ActionListener, TokenSource
     this.currentGame.playTurn(this);
   }
 
-  @Override
-  public Token getToken() {
-    if (this.token != null) {
-      Token token = this.token;
-      this.token = null;
-      this.updateImagePath(null);
-      return token;
-    }
-    return null;
+  /**
+   * Get a Token from the Intersection.
+   * 
+   * @return Token if there is one, null if not.
+   */
+  public Token popToken() {
+    Token token = this.tokenStack.popToken();
+    this.updateImagePath(null);
+    return token;
   }
 
   /**
@@ -45,13 +45,12 @@ public class Intersection extends JButton implements ActionListener, TokenSource
    * @param token The Token to place on the Intersection. If null, the Intersection becomes empty.
    */
   public void setToken(Token token) {
-    this.token = token;
+    this.tokenStack.pushToken(token);
     this.updateImagePath(token.getTokenImagePath());
   }
 
-  @Override
   public boolean isEmpty() {
-    return (this.token == null);
+    return this.tokenStack.isEmpty();
   }
 
   private void updateImagePath(String imagePath) {
