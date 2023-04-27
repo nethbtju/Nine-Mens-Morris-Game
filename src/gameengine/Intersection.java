@@ -9,12 +9,10 @@ import tokens.TokenSource;
 
 /** Represents a single intersection on the GameBoard. */
 public class Intersection extends JButton implements ActionListener, TokenSource {
+  private final int TOKEN_HEIGHT = 50;
+  private final int TOKEN_WIDTH = 50;
   Game currentGame;
   private Token token;
-
-  final private int TOKEN_HEIGHT = 50;
-
-  final private int TOKEN_WIDTH = 50;
 
   /**
    * Constructor for an Intersection.
