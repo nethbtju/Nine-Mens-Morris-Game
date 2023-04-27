@@ -15,7 +15,7 @@ public class TokenBank extends TokenStack {
    */
   public TokenBank(TokenType tokenType, String tokenImagePath) {
     super(9);
-    for (int i = 0; i < this.maximumTokens; i++) {
+    while (!this.isFull()) {
       Token token = new Token(tokenType, tokenImagePath);
       this.tokens.push(token);
     }
