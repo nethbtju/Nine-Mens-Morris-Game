@@ -31,13 +31,13 @@ public class GameBoardGui extends JPanel {
     setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     String path = "img/BoardImages/board600pxls.png";
     backgroundImage = ImageIO.read(new File(path));
-
     for (int i = 0; i < X.length; i++) {
       Intersection button = this.newButton(X[i], Y[i]);
       add(button);
     }
-
+    add(this.winningPlayerDisplay("white"));
     this.setLayout(null);
+
   }
 
   /**
@@ -90,6 +90,15 @@ public class GameBoardGui extends JPanel {
 
     // Display the window.
     frame.setVisible(true);
+  }
+  public JLabel winningPlayerDisplay(String winningPlayerColour){
+    String winnerImage = "img/BoardImages/" + winningPlayerColour + "WinScreen.png";
+    JLabel winLabel = new JLabel();
+    winLabel.setLocation(150, 260);
+    winLabel.setSize(500, 200);
+    winLabel.setOpaque(false);
+    winLabel.setIcon(new ImageIcon(new ImageIcon(winnerImage).getImage().getScaledInstance(500, 200, Image.SCALE_SMOOTH)));
+    return winLabel;
   }
 
   public void updatePlayerTurnDisplay(String newDisplay) {}
