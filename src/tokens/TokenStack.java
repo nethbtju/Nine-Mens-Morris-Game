@@ -23,6 +23,18 @@ public class TokenStack {
   }
 
   /**
+   * Peek at a Token from the TokenStack without popping it.
+   *
+   * @return A Token if one exists, null if the TokenStack is empty.
+   */
+  public Token peekToken() {
+    if (!this.tokens.isEmpty()) {
+      return this.tokens.peek();
+    }
+    return null;
+  }
+
+  /**
    * Pop a Token from the TokenStack.
    *
    * @return A Token if one exists, null if the TokenStack is empty.

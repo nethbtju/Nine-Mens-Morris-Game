@@ -8,15 +8,18 @@ import tokens.Token;
 public class PlaceTokenAction implements Action {
 
   @Override
-  public boolean execute(Intersection selectedIntersection, Player player) {
+  public void execute(Intersection selectedIntersection, Player player) {
+    Token token = player.getTokenBank().popToken();
+    selectedIntersection.setToken(token);
+    player.incrementTokenCount();
+  }
+
+  @Override
+  public boolean isValid(Intersection selectedIntersection, Player player) {
     if (!selectedIntersection.isEmpty()) {
       System.out.println("Intersection is occupied!");
       return false;
-    } else {
-      Token token = player.getTokenBank().popToken();
-      selectedIntersection.setToken(token);
-      player.incrementTokenCount();
-      return true;
     }
+    return true;
   }
 }

@@ -11,7 +11,17 @@ public interface Action {
    *
    * @param selectedIntersection The intersection selected by the user on the frontend.
    * @param player The player performing the Action.
-   * @return False if the execution failed (invalid move), true if successful.
+   *
    */
-  boolean execute(Intersection selectedIntersection, Player player);
+  void execute(Intersection selectedIntersection, Player player);
+
+  /**
+   * Check whether the Action is valid given the intersection selected by the user.
+   *
+   * @param selectedIntersection The intersection selected by the user on the frontend.
+   * @param player The player performing the action.
+   *
+   * @return True if the selection
+   */
+  boolean isValid(Intersection selectedIntersection, Player player);
 }

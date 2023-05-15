@@ -18,7 +18,6 @@ public class Game {
   private final GameBoardGui gameBoard;
   private final Queue<Player> playerQueue = new LinkedList<>();
   private final Queue<Action> actionQueue = new LinkedList<>();
-  private Intersection selectedIntersection;
 
   /**
    * Constructor for the Game, initialises game backend.
@@ -45,10 +44,12 @@ public class Game {
       this.pushPlayerActions(currentPlayer);
     }
 
-    Action action = actionQueue.peek();
-    boolean actionComplete = action.execute(selectedIntersection, currentPlayer);
-    if (actionComplete) {
-      actionQueue.remove();
+    Action action = this.actionQueue.peek();
+    boolean actionValid = action.isValid(selectedIntersection, currentPlayer);
+    if (actionValid) {
+      this.gameBoard.unhighlightAllIntersections();
+      action.execute(selectedIntersection, currentPlayer);
+      this.actionQueue.remove();
     }
 
     if (this.actionQueue.isEmpty()) {
@@ -62,19 +63,17 @@ public class Game {
    * Translates the Player's Capability into the Actions that they can take on a given turn.
    *
    * @param currentPlayer The Player currently taking their turn.
-   * @return A Queue of Actions that the Player can take before their turn ends.
    */
   private void pushPlayerActions(Player currentPlayer) {
     Capable currentCapability = currentPlayer.getCurrentCapability();
-    Queue<Action> actionQueue = new LinkedList<>();
 
     if (currentCapability == Capable.PLACEABLE) {
       currentPlayer.incrementTokenCount();
-      actionQueue.add(new PlaceTokenAction());
+      this.actionQueue.add(new PlaceTokenAction());
     } else if (currentCapability == Capable.MOVEABLE) {
       this.gameBoard.setIntersectionsAsClosed();
-      actionQueue.add(new SelectTokenAction());
-      actionQueue.add(new MoveTokenAction());
+      this.actionQueue.add(new SelectTokenAction());
+      this.actionQueue.add(new MoveTokenAction());
     }
   }
 
@@ -82,10 +81,18 @@ public class Game {
   private void initialisePlayers() {
     Player player1 =
         new Player(
-            TokenType.WHITE, new TokenBank(TokenType.WHITE, "img/BoardImages/WhiteTokenPlain.png"));
+            TokenType.WHITE,
+            new TokenBank(
+                TokenType.WHITE,
+                "img/BoardImages/WhiteTokenPlain.png",
+                "img/BoardImages/WhiteTokenSelected.png"));
     Player player2 =
         new Player(
-            TokenType.BLACK, new TokenBank(TokenType.BLACK, "img/BoardImages/BlackTokenPlain.png"));
+            TokenType.BLACK,
+            new TokenBank(
+                TokenType.BLACK,
+                "img/BoardImages/BlackTokenPlain.png",
+                "img/BoardImages/BlackTokenSelected.png"));
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
   }

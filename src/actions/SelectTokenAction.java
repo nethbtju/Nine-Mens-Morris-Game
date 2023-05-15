@@ -7,20 +7,23 @@ import tokens.Token;
 /** Selects a token for a Player to act upon. */
 public class SelectTokenAction implements Action {
   @Override
-  public boolean execute(Intersection selectedIntersection, Player player) {
+  public void execute(Intersection selectedIntersection, Player player) {
+    Token token = selectedIntersection.selectToken();
+    player.setTokenInHand(token);
+  }
 
+  @Override
+  public boolean isValid(Intersection selectedIntersection, Player player) {
     if (selectedIntersection.isEmpty()) {
       System.out.println("Intersection is empty!");
       return false;
     } else {
-      Token token = selectedIntersection.getToken();
+      Token token = selectedIntersection.peekToken();
       if (!token.getTokenType().equals(player.getTokenType())) {
-        selectedIntersection.setToken((token));
         System.out.println("Token does not belong to player!");
         return false;
       }
-      player.setTokenInHand(token);
-      return true;
     }
+    return true;
   }
 }

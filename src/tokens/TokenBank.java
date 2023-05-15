@@ -12,10 +12,10 @@ public class TokenBank extends TokenStack {
    *     is a stopgap measure until dependency injection is introduced, at which point tokens can be
    *     initialised and passed to the TokenBank rather than
    */
-  public TokenBank(TokenType tokenType, String tokenImagePath) {
+  public TokenBank(TokenType tokenType, String tokenImagePath, String selectedTokenImagePath) {
     super(9);
     while (!this.isFull()) {
-      Token token = new Token(tokenType, tokenImagePath);
+      Token token = new Token(tokenType, tokenImagePath, selectedTokenImagePath);
       this.tokens.push(token);
     }
   }

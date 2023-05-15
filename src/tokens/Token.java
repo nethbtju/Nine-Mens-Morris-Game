@@ -4,6 +4,7 @@ package tokens;
 public class Token {
   private final TokenType tokenType;
   private final String tokenImagePath;
+  private final String selectedTokenImagePath;
 
   /**
    * Constructor for Tokens.
@@ -12,18 +13,19 @@ public class Token {
    *     the token belongs.
    * @param tokenImagePath The filepath to the image used to represent the Token.
    */
-  public Token(TokenType tokenType, String tokenImagePath) {
+  public Token(TokenType tokenType, String tokenImagePath, String selectedTokenImagePath) {
     this.tokenType = tokenType;
     this.tokenImagePath = tokenImagePath;
+    this.selectedTokenImagePath = selectedTokenImagePath;
   }
 
   /**
-   * Get the filepath to the image used to display the Token.
+   * Get the filepath to the image used to display the Token when it is selected.
    *
-   * @return The token's image filepath.
+   * @return The token's selected image filepath.
    */
-  public String getTokenImagePath() {
-    return this.tokenImagePath;
+  public String getSelectedTokenImagePath() {
+    return this.selectedTokenImagePath;
   }
 
   /**
@@ -35,4 +37,15 @@ public class Token {
   public TokenType getTokenType() {
     return this.tokenType;
   }
+
+  /**
+   * Get the filepath to the image used to display the Token.
+   *
+   * @return The token's image filepath.
+   */
+  public String getTokenImagePath() {
+    return this.tokenImagePath;
+  }
 }
+
+
