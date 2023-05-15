@@ -117,6 +117,18 @@ public class GameBoardGui extends JPanel {
     this.repaint();
   }
 
+  /**
+   * Attach an Observer to a given Intersection by specifying its key.
+   *
+   * @param intersectionKey The key of the Intersection being attached to.
+   */
+  public void attachMillObserverByKey(MillObserver millObserver, String[] intersectionKeys) {
+    for (String intersectionKey : intersectionKeys) {
+      Intersection current = intersectionMap.get(intersectionKey);
+      current.attachObserver(millObserver);
+    }
+  }
+  
   /** Sets all Intersections as closed, disallowing Players from selecting them for any Action. */
   public void setIntersectionsAsClosed() {
     for (String key : intersectionMap.keySet()) {
