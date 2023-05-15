@@ -15,9 +15,10 @@ import tokens.TokenType;
 /** An instance of a Nine Man's Morris game. Highest level class in the game architecture. */
 public class Game {
 
-  GameBoardGui gameBoard;
-  Queue<Player> playerQueue = new LinkedList<>();
-  Queue<Action> actionQueue = new LinkedList<>();
+  private final GameBoardGui gameBoard;
+  private final Queue<Player> playerQueue = new LinkedList<>();
+  private final Queue<Action> actionQueue = new LinkedList<>();
+  private Intersection selectedIntersection;
 
   /**
    * Constructor for the Game, initialises game backend.
@@ -41,7 +42,7 @@ public class Game {
     Player currentPlayer = this.playerQueue.peek();
 
     if (this.actionQueue.isEmpty()) {
-      this.actionQueue = this.processPlayerActions(currentPlayer);
+      this.pushPlayerActions(currentPlayer);
     }
 
     Action action = actionQueue.peek();
@@ -63,7 +64,7 @@ public class Game {
    * @param currentPlayer The Player currently taking their turn.
    * @return A Queue of Actions that the Player can take before their turn ends.
    */
-  private Queue<Action> processPlayerActions(Player currentPlayer) {
+  private void pushPlayerActions(Player currentPlayer) {
     Capable currentCapability = currentPlayer.getCurrentCapability();
     Queue<Action> actionQueue = new LinkedList<>();
 
@@ -75,8 +76,6 @@ public class Game {
       actionQueue.add(new SelectTokenAction());
       actionQueue.add(new MoveTokenAction());
     }
-
-    return actionQueue;
   }
 
   /** Enqueue two players to the game. */
@@ -97,10 +96,10 @@ public class Game {
     TokenType playerType = currentPlayer.getTokenType();
 
     if (playerType == TokenType.WHITE) {
-      //System.out.println("Player 1");
+      // System.out.println("Player 1");
       this.gameBoard.updatePlayerTurnDisplay("Player 1 Turn!");
     } else {
-      //System.out.println("Player 2");
+      // System.out.println("Player 2");
       this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
     }
   }
