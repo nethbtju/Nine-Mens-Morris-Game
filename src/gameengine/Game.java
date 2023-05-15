@@ -38,9 +38,6 @@ public class Game {
    * @param selectedIntersection The intersection selected by the user on the frontend.
    */
   public void playTurn(Intersection selectedIntersection) {
-    System.out.print(selectedIntersection.getCoordinates()[0]);
-    System.out.print(selectedIntersection.getCoordinates()[1]);
-    System.out.println(selectedIntersection.index);
     Player currentPlayer = this.playerQueue.peek();
 
     if (this.actionQueue.isEmpty()) {
