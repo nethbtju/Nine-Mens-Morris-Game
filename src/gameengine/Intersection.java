@@ -3,6 +3,7 @@ package gameengine;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
 import tokens.Token;
 import tokens.TokenStack;
@@ -12,6 +13,7 @@ public class Intersection extends JButton implements ActionListener {
   private final int TOKEN_HEIGHT = 50;
   private final int TOKEN_WIDTH = 50;
   private final TokenStack tokenStack = new TokenStack(1);
+  private final ArrayList<MillObserver> millObservers = new ArrayList<>();
   private final int[] coordinates;
   private final Game currentGame;
   private boolean legalMoveState = true;
@@ -38,10 +40,9 @@ public class Intersection extends JButton implements ActionListener {
    */
   public Token selectToken() {
     Token token = this.tokenStack.popToken();
-    if (token != null) {
-      this.updateImagePath(token.getSelectedTokenImagePath());
-    } else {
-      this.updateImagePath(null);
+    this.updateImagePath(token.getSelectedTokenImagePath());
+    for (MillObserver millObserver : this.millObservers) {
+      millObserver.updateTokenRemoval(token);
     }
     return token;
   }
@@ -72,6 +73,9 @@ public class Intersection extends JButton implements ActionListener {
    */
   public Token removeToken() {
     Token token = this.tokenStack.popToken();
+    for (MillObserver millObserver : this.millObservers) {
+      millObserver.updateTokenRemoval(token);
+    }
     this.updateImagePath(null);
     return token;
   }
@@ -83,6 +87,9 @@ public class Intersection extends JButton implements ActionListener {
    */
   public void setToken(Token token) {
     this.tokenStack.pushToken(token);
+    for (MillObserver millObserver : this.millObservers) {
+      millObserver.updateTokenAddition(token);
+    }
     this.updateImagePath(token.getTokenImagePath());
   }
 
@@ -101,6 +108,15 @@ public class Intersection extends JButton implements ActionListener {
             new ImageIcon(imagePath)
                 .getImage()
                 .getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
+  }
+
+  /**
+   * Attach a MillObserver to the Intersection that watches to see if a Mill is formed on it.
+   *
+   * @param millObserver The MillObserver being attached.
+   */
+  public void attachObserver(MillObserver millObserver) {
+    this.millObservers.add(millObserver);
   }
 
   public boolean isLegalMove() {
