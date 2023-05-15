@@ -12,15 +12,21 @@ public class Intersection extends JButton implements ActionListener {
   private final int TOKEN_HEIGHT = 50;
   private final int TOKEN_WIDTH = 50;
   private final TokenStack tokenStack = new TokenStack(1);
+
+  private boolean legalMoveState = true;
   Game currentGame;
+
+  private int[] coordinates;
+
 
   /**
    * Constructor for an Intersection.
    *
    * @param currentGame The overarching Game in which the Intersection exists.
    */
-  public Intersection(Game currentGame) {
+  public Intersection(Game currentGame, int[] coordinates) {
     this.currentGame = currentGame;
+    this.coordinates = coordinates;
   }
 
   @Override
@@ -64,5 +70,26 @@ public class Intersection extends JButton implements ActionListener {
             new ImageIcon(imagePath)
                 .getImage()
                 .getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
+  }
+
+  public boolean isLegalMove(){
+    return this.legalMoveState;
+  }
+
+  public void setLegalMoveState(){
+      this.legalMoveState = true;
+  }
+
+  public void setIlegalMoveState(){
+      this.legalMoveState = false;
+  }
+
+  public int[] getCoordinates(){
+    return this.coordinates;
+  }
+
+  public String getKey(){
+    String intersectionKey = String.valueOf(this.coordinates[0]) + String.valueOf(this.coordinates[1]);
+    return intersectionKey;
   }
 }

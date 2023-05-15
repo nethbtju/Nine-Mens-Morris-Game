@@ -38,6 +38,9 @@ public class Game {
    * @param selectedIntersection The intersection selected by the user on the frontend.
    */
   public void playTurn(Intersection selectedIntersection) {
+    System.out.print(selectedIntersection.getCoordinates()[0]);
+    System.out.print(selectedIntersection.getCoordinates()[1]);
+    System.out.println(selectedIntersection.index);
     Player currentPlayer = this.playerQueue.peek();
 
     if (this.actionQueue.isEmpty()) {
@@ -96,10 +99,10 @@ public class Game {
     TokenType playerType = currentPlayer.getTokenType();
 
     if (playerType == TokenType.WHITE) {
-      System.out.println("Player 1");
+      //System.out.println("Player 1");
       this.gameBoard.updatePlayerTurnDisplay("Player 1 Turn!");
     } else {
-      System.out.println("Player 2");
+      //System.out.println("Player 2");
       this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
     }
   }

@@ -1,9 +1,14 @@
 package gameengine;
 
+import gameplayers.Player;
+import tokens.Token;
+import tokens.TokenType;
+
 import java.awt.*;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -18,6 +23,16 @@ public class GameBoardGui extends JPanel {
     178, 343, 508, 234, 343, 452, 288, 343, 398, 178, 178, 343, 343, 343, 234, 288, 288, 398, 398,
     452, 508, 508, 452, 234
   };
+
+  private int[][] COORDINATES = {{0,0,3,3},{0,3,1,3},{0,6,3,3},{1,1,2,2},{1,3,1,2},{1,5,2,2},{2,2,1,1},{2,3,1,1},{2,4,1,1},{3,0,3,1},{6,0,3,3},
+          {4,3,1,1},{5,3,1,2},{6,3,1,3},{3,1,2,1},{3,2,1,1},{4,2,1,1},{4,4,1,1},{3,4,1,1},{3,5,2,1},{3,6,3,1},{6,6,3,3},{5,5,2,2},
+          {5,1,2,2}
+  };
+
+  HashMap<String, Intersection> intersectionMap = new HashMap<String, Intersection>();
+
+
+
   private final Game currentGame;
 
   /**
@@ -32,11 +47,19 @@ public class GameBoardGui extends JPanel {
     String path = "img/BoardImages/board600pxls.png";
     backgroundImage = ImageIO.read(new File(path));
     for (int i = 0; i < X.length; i++) {
-      Intersection button = this.newButton(X[i], Y[i]);
+
+      String intersectionKey = String.valueOf(COORDINATES[i][0]) + String.valueOf(COORDINATES[i][1]);
+
+      Intersection button = this.newButton(X[i], Y[i], COORDINATES[i]);
+      this.intersectionMap.put(intersectionKey, button);
       add(button);
+
     }
-    add(this.winningPlayerDisplay("white"));
+    //add(this.winningPlayerDisplay("black"));
     this.setLayout(null);
+
+
+
 
   }
 
@@ -47,8 +70,8 @@ public class GameBoardGui extends JPanel {
    * @param y The y coordinate of the new Intersection.
    * @return The newly created Intersection.
    */
-  public Intersection newButton(int x, int y) {
-    Intersection button = new Intersection(this.currentGame);
+  public Intersection newButton(int x, int y, int[] coordinates) {
+    Intersection button = new Intersection(this.currentGame, coordinates);
     button.setLocation(x, y);
     button.setSize(50, 50);
     button.setOpaque(false);
@@ -90,6 +113,7 @@ public class GameBoardGui extends JPanel {
 
     // Display the window.
     frame.setVisible(true);
+
   }
   public JLabel winningPlayerDisplay(String winningPlayerColour){
     String winnerImage = "img/BoardImages/" + winningPlayerColour + "WinScreen.png";
@@ -101,5 +125,12 @@ public class GameBoardGui extends JPanel {
     return winLabel;
   }
 
-  public void updatePlayerTurnDisplay(String newDisplay) {}
+  public void updatePlayerTurnDisplay(String newDisplay) {
+    this.winningPlayerDisplay("white");
+    this.validate();
+    this.repaint();
+
+  }
+
+
 }
