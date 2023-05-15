@@ -71,6 +71,7 @@ public class Game {
       currentPlayer.incrementTokenCount();
       actionQueue.add(new PlaceTokenAction());
     } else if (currentCapability == Capable.MOVEABLE) {
+      this.gameBoard.setIntersectionsAsClosed();
       actionQueue.add(new SelectTokenAction());
       actionQueue.add(new MoveTokenAction());
     }

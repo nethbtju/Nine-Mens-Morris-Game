@@ -132,5 +132,13 @@ public class GameBoardGui extends JPanel {
 
   }
 
+  public void setIntersectionsAsClosed(){
+    System.out.println("hi");
+    for ( String key : intersectionMap.keySet() ) {
+      Intersection current = intersectionMap.get(key);
+      current.setIlegalMoveState();
+    }
+  }
+
 
 }
