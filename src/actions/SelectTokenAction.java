@@ -14,6 +14,7 @@ public class SelectTokenAction implements Action {
 
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
+
     if (selectedIntersection.isEmpty()) {
       System.out.println("Intersection is empty!");
       return false;
@@ -24,7 +25,7 @@ public class SelectTokenAction implements Action {
         return false;
       }
     }
-    selectedIntersection.setLegalMoves();
-    return true;
+    selectedIntersection.highLightSelectedToken();
+    return selectedIntersection.setLegalMoves();
   }
 }

@@ -145,7 +145,7 @@ public class GameBoardGui extends JPanel {
     }
   }
 
-  public void setLegalIntersections(Intersection selectedIntersection){
+  public boolean setLegalIntersections(Intersection selectedIntersection){
       int[] selectedCoordinates = selectedIntersection.getCoordinates();
       int xShift = selectedCoordinates[2];
       int yShift = selectedCoordinates[3];
@@ -163,14 +163,25 @@ public class GameBoardGui extends JPanel {
       System.out.println(downKey);
       System.out.println();
 
+      boolean hasMoveableIntersection = false;
+
       for(int i = 0; i < keyList.length; i++){
         String currentKey = keyList[i];
         if(intersectionMap.containsKey(currentKey)){
           Intersection currentIntersection = intersectionMap.get(currentKey);
-          currentIntersection.setLegalMoveState();
-          System.out.println(currentKey);
+          if(currentIntersection.isEmpty()) {
+            currentIntersection.setLegalMoveState();
+            System.out.println(currentKey);
+            hasMoveableIntersection = true;
+          }
         }
       }
+
+    System.out.println("bob");
+    System.out.println(hasMoveableIntersection);
+      return hasMoveableIntersection;
+
+
 
 
   }

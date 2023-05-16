@@ -47,6 +47,11 @@ public class Intersection extends JButton implements ActionListener {
     return token;
   }
 
+  public void highLightSelectedToken(){
+    Token token = this.peekToken();
+    this.updateImagePath(token.getSelectedTokenImagePath());
+  }
+
   /** Reset the image of an Intersection from any highlighting back to its normal appearance. */
   public void resetIntersectionImage() {
     Token token = this.tokenStack.peekToken();
@@ -135,13 +140,9 @@ public class Intersection extends JButton implements ActionListener {
     return this.coordinates;
   }
 
-  public String getKey() {
-    String intersectionKey = String.valueOf(this.coordinates[0]) + this.coordinates[1];
-    return intersectionKey;
-  }
-
-  public void setLegalMoves(){
-    this.currentGame.getGameBoard().setLegalIntersections(this);
+  public boolean setLegalMoves(){
+    boolean result = this.currentGame.getGameBoard().setLegalIntersections(this);
+    return result;
   }
 
 
