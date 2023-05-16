@@ -52,6 +52,10 @@ public class Intersection extends JButton implements ActionListener {
     this.updateImagePath(token.getSelectedTokenImagePath());
   }
 
+  public void highlightAsOpen(){
+    this.updateImagePath("img/BoardImages/dotSelected.png");
+  }
+
   /** Reset the image of an Intersection from any highlighting back to its normal appearance. */
   public void resetIntersectionImage() {
     Token token = this.tokenStack.peekToken();
@@ -96,8 +100,13 @@ public class Intersection extends JButton implements ActionListener {
       millObserver.updateTokenAddition(token);
     }
     this.updateImagePath(token.getTokenImagePath());
+
+    this.unhighlightTokens();
   }
 
+  public void unhighlightTokens(){
+    this.currentGame.getGameBoard().unhighlightAllIntersections();
+  }
   /**
    * Checks whether the Intersection does not have a Token.
    *

@@ -25,6 +25,7 @@ public class SelectTokenAction implements Action {
         return false;
       }
     }
+    selectedIntersection.unhighlightTokens();
     selectedIntersection.highLightSelectedToken();
     return selectedIntersection.setLegalMoves();
   }

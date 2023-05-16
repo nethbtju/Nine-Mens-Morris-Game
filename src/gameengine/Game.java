@@ -52,6 +52,7 @@ public class Game {
     boolean actionValid = action.isValid(selectedIntersection, currentPlayer);
     if (actionValid) {
       this.gameBoard.unhighlightAllIntersections();
+      this.gameBoard.tokenPlacementHint();
       action.execute(selectedIntersection, currentPlayer);
       this.actionQueue.remove();
     }

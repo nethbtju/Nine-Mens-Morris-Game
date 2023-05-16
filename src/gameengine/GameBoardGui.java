@@ -185,4 +185,14 @@ public class GameBoardGui extends JPanel {
 
 
   }
+
+  public void tokenPlacementHint(){
+    for (String key : intersectionMap.keySet()) {
+      Intersection current = intersectionMap.get(key);
+      if(current.isLegalMove() && current.isEmpty()) {
+        current.highlightAsOpen();
+      }
+
+    }
+  }
 }
