@@ -47,9 +47,14 @@ public class Intersection extends JButton implements ActionListener {
     return token;
   }
 
-  public void highLightSelectedToken(){
+  public void highLightSelectedTokenLegal(){
     Token token = this.peekToken();
     this.updateImagePath(token.getSelectedTokenImagePath());
+  }
+
+  public void highLightSelectedTokenILegal(){
+    Token token = this.peekToken();
+    this.updateImagePath(token.getSelectedTokenIllegalImagePath());
   }
 
   public void highlightAsOpen(){

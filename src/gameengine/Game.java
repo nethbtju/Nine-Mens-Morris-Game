@@ -160,14 +160,16 @@ public class Game {
             new TokenBank(
                 TokenType.WHITE,
                 "img/BoardImages/WhiteTokenPlain.png",
-                "img/BoardImages/WhiteTokenSelected.png"));
+                "img/BoardImages/WhiteTokenSelected.png",
+                    "img/BoardImages/WhiteTokenIllegal.png"));
     Player player2 =
         new Player(
             TokenType.BLACK,
             new TokenBank(
                 TokenType.BLACK,
                 "img/BoardImages/BlackTokenPlain.png",
-                "img/BoardImages/BlackTokenSelected.png"));
+                "img/BoardImages/BlackTokenSelected.png",
+                    "img/BoardImages/BlackTokenIllegal.png"));
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
   }
