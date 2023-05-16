@@ -24,6 +24,7 @@ public class SelectTokenAction implements Action {
         return false;
       }
     }
+    selectedIntersection.setLegalMoves();
     return true;
   }
 }

@@ -41,7 +41,7 @@ public class GameBoardGui extends JPanel {
     backgroundImage = ImageIO.read(new File(path));
     for (int i = 0; i < X.length; i++) {
 
-      String intersectionKey = String.valueOf(COORDINATES[i][0]) + COORDINATES[i][1];
+      String intersectionKey = String.valueOf(COORDINATES[i][0]) + String.valueOf(COORDINATES[i][1]);
 
       Intersection button = this.newButton(X[i], Y[i], COORDINATES[i]);
       this.intersectionMap.put(intersectionKey, button);
@@ -143,5 +143,35 @@ public class GameBoardGui extends JPanel {
       Intersection current = intersectionMap.get(key);
       current.resetIntersectionImage();
     }
+  }
+
+  public void setLegalIntersections(Intersection selectedIntersection){
+      int[] selectedCoordinates = selectedIntersection.getCoordinates();
+      int xShift = selectedCoordinates[2];
+      int yShift = selectedCoordinates[3];
+
+      String leftKey = String.valueOf(selectedCoordinates[0] - xShift) + String.valueOf(selectedCoordinates[1]);
+      String rightKey = String.valueOf(selectedCoordinates[0] + xShift) + String.valueOf(selectedCoordinates[1]);
+      String downKey = String.valueOf(selectedCoordinates[0]) + String.valueOf(selectedCoordinates[1] - yShift);
+      String upKey = String.valueOf(selectedCoordinates[0]) + String.valueOf(selectedCoordinates[1] + yShift);
+
+      String[] keyList = {leftKey, rightKey, downKey, upKey};
+
+      System.out.println(leftKey);
+      System.out.println(rightKey);
+      System.out.println(upKey);
+      System.out.println(downKey);
+      System.out.println();
+
+      for(int i = 0; i < keyList.length; i++){
+        String currentKey = keyList[i];
+        if(intersectionMap.containsKey(currentKey)){
+          Intersection currentIntersection = intersectionMap.get(currentKey);
+          currentIntersection.setLegalMoveState();
+          System.out.println(currentKey);
+        }
+      }
+
+
   }
 }

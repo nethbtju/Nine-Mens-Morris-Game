@@ -184,4 +184,8 @@ public class Game {
       this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
     }
   }
+
+  public GameBoardGui getGameBoard() {
+    return gameBoard;
+  }
 }

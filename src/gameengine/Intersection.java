@@ -16,7 +16,7 @@ public class Intersection extends JButton implements ActionListener {
   private final ArrayList<MillObserver> millObservers = new ArrayList<>();
   private final int[] coordinates;
   private final Game currentGame;
-  private boolean legalMoveState = true;
+  private boolean legalMoveState = false;
 
   /**
    * Constructor for an Intersection.
@@ -139,4 +139,10 @@ public class Intersection extends JButton implements ActionListener {
     String intersectionKey = String.valueOf(this.coordinates[0]) + this.coordinates[1];
     return intersectionKey;
   }
+
+  public void setLegalMoves(){
+    this.currentGame.getGameBoard().setLegalIntersections(this);
+  }
+
+
 }

@@ -55,6 +55,14 @@ public class Player {
     return null;
   }
 
+  public Token peepTokenInHand() {
+    if (this.tokenInHand != null) {
+      Token token = this.tokenInHand;
+      return token;
+    }
+    return null;
+  }
+
   /**
    * Check if the Player has selected a Token. Do not remove the Token from the Player.
    *

@@ -12,4 +12,9 @@ public class MoveTokenAction extends PlaceTokenAction implements Action {
     Token token = player.popTokenInHand();
     tokenDestination.setToken(token);
   }
+
+  public boolean isValid(Intersection selectedIntersection, Player player){
+    System.out.println(selectedIntersection.isLegalMove());
+    return selectedIntersection.isLegalMove() && selectedIntersection.isEmpty();
+  }
 }
