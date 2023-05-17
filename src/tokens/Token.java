@@ -6,6 +6,7 @@ public class Token {
   private final String tokenImagePath;
   private final String selectedTokenImagePath;
   private final String selectedTokenIllegalImagePath;
+  private final String millTokenImagePath;
 
   /**
    * Constructor for Tokens.
@@ -14,11 +15,12 @@ public class Token {
    *     the token belongs.
    * @param tokenImagePath The filepath to the image used to represent the Token.
    */
-  public Token(TokenType tokenType, String tokenImagePath, String selectedTokenImagePath, String selectedTokenIllegalImagePath) {
+  public Token(TokenType tokenType, String tokenImagePath, String selectedTokenImagePath, String selectedTokenIllegalImagePath, String millTokenImagePath) {
     this.tokenType = tokenType;
     this.tokenImagePath = tokenImagePath;
     this.selectedTokenImagePath = selectedTokenImagePath;
     this.selectedTokenIllegalImagePath = selectedTokenIllegalImagePath;
+    this.millTokenImagePath = millTokenImagePath;
   }
 
   /**
@@ -51,6 +53,10 @@ public class Token {
    */
   public String getTokenImagePath() {
     return this.tokenImagePath;
+  }
+
+  public String getMillTokenImagePath() {
+    return this.millTokenImagePath;
   }
 }
 

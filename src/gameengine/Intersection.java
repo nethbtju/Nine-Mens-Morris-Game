@@ -17,6 +17,7 @@ public class Intersection extends JButton implements ActionListener {
   private final int[] coordinates;
   private final Game currentGame;
   private boolean legalMoveState = false;
+  private boolean millState = false;
 
   /**
    * Constructor for an Intersection.
@@ -33,6 +34,30 @@ public class Intersection extends JButton implements ActionListener {
     this.currentGame.playTurn(this);
   }
 
+  /** Update the mill state of the Intersection, which tracks whether it has a mill. */
+  public void setMillState() {
+    if (this.isEmpty()) {
+      return;
+    }
+
+    boolean millFound = false;
+    for (MillObserver millObserver : this.millObservers) {
+      if (millObserver.hasMill()) {
+        millFound = true;
+      }
+    }
+    this.millState = millFound;
+  }
+
+  /**
+   * Get the mill state of the Intersection.
+   *
+   * @return True if there is a Mill on the Intersection, false if not.
+   */
+  public boolean getMillState() {
+    return this.millState;
+  }
+
   /** Set the image of the Intersection to display a legally selected token. */
   public void highlightSelectedTokenLegal() {
     Token token = this.peekToken();
@@ -43,6 +68,12 @@ public class Intersection extends JButton implements ActionListener {
   public void highlightSelectedTokenIllegal() {
     Token token = this.peekToken();
     this.updateImagePath(token.getSelectedTokenIllegalImagePath());
+  }
+
+  /** Set the image of the Intersection to display a Token in a mill. */
+  public void highlightMill() {
+    Token token = this.peekToken();
+    this.updateImagePath(token.getMillTokenImagePath());
   }
 
   /** Set the image of the Intersection to display an empty and accessible intersection. */
@@ -142,6 +173,11 @@ public class Intersection extends JButton implements ActionListener {
     this.millObservers.add(millObserver);
   }
 
+  /**
+   * Checks whether the intersection is legal to act upon with an Action.
+   *
+   * @return True if legal, false if not.
+   */
   public boolean isLegalMove() {
     return this.legalMoveState;
   }
@@ -159,7 +195,6 @@ public class Intersection extends JButton implements ActionListener {
   }
 
   public boolean setLegalMoves() {
-    boolean result = this.currentGame.getGameBoard().setLegalIntersections(this);
-    return result;
+    return this.currentGame.getGameBoard().setLegalIntersections(this);
   }
 }

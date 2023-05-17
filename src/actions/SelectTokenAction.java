@@ -30,10 +30,9 @@ public class SelectTokenAction implements Action {
 
     if (result) {
       selectedIntersection.highlightSelectedTokenLegal();
-      return result;
     } else {
       selectedIntersection.highlightSelectedTokenIllegal();
-      return result;
     }
+    return result;
   }
 }

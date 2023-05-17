@@ -41,7 +41,7 @@ public class GameBoardGui extends JPanel {
     backgroundImage = ImageIO.read(new File(path));
     for (int i = 0; i < X.length; i++) {
 
-      String intersectionKey = String.valueOf(COORDINATES[i][0]) + String.valueOf(COORDINATES[i][1]);
+      String intersectionKey = String.valueOf(COORDINATES[i][0]) + COORDINATES[i][1];
 
       Intersection button = this.newButton(X[i], Y[i], COORDINATES[i]);
       this.intersectionMap.put(intersectionKey, button);
@@ -118,9 +118,11 @@ public class GameBoardGui extends JPanel {
   }
 
   /**
-   * Attach an Observer to a given Intersection by specifying its key.
+   * Attach a single MillObserver to a set of Intersections by specifying their keys.
    *
-   * @param intersectionKey The key of the Intersection being attached to.
+   * @param millObserver The MillObserver being attached, which watches for Mills being formed.
+   * @param intersectionKeys The keys of the Intersections to which the MillObservers are to be
+   *                         attached.
    */
   public void attachMillObserverByKey(MillObserver millObserver, String[] intersectionKeys) {
     for (String intersectionKey : intersectionKeys) {
@@ -128,7 +130,7 @@ public class GameBoardGui extends JPanel {
       current.attachObserver(millObserver);
     }
   }
-  
+
   /** Sets all Intersections as closed, disallowing Players from selecting them for any Action. */
   public void setIntersectionsAsClosed() {
     for (String key : intersectionMap.keySet()) {
@@ -145,54 +147,48 @@ public class GameBoardGui extends JPanel {
     }
   }
 
-  public boolean setLegalIntersections(Intersection selectedIntersection){
-      int[] selectedCoordinates = selectedIntersection.getCoordinates();
-      int xShift = selectedCoordinates[2];
-      int yShift = selectedCoordinates[3];
+  /**
+   * Sets the legal Intersections to travel to on the GameBoard, given the Intersection that has
+   * just been selected for an Action.
+   *
+   * @param selectedIntersection The Intersection selected for an Action.
+   * @return Always returns True
+   */
+  @SuppressWarnings("checkstyle:LocalVariableName")
+  public boolean setLegalIntersections(Intersection selectedIntersection) {
+    int[] selectedCoordinates = selectedIntersection.getCoordinates();
+    int xShift = selectedCoordinates[2];
+    int yShift = selectedCoordinates[3];
 
-      String leftKey = String.valueOf(selectedCoordinates[0] - xShift) + String.valueOf(selectedCoordinates[1]);
-      String rightKey = String.valueOf(selectedCoordinates[0] + xShift) + String.valueOf(selectedCoordinates[1]);
-      String downKey = String.valueOf(selectedCoordinates[0]) + String.valueOf(selectedCoordinates[1] - yShift);
-      String upKey = String.valueOf(selectedCoordinates[0]) + String.valueOf(selectedCoordinates[1] + yShift);
+    String leftKey = String.valueOf(selectedCoordinates[0] - xShift) + selectedCoordinates[1];
+    String rightKey = String.valueOf(selectedCoordinates[0] + xShift) + selectedCoordinates[1];
+    String downKey = String.valueOf(selectedCoordinates[0]) + (selectedCoordinates[1] - yShift);
+    String upKey = String.valueOf(selectedCoordinates[0]) + (selectedCoordinates[1] + yShift);
 
-      String[] keyList = {leftKey, rightKey, downKey, upKey};
+    String[] keyList = {leftKey, rightKey, downKey, upKey};
 
-      System.out.println(leftKey);
-      System.out.println(rightKey);
-      System.out.println(upKey);
-      System.out.println(downKey);
-      System.out.println();
+    boolean hasMoveableIntersection = false;
 
-      boolean hasMoveableIntersection = false;
-
-      for(int i = 0; i < keyList.length; i++){
-        String currentKey = keyList[i];
-        if(intersectionMap.containsKey(currentKey)){
-          Intersection currentIntersection = intersectionMap.get(currentKey);
-          if(currentIntersection.isEmpty()) {
-            currentIntersection.setLegalMoveState();
-            System.out.println(currentKey);
-            hasMoveableIntersection = true;
-          }
+    for (String currentKey : keyList) {
+      if (intersectionMap.containsKey(currentKey)) {
+        Intersection currentIntersection = intersectionMap.get(currentKey);
+        if (currentIntersection.isEmpty()) {
+          currentIntersection.setLegalMoveState();
+          hasMoveableIntersection = true;
         }
       }
+    }
 
-    System.out.println("bob");
-    System.out.println(hasMoveableIntersection);
-      return hasMoveableIntersection;
-
-
-
-
+    return hasMoveableIntersection;
   }
 
-  public void tokenPlacementHint(){
+  /** Highlights all the Intersections that are currently open to move to. */
+  public void highlightOpenIntersections() {
     for (String key : intersectionMap.keySet()) {
       Intersection current = intersectionMap.get(key);
-      if(current.isLegalMove() && current.isEmpty()) {
+      if (current.isLegalMove() && current.isEmpty()) {
         current.highlightAsOpen();
       }
-
     }
   }
 }
