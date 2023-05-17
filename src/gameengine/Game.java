@@ -55,8 +55,8 @@ public class Game {
       this.gameBoard.unhighlightAllIntersections();
       this.gameBoard.highlightOpenIntersections();
       action.execute(selectedIntersection, currentPlayer);
-      selectedIntersection.setMillState();
-      if (initialMillState != selectedIntersection.getMillState()) {
+      this.gameBoard.setMillStates();
+      if (!initialMillState && selectedIntersection.getMillState()) {
         this.actionQueue.add(new RemoveTokenAction());
       }
       this.actionQueue.remove();

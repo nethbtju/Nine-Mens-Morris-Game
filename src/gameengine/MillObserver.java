@@ -26,7 +26,6 @@ public class MillObserver {
         tokensOfGivenType += 1;
       }
     }
-    
     return (tokensOfGivenType == 3);
   }
 

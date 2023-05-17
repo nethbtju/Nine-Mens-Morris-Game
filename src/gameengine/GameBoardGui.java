@@ -26,6 +26,7 @@ public class GameBoardGui extends JPanel {
     {5, 3, 1, 2}, {6, 3, 1, 3}, {3, 1, 2, 1}, {3, 2, 1, 1}, {4, 2, 1, 1}, {4, 4, 1, 1},
     {3, 4, 1, 1}, {3, 5, 2, 1}, {3, 6, 3, 1}, {6, 6, 3, 3}, {5, 5, 2, 2}, {5, 1, 2, 2}
   };
+
   HashMap<String, Intersection> intersectionMap = new HashMap<>();
 
   /**
@@ -188,6 +189,17 @@ public class GameBoardGui extends JPanel {
       Intersection current = intersectionMap.get(key);
       if (current.isLegalMove() && current.isEmpty()) {
         current.highlightAsOpen();
+      }
+    }
+  }
+
+  /** Highlight all the Intersections that are currently part of a mill. */
+  public void setMillStates() {
+    for (String key : intersectionMap.keySet()) {
+      Intersection current = intersectionMap.get(key);
+      current.setMillState();
+      if (current.getMillState()) {
+        current.highlightMill();
       }
     }
   }

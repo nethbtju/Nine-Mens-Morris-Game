@@ -36,10 +36,6 @@ public class Intersection extends JButton implements ActionListener {
 
   /** Update the mill state of the Intersection, which tracks whether it has a mill. */
   public void setMillState() {
-    if (this.isEmpty()) {
-      return;
-    }
-
     boolean millFound = false;
     for (MillObserver millObserver : this.millObservers) {
       if (millObserver.hasMill()) {
@@ -114,18 +110,13 @@ public class Intersection extends JButton implements ActionListener {
     return token;
   }
 
-  /**
-   * Get a Token from the Intersection.
-   *
-   * @return Token if there is one, null if not.
-   */
-  public Token removeToken() {
+  /** Remove a Token from the Intersection. */
+  public void removeToken() {
     Token token = this.tokenStack.popToken();
     for (MillObserver millObserver : this.millObservers) {
       millObserver.updateTokenRemoval(token);
     }
     this.updateImagePath(null);
-    return token;
   }
 
   /**
