@@ -33,31 +33,20 @@ public class Intersection extends JButton implements ActionListener {
     this.currentGame.playTurn(this);
   }
 
-  /**
-   * Highlight a selected Intersection and remove its Token.
-   *
-   * @return The Token on the Intersection if it exists, null if there is no Token.
-   */
-  public Token selectToken() {
-    Token token = this.tokenStack.popToken();
-    this.updateImagePath(token.getSelectedTokenImagePath());
-    for (MillObserver millObserver : this.millObservers) {
-      millObserver.updateTokenRemoval(token);
-    }
-    return token;
-  }
-
-  public void highLightSelectedTokenLegal(){
+  /** Set the image of the Intersection to display a legally selected token. */
+  public void highlightSelectedTokenLegal() {
     Token token = this.peekToken();
     this.updateImagePath(token.getSelectedTokenImagePath());
   }
 
-  public void highLightSelectedTokenILegal(){
+  /** Set the image of the Intersection to display an illegally selected token. */
+  public void highlightSelectedTokenIllegal() {
     Token token = this.peekToken();
     this.updateImagePath(token.getSelectedTokenIllegalImagePath());
   }
 
-  public void highlightAsOpen(){
+  /** Set the image of the Intersection to display an empty and accessible intersection. */
+  public void highlightAsOpen() {
     this.updateImagePath("img/BoardImages/dotSelected.png");
   }
 
@@ -78,6 +67,20 @@ public class Intersection extends JButton implements ActionListener {
    */
   public Token peekToken() {
     return this.tokenStack.peekToken();
+  }
+
+  /**
+   * Highlight a selected Intersection and remove its Token.
+   *
+   * @return The Token on the Intersection if it exists, null if there is no Token.
+   */
+  public Token selectToken() {
+    Token token = this.tokenStack.popToken();
+    this.updateImagePath(token.getSelectedTokenImagePath());
+    for (MillObserver millObserver : this.millObservers) {
+      millObserver.updateTokenRemoval(token);
+    }
+    return token;
   }
 
   /**
@@ -109,9 +112,10 @@ public class Intersection extends JButton implements ActionListener {
     this.unhighlightTokens();
   }
 
-  public void unhighlightTokens(){
+  public void unhighlightTokens() {
     this.currentGame.getGameBoard().unhighlightAllIntersections();
   }
+  
   /**
    * Checks whether the Intersection does not have a Token.
    *
@@ -154,10 +158,8 @@ public class Intersection extends JButton implements ActionListener {
     return this.coordinates;
   }
 
-  public boolean setLegalMoves(){
+  public boolean setLegalMoves() {
     boolean result = this.currentGame.getGameBoard().setLegalIntersections(this);
     return result;
   }
-
-
 }
