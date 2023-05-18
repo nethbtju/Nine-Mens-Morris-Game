@@ -8,7 +8,7 @@ import tokens.TokenType;
 public class Player {
   private final TokenType tokenType;
   private final TokenBank tokenBank;
-  private int tokenCount = 9;
+  private int tokenCount = 0;
   private Token tokenInHand;
 
   /**

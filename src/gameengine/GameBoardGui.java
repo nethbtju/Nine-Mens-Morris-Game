@@ -1,7 +1,5 @@
 package gameengine;
 
-import tokens.TokenType;
-
 import java.awt.*;
 import java.awt.Image;
 import java.io.File;
@@ -9,6 +7,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import tokens.TokenType;
 
 /** Represents the GameBoard in which Intersections exist. */
 public class GameBoardGui extends JPanel {
@@ -28,9 +27,8 @@ public class GameBoardGui extends JPanel {
     {5, 3, 1, 2}, {6, 3, 1, 3}, {3, 1, 2, 1}, {3, 2, 1, 1}, {4, 2, 1, 1}, {4, 4, 1, 1},
     {3, 4, 1, 1}, {3, 5, 2, 1}, {3, 6, 3, 1}, {6, 6, 3, 3}, {5, 5, 2, 2}, {5, 1, 2, 2}
   };
-  private String winnerDisplayerString = "";
-
   HashMap<String, Intersection> intersectionMap = new HashMap<>();
+  private String winnerDisplayerString = "";
 
   /**
    * Constructor for the GameBoard, puts everything together.
@@ -52,7 +50,6 @@ public class GameBoardGui extends JPanel {
       add(button);
     }
     this.setLayout(null);
-
   }
 
   /**
@@ -103,7 +100,7 @@ public class GameBoardGui extends JPanel {
     frame.setVisible(true);
   }
 
-  public void showWinnerDisplay(String image){
+  public void showWinnerDisplay(String image) {
     setWinnerDisplayerString(image);
     add(winningPlayerDisplay(winnerDisplayerString));
   }
@@ -135,7 +132,7 @@ public class GameBoardGui extends JPanel {
    *
    * @param millObserver The MillObserver being attached, which watches for Mills being formed.
    * @param intersectionKeys The keys of the Intersections to which the MillObservers are to be
-   *                         attached.
+   *     attached.
    */
   public void attachMillObserverByKey(MillObserver millObserver, String[] intersectionKeys) {
     for (String intersectionKey : intersectionKeys) {
@@ -168,7 +165,8 @@ public class GameBoardGui extends JPanel {
    * @return Always returns True
    */
   @SuppressWarnings("checkstyle:LocalVariableName")
-  public boolean setLegalIntersections(Intersection selectedIntersection, boolean updateIntersection) {
+  public boolean setLegalIntersections(
+      Intersection selectedIntersection, boolean updateIntersection) {
     int[] selectedCoordinates = selectedIntersection.getCoordinates();
     int xShift = selectedCoordinates[2];
     int yShift = selectedCoordinates[3];
@@ -186,7 +184,7 @@ public class GameBoardGui extends JPanel {
       if (intersectionMap.containsKey(currentKey)) {
         Intersection currentIntersection = intersectionMap.get(currentKey);
         if (currentIntersection.isEmpty()) {
-          if(updateIntersection) {
+          if (updateIntersection) {
             currentIntersection.setLegalMoveState();
           }
           hasMoveableIntersection = true;
@@ -197,11 +195,16 @@ public class GameBoardGui extends JPanel {
     return hasMoveableIntersection;
   }
 
-  public boolean setLegalJumpIntersections(){
+  /**
+   * Set the legal Intersections to jump to on the GameBoard.
+   *
+   * @return True if there are any Intersections to jump to, false if not.
+   */
+  public boolean setLegalJumpIntersections() {
     boolean isMoveable = false;
     for (String key : intersectionMap.keySet()) {
       Intersection current = intersectionMap.get(key);
-      if(current.isEmpty()){
+      if (current.isEmpty()) {
         isMoveable = true;
         current.setLegalMoveState();
       }
@@ -230,20 +233,37 @@ public class GameBoardGui extends JPanel {
     }
   }
 
-  public void killGame(){
+  /**
+   * Get the number of Intersections holding Tokens of a given TokenType that are in a mill.
+   *
+   * @param tokenType The TokenType for which Intersections with mills are being counted.
+   * @return The number of Intersections in mills of a given TokenType.
+   */
+  public int getMillIntersectionCount(TokenType tokenType) {
+    int millIntersectionCount = 0;
+    for (String key : intersectionMap.keySet()) {
+      Intersection current = intersectionMap.get(key);
+      if (current.getMillState() && current.peekToken().getTokenType() == tokenType) {
+        millIntersectionCount += 1;
+      }
+    }
+    return millIntersectionCount;
+  }
+
+  public void killGame() {
     for (String key : this.intersectionMap.keySet()) {
       Intersection current = this.intersectionMap.get(key);
       current.removeToken();
     }
-
   }
 
   public boolean hasAnyLegalMoves(TokenType playerTokenType) {
     boolean hasLegalMoves = false;
     for (String key : intersectionMap.keySet()) {
       Intersection current = intersectionMap.get(key);
-      if(current.peekToken() != null){
-        if (current.peekToken().getTokenType() == playerTokenType && this.setLegalIntersections(current, false)) {
+      if (current.peekToken() != null) {
+        if (current.peekToken().getTokenType() == playerTokenType
+            && this.setLegalIntersections(current, false)) {
           hasLegalMoves = true;
         }
       }

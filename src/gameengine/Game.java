@@ -1,19 +1,12 @@
 package gameengine;
 
-import actions.Action;
-import actions.MoveTokenAction;
-import actions.PlaceTokenAction;
-import actions.RemoveTokenAction;
-import actions.SelectTokenAction;
+import actions.*;
 import gameplayers.Capable;
 import gameplayers.Player;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
-
-import tokens.Token;
 import tokens.TokenBank;
 import tokens.TokenType;
 
@@ -62,7 +55,7 @@ public class Game {
       action.execute(selectedIntersection, currentPlayer);
       this.gameBoard.setMillStates();
       if (!initialMillState && selectedIntersection.getMillState()) {
-        this.actionQueue.add(new RemoveTokenAction());
+        this.pushMillActions();
       }
       this.actionQueue.remove();
     }
@@ -74,10 +67,26 @@ public class Game {
     this.updatePlayTurnDisplay();
   }
 
+  /**
+   * Push the appropriate Action to the current player's actionQueue depending on whether their
+   * opponent has all of their Tokens in mills.
+   */
+  private void pushMillActions() {
+    Player currentPlayer = this.playerQueue.remove();
+    Player attackedPlayer = this.playerQueue.remove();
+
+    if (this.gameBoard.getMillIntersectionCount(attackedPlayer.getTokenType()) == attackedPlayer.getTokenCount()) {
+      this.actionQueue.add(new RemoveMillTokenAction());
+    } else {
+      this.actionQueue.add(new RemoveTokenAction());
+    }
+
+    this.playerQueue.add(currentPlayer);
+    this.playerQueue.add(attackedPlayer);
+  }
+  
   /** Initialise the MillObservers, which detect Mill formation. */
   private void initialiseMillObservers() {
-    // Hardcoded while searching for a better representation
-
     String[] OUTER_LEFT_COLUMN = {"00", "03", "06"};
     String[] OUTER_RIGHT_COLUMN = {"60", "63", "66"};
     String[] OUTER_BOTTOM_ROW = {"00", "30", "60"};
@@ -150,7 +159,7 @@ public class Game {
                 TokenType.WHITE,
                 "img/BoardImages/WhiteTokenPlain.png",
                 "img/BoardImages/WhiteTokenSelected.png",
-                    "img/BoardImages/WhiteTokenIllegal.png",
+                "img/BoardImages/WhiteTokenIllegal.png",
                 "img/BoardImages/WhiteTokenMill.png"));
     Player player2 =
         new Player(
@@ -159,7 +168,7 @@ public class Game {
                 TokenType.BLACK,
                 "img/BoardImages/BlackTokenPlain.png",
                 "img/BoardImages/BlackTokenSelected.png",
-                    "img/BoardImages/BlackTokenIllegal.png",
+                "img/BoardImages/BlackTokenIllegal.png",
                 "img/BoardImages/BlackTokenMill.png"));
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
@@ -171,42 +180,38 @@ public class Game {
     TokenType playerType = currentPlayer.getTokenType();
 
     if (playerType == TokenType.WHITE) {
-      // System.out.println("Player 1");
       this.gameBoard.updatePlayerTurnDisplay("Player 1 Turn!");
     } else {
-      // System.out.println("Player 2");
       this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
     }
   }
 
-  public boolean checkPlayerLose(Player player){
-    String image;
+  /**
+   * Checks whether a Player has lost the game.
+   *
+   * @param player The Player whose loss is being decided.
+   * @return True if the Player has lost, false if not.
+   */
+  public boolean checkPlayerLose(Player player) {
     int currentPlayerTokens = player.getTokenCount();
-    if(currentPlayerTokens >= 3){
-      return false;
-    }
-
-    if (this.gameBoard.hasAnyLegalMoves(player.getTokenType()) || currentPlayerTokens < 3){
-      return true;
-    } else{
-      return false;
-    }
+    return (currentPlayerTokens < 3 && player.getTokenBank().isEmpty())
+        || !this.gameBoard.hasAnyLegalMoves(player.getTokenType());
   }
 
   public GameBoardGui getGameBoard() {
     return gameBoard;
   }
 
-  public void checkIfGameOver(Player attackedPlayer){
+  public void checkIfGameOver(Player attackedPlayer) {
     if (this.checkPlayerLose(attackedPlayer)) {
       printWinScreen(attackedPlayer);
       this.gameBoard.killGame();
     }
   }
 
-  public void printWinScreen(Player attackedPlayer){
+  public void printWinScreen(Player attackedPlayer) {
     String image;
-    if (attackedPlayer.getTokenType() == TokenType.BLACK){
+    if (attackedPlayer.getTokenType() == TokenType.BLACK) {
       image = "img/BoardImages/WhiteWinScreen.png";
     } else {
       image = "img/BoardImages/BlackWinScreen.png";
@@ -214,7 +219,7 @@ public class Game {
     this.gameBoard.showWinnerDisplay(image);
   }
 
-  public void decrementOpposingPlayerTokenCount(){
+  public void decrementOpposingPlayerTokenCount() {
     Player currentPlayer = this.playerQueue.remove();
     Player attackedPlayer = this.playerQueue.remove();
 
@@ -223,7 +228,7 @@ public class Game {
     this.playerQueue.add(currentPlayer);
     this.playerQueue.add(attackedPlayer);
 
-    //check when game is lost
+    // check when game is lost
     this.checkIfGameOver(attackedPlayer);
   }
 }
