@@ -192,7 +192,7 @@ public class Game {
       image = "img/BoardImages/WhiteWinScreen.png";
     } else {
       image = "img/BoardImages/BlackWinScreen.png";
-    }
+  }
 
     if(this.gameBoard.hasAnyLegalMoves(player.getTokenType()) || currentPlayerTokens < 3){
       return true;
@@ -221,6 +221,16 @@ public class Game {
     }
   }
 
+  public void printWinScreen(Player winningPlayer){
+    String image;
+    if (winningPlayer.getTokenType() == TokenType.BLACK){
+      image = "img/BoardImages/WhiteWinScreen.png";
+    } else {
+      image = "img/BoardImages/BlackWinScreen.png";
+    }
+    this.gameBoard.winningPlayerDisplay(image);
+  }
+
   public void decrementOpposingPlayerTokenCount(){
     Player currentPlayer = this.playerQueue.remove();
     Player attackedPlayer = this.playerQueue.remove();
@@ -232,6 +242,8 @@ public class Game {
 
     //check when game is lost
     this.checkIfGameOver(attackedPlayer);
+
+
 
   }
 }
