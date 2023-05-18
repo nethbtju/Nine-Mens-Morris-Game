@@ -47,8 +47,6 @@ public class Game {
   public void playTurn(Intersection selectedIntersection) {
     Player currentPlayer = this.playerQueue.peek();
 
-
-
     boolean initialMillState = selectedIntersection.getMillState();
 
     if (this.actionQueue.isEmpty()) {
@@ -188,27 +186,12 @@ public class Game {
       return false;
     }
 
-    if (player.getTokenType() == TokenType.BLACK){
-      image = "img/BoardImages/WhiteWinScreen.png";
-    } else {
-      image = "img/BoardImages/BlackWinScreen.png";
-  }
-
-    if(this.gameBoard.hasAnyLegalMoves(player.getTokenType()) || currentPlayerTokens < 3){
+    if (this.gameBoard.hasAnyLegalMoves(player.getTokenType()) || currentPlayerTokens < 3){
       return true;
-    }
-    else{
+    } else{
       return false;
     }
-
-
-
-
   }
-
-
-
-
 
   public GameBoardGui getGameBoard() {
     return gameBoard;
@@ -216,19 +199,19 @@ public class Game {
 
   public void checkIfGameOver(Player attackedPlayer){
     if (this.checkPlayerLose(attackedPlayer)) {
-      System.out.println("u lose");
+      printWinScreen(attackedPlayer);
       this.gameBoard.killGame();
     }
   }
 
-  public void printWinScreen(Player winningPlayer){
+  public void printWinScreen(Player attackedPlayer){
     String image;
-    if (winningPlayer.getTokenType() == TokenType.BLACK){
+    if (attackedPlayer.getTokenType() == TokenType.BLACK){
       image = "img/BoardImages/WhiteWinScreen.png";
     } else {
       image = "img/BoardImages/BlackWinScreen.png";
     }
-    this.gameBoard.winningPlayerDisplay(image);
+    this.gameBoard.showWinnerDisplay(image);
   }
 
   public void decrementOpposingPlayerTokenCount(){
@@ -242,8 +225,5 @@ public class Game {
 
     //check when game is lost
     this.checkIfGameOver(attackedPlayer);
-
-
-
   }
 }

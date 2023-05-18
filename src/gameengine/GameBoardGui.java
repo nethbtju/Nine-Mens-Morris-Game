@@ -197,9 +197,6 @@ public class GameBoardGui extends JPanel {
     return hasMoveableIntersection;
   }
 
-
-
-
   public boolean setLegalJumpIntersections(){
     boolean isMoveable = false;
     for (String key : intersectionMap.keySet()) {
