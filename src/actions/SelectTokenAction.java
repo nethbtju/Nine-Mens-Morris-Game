@@ -28,13 +28,11 @@ public class SelectTokenAction implements Action {
     selectedIntersection.unhighlightTokens();
     boolean result = selectedIntersection.setLegalMoves();
 
-    if(result){
-      selectedIntersection.highLightSelectedTokenLegal();
-      return result;
+    if (result) {
+      selectedIntersection.highlightSelectedTokenLegal();
+    } else {
+      selectedIntersection.highlightSelectedTokenIllegal();
     }
-    else{
-      selectedIntersection.highLightSelectedTokenILegal();
-      return result;
-    }
+    return result;
   }
 }

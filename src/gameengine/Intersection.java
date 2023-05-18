@@ -17,6 +17,7 @@ public class Intersection extends JButton implements ActionListener {
   private final int[] coordinates;
   private final Game currentGame;
   private boolean legalMoveState = false;
+  private boolean millState = false;
 
   /**
    * Constructor for an Intersection.
@@ -33,31 +34,46 @@ public class Intersection extends JButton implements ActionListener {
     this.currentGame.playTurn(this);
   }
 
-  /**
-   * Highlight a selected Intersection and remove its Token.
-   *
-   * @return The Token on the Intersection if it exists, null if there is no Token.
-   */
-  public Token selectToken() {
-    Token token = this.tokenStack.popToken();
-    this.updateImagePath(token.getSelectedTokenImagePath());
+  /** Update the mill state of the Intersection, which tracks whether it has a mill. */
+  public void setMillState() {
+    boolean millFound = false;
     for (MillObserver millObserver : this.millObservers) {
-      millObserver.updateTokenRemoval(token);
+      if (millObserver.hasMill()) {
+        millFound = true;
+      }
     }
-    return token;
+    this.millState = millFound;
   }
 
-  public void highLightSelectedTokenLegal(){
+  /**
+   * Get the mill state of the Intersection.
+   *
+   * @return True if there is a Mill on the Intersection, false if not.
+   */
+  public boolean getMillState() {
+    return this.millState;
+  }
+
+  /** Set the image of the Intersection to display a legally selected token. */
+  public void highlightSelectedTokenLegal() {
     Token token = this.peekToken();
     this.updateImagePath(token.getSelectedTokenImagePath());
   }
 
-  public void highLightSelectedTokenILegal(){
+  /** Set the image of the Intersection to display an illegally selected token. */
+  public void highlightSelectedTokenIllegal() {
     Token token = this.peekToken();
     this.updateImagePath(token.getSelectedTokenIllegalImagePath());
   }
 
-  public void highlightAsOpen(){
+  /** Set the image of the Intersection to display a Token in a mill. */
+  public void highlightMill() {
+    Token token = this.peekToken();
+    this.updateImagePath(token.getMillTokenImagePath());
+  }
+
+  /** Set the image of the Intersection to display an empty and accessible intersection. */
+  public void highlightAsOpen() {
     this.updateImagePath("img/BoardImages/dotSelected.png");
   }
 
@@ -81,17 +97,26 @@ public class Intersection extends JButton implements ActionListener {
   }
 
   /**
-   * Get a Token from the Intersection.
+   * Highlight a selected Intersection and remove its Token.
    *
-   * @return Token if there is one, null if not.
+   * @return The Token on the Intersection if it exists, null if there is no Token.
    */
-  public Token removeToken() {
+  public Token selectToken() {
+    Token token = this.tokenStack.popToken();
+    this.updateImagePath(token.getSelectedTokenImagePath());
+    for (MillObserver millObserver : this.millObservers) {
+      millObserver.updateTokenRemoval(token);
+    }
+    return token;
+  }
+
+  /** Remove a Token from the Intersection. */
+  public void removeToken() {
     Token token = this.tokenStack.popToken();
     for (MillObserver millObserver : this.millObservers) {
       millObserver.updateTokenRemoval(token);
     }
     this.updateImagePath(null);
-    return token;
   }
 
   /**
@@ -109,9 +134,10 @@ public class Intersection extends JButton implements ActionListener {
     this.unhighlightTokens();
   }
 
-  public void unhighlightTokens(){
+  public void unhighlightTokens() {
     this.currentGame.getGameBoard().unhighlightAllIntersections();
   }
+  
   /**
    * Checks whether the Intersection does not have a Token.
    *
@@ -138,6 +164,11 @@ public class Intersection extends JButton implements ActionListener {
     this.millObservers.add(millObserver);
   }
 
+  /**
+   * Checks whether the intersection is legal to act upon with an Action.
+   *
+   * @return True if legal, false if not.
+   */
   public boolean isLegalMove() {
     return this.legalMoveState;
   }
@@ -154,10 +185,7 @@ public class Intersection extends JButton implements ActionListener {
     return this.coordinates;
   }
 
-  public boolean setLegalMoves(){
-    boolean result = this.currentGame.getGameBoard().setLegalIntersections(this);
-    return result;
+  public boolean setLegalMoves() {
+    return this.currentGame.getGameBoard().setLegalIntersections(this);
   }
-
-
 }

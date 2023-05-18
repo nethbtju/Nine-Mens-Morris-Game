@@ -3,6 +3,7 @@ package gameengine;
 import actions.Action;
 import actions.MoveTokenAction;
 import actions.PlaceTokenAction;
+import actions.RemoveTokenAction;
 import actions.SelectTokenAction;
 import gameplayers.Capable;
 import gameplayers.Player;
@@ -42,7 +43,7 @@ public class Game {
    */
   public void playTurn(Intersection selectedIntersection) {
     Player currentPlayer = this.playerQueue.peek();
-    int originalMillCount = this.getNumberOfMills(currentPlayer);
+    boolean initialMillState = selectedIntersection.getMillState();
 
     if (this.actionQueue.isEmpty()) {
       this.pushPlayerActions(currentPlayer);
@@ -52,13 +53,13 @@ public class Game {
     boolean actionValid = action.isValid(selectedIntersection, currentPlayer);
     if (actionValid) {
       this.gameBoard.unhighlightAllIntersections();
-      this.gameBoard.tokenPlacementHint();
+      this.gameBoard.highlightOpenIntersections();
       action.execute(selectedIntersection, currentPlayer);
+      this.gameBoard.setMillStates();
+      if (!initialMillState && selectedIntersection.getMillState()) {
+        this.actionQueue.add(new RemoveTokenAction());
+      }
       this.actionQueue.remove();
-    }
-
-    if (this.getNumberOfMills(currentPlayer) > originalMillCount) {
-      System.out.println("A new mill was formed!");
     }
 
     if (this.actionQueue.isEmpty()) {
@@ -66,22 +67,6 @@ public class Game {
     }
 
     this.updatePlayTurnDisplay();
-  }
-
-  /**
-   * Get a count of the mills currently controlled by the Player.
-   *
-   * @param currentPlayer The Player currently playing their turn.
-   * @return The number of Mills currently owned by the Player.
-   */
-  private int getNumberOfMills(Player currentPlayer) {
-    int numberOfMills = 0;
-    for (MillObserver millObserver : this.millObservers) {
-      if (millObserver.checkForMill(currentPlayer.getTokenType())) {
-        numberOfMills++;
-      }
-    }
-    return numberOfMills;
   }
 
   /** Initialise the MillObservers, which detect Mill formation. */
@@ -161,7 +146,8 @@ public class Game {
                 TokenType.WHITE,
                 "img/BoardImages/WhiteTokenPlain.png",
                 "img/BoardImages/WhiteTokenSelected.png",
-                    "img/BoardImages/WhiteTokenIllegal.png"));
+                    "img/BoardImages/WhiteTokenIllegal.png",
+                "img/BoardImages/WhiteTokenIllegal.png"));
     Player player2 =
         new Player(
             TokenType.BLACK,
@@ -169,7 +155,8 @@ public class Game {
                 TokenType.BLACK,
                 "img/BoardImages/BlackTokenPlain.png",
                 "img/BoardImages/BlackTokenSelected.png",
-                    "img/BoardImages/BlackTokenIllegal.png"));
+                    "img/BoardImages/BlackTokenIllegal.png",
+                "img/BoardImages/BlackTokenIllegal.png"));
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
   }

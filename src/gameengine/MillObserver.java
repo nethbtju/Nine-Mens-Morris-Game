@@ -11,11 +11,16 @@ public class MillObserver {
   /**
    * Check whether the MillObserver is currently observing a Mill of a particular TokenType.
    *
-   * @param tokenType The TokenType of the Mill being checked for.
    * @return True if a mill exists, false if not.
    */
-  public boolean checkForMill(TokenType tokenType) {
+  public boolean hasMill() {
+    if (this.tokens.size() != 3) {
+      return false;
+    }
+
+    TokenType tokenType = tokens.get(0).getTokenType();
     int tokensOfGivenType = 0;
+
     for (Token token : tokens) {
       if (token.getTokenType() == tokenType) {
         tokensOfGivenType += 1;
