@@ -46,9 +46,8 @@ public class Game {
    */
   public void playTurn(Intersection selectedIntersection) {
     Player currentPlayer = this.playerQueue.peek();
-    if (checkPlayerLose(currentPlayer)) {
-      killGame(gameBoard.intersectionMap);
-    }
+
+
 
     boolean initialMillState = selectedIntersection.getMillState();
 
@@ -184,44 +183,42 @@ public class Game {
 
   public boolean checkPlayerLose(Player player){
     String image;
-    // checking if the player has less than 3 tokens
     int currentPlayerTokens = player.getTokenCount();
+    if(currentPlayerTokens >= 3){
+      return false;
+    }
+
     if (player.getTokenType() == TokenType.BLACK){
       image = "img/BoardImages/WhiteWinScreen.png";
     } else {
       image = "img/BoardImages/BlackWinScreen.png";
     }
 
-    int invalidTokens = 0;
-    HashMap<String, Intersection> allInters = gameBoard.intersectionMap;
-    for (String key : allInters.keySet()) {
-      Intersection current = allInters.get(key);
-      TokenType currentToken = current.peekToken().getTokenType();
-      if (!gameBoard.setLegalIntersections(current)
-              && currentToken == player.getTokenType()) {
-        invalidTokens += 1;
-      }
+    if(this.gameBoard.hasAnyLegalMoves(player.getTokenType()) || currentPlayerTokens < 3){
+      return true;
     }
-
-    Capable currentPlayerCapable = player.getCurrentCapability();
-    if ((currentPlayerCapable == Capable.JUMPABLE && currentPlayerTokens < 3)
-            || invalidTokens == currentPlayerTokens) {
-        gameBoard.showWinnerDisplay(image);
-        return true;
-    } else {
+    else{
       return false;
     }
+
+
+
+
   }
 
-  private void killGame(HashMap<String, Intersection> intersectionHashMap){
-    for (String key : intersectionHashMap.keySet()) {
-      Intersection current = intersectionHashMap.get(key);
-        current.removeToken();
-      }
-    }
+
+
+
 
   public GameBoardGui getGameBoard() {
     return gameBoard;
+  }
+
+  public void checkIfGameOver(Player attackedPlayer){
+    if (this.checkPlayerLose(attackedPlayer)) {
+      System.out.println("u lose");
+      this.gameBoard.killGame();
+    }
   }
 
   public void decrementOpposingPlayerTokenCount(){
@@ -232,6 +229,9 @@ public class Game {
 
     this.playerQueue.add(currentPlayer);
     this.playerQueue.add(attackedPlayer);
+
+    //check when game is lost
+    this.checkIfGameOver(attackedPlayer);
 
   }
 }

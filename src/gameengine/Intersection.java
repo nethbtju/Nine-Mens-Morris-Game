@@ -186,7 +186,7 @@ public class Intersection extends JButton implements ActionListener {
   }
 
   public boolean setLegalMoves() {
-    return this.currentGame.getGameBoard().setLegalIntersections(this);
+    return this.currentGame.getGameBoard().setLegalIntersections(this, true);
   }
 
   public boolean setLegalJumpMoves() {

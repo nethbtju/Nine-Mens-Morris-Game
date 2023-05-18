@@ -11,7 +11,7 @@ public class PlaceTokenAction implements Action {
   public void execute(Intersection selectedIntersection, Player player) {
     Token token = player.getTokenBank().popToken();
     selectedIntersection.setToken(token);
-    player.incrementTokenCount();
+    //player.incrementTokenCount();
   }
 
   @Override

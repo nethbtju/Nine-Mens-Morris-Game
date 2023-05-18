@@ -1,5 +1,7 @@
 package gameengine;
 
+import tokens.TokenType;
+
 import java.awt.*;
 import java.awt.Image;
 import java.io.File;
@@ -166,7 +168,7 @@ public class GameBoardGui extends JPanel {
    * @return Always returns True
    */
   @SuppressWarnings("checkstyle:LocalVariableName")
-  public boolean setLegalIntersections(Intersection selectedIntersection) {
+  public boolean setLegalIntersections(Intersection selectedIntersection, boolean updateIntersection) {
     int[] selectedCoordinates = selectedIntersection.getCoordinates();
     int xShift = selectedCoordinates[2];
     int yShift = selectedCoordinates[3];
@@ -184,7 +186,9 @@ public class GameBoardGui extends JPanel {
       if (intersectionMap.containsKey(currentKey)) {
         Intersection currentIntersection = intersectionMap.get(currentKey);
         if (currentIntersection.isEmpty()) {
-          currentIntersection.setLegalMoveState();
+          if(updateIntersection) {
+            currentIntersection.setLegalMoveState();
+          }
           hasMoveableIntersection = true;
         }
       }
@@ -192,6 +196,9 @@ public class GameBoardGui extends JPanel {
 
     return hasMoveableIntersection;
   }
+
+
+
 
   public boolean setLegalJumpIntersections(){
     boolean isMoveable = false;
@@ -224,5 +231,26 @@ public class GameBoardGui extends JPanel {
         current.highlightMill();
       }
     }
+  }
+
+  public void killGame(){
+    for (String key : this.intersectionMap.keySet()) {
+      Intersection current = this.intersectionMap.get(key);
+      current.removeToken();
+    }
+
+  }
+
+  public boolean hasAnyLegalMoves(TokenType playerTokenType) {
+    boolean hasLegalMoves = false;
+    for (String key : intersectionMap.keySet()) {
+      Intersection current = intersectionMap.get(key);
+      if(current.peekToken() != null){
+        if (current.peekToken().getTokenType() == playerTokenType && this.setLegalIntersections(current, false)) {
+          hasLegalMoves = true;
+        }
+      }
+    }
+    return hasLegalMoves;
   }
 }
