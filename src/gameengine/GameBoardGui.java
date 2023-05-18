@@ -26,6 +26,7 @@ public class GameBoardGui extends JPanel {
     {5, 3, 1, 2}, {6, 3, 1, 3}, {3, 1, 2, 1}, {3, 2, 1, 1}, {4, 2, 1, 1}, {4, 4, 1, 1},
     {3, 4, 1, 1}, {3, 5, 2, 1}, {3, 6, 3, 1}, {6, 6, 3, 3}, {5, 5, 2, 2}, {5, 1, 2, 2}
   };
+  private String winnerDisplayerString = "";
 
   HashMap<String, Intersection> intersectionMap = new HashMap<>();
 
@@ -48,8 +49,8 @@ public class GameBoardGui extends JPanel {
       this.intersectionMap.put(intersectionKey, button);
       add(button);
     }
-    // add(this.winningPlayerDisplay("black"));
     this.setLayout(null);
+
   }
 
   /**
@@ -100,8 +101,17 @@ public class GameBoardGui extends JPanel {
     frame.setVisible(true);
   }
 
+  public void showWinnerDisplay(String image){
+    setWinnerDisplayerString(image);
+    add(winningPlayerDisplay(winnerDisplayerString));
+  }
+
+  public void setWinnerDisplayerString(String winnerDisplayerString) {
+    this.winnerDisplayerString = winnerDisplayerString;
+  }
+
   public JLabel winningPlayerDisplay(String winningPlayerColour) {
-    String winnerImage = "img/BoardImages/" + winningPlayerColour + "WinScreen.png";
+    String winnerImage = winningPlayerColour;
     JLabel winLabel = new JLabel();
     winLabel.setLocation(150, 260);
     winLabel.setSize(500, 200);

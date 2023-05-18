@@ -55,7 +55,7 @@ public class Player {
     return null;
   }
 
-  public Token peepTokenInHand() {
+  public Token peekTokenInHand() {
     if (this.tokenInHand != null) {
       Token token = this.tokenInHand;
       return token;

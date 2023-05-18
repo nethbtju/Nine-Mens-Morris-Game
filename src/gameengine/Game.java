@@ -9,8 +9,11 @@ import gameplayers.Capable;
 import gameplayers.Player;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import tokens.Token;
 import tokens.TokenBank;
 import tokens.TokenType;
 
@@ -43,6 +46,10 @@ public class Game {
    */
   public void playTurn(Intersection selectedIntersection) {
     Player currentPlayer = this.playerQueue.peek();
+    if (checkPlayerLose(currentPlayer)) {
+      killGame(gameBoard.intersectionMap);
+    }
+
     boolean initialMillState = selectedIntersection.getMillState();
 
     if (this.actionQueue.isEmpty()) {
@@ -147,7 +154,7 @@ public class Game {
                 "img/BoardImages/WhiteTokenPlain.png",
                 "img/BoardImages/WhiteTokenSelected.png",
                     "img/BoardImages/WhiteTokenIllegal.png",
-                "img/BoardImages/WhiteTokenIllegal.png"));
+                "img/BoardImages/WhiteTokenMill.png"));
     Player player2 =
         new Player(
             TokenType.BLACK,
@@ -156,7 +163,7 @@ public class Game {
                 "img/BoardImages/BlackTokenPlain.png",
                 "img/BoardImages/BlackTokenSelected.png",
                     "img/BoardImages/BlackTokenIllegal.png",
-                "img/BoardImages/BlackTokenIllegal.png"));
+                "img/BoardImages/BlackTokenMill.png"));
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
   }
@@ -174,6 +181,44 @@ public class Game {
       this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
     }
   }
+
+  public boolean checkPlayerLose(Player player){
+    String image;
+    // checking if the player has less than 3 tokens
+    int currentPlayerTokens = player.getTokenCount();
+    if (player.getTokenType() == TokenType.BLACK){
+      image = "img/BoardImages/WhiteWinScreen.png";
+    } else {
+      image = "img/BoardImages/BlackWinScreen.png";
+    }
+
+    int invalidTokens = 0;
+    HashMap<String, Intersection> allInters = gameBoard.intersectionMap;
+    for (String key : allInters.keySet()) {
+      Intersection current = allInters.get(key);
+      TokenType currentToken = current.peekToken().getTokenType();
+      if (!gameBoard.setLegalIntersections(current)
+              && currentToken == player.getTokenType()) {
+        invalidTokens += 1;
+      }
+    }
+
+    Capable currentPlayerCapable = player.getCurrentCapability();
+    if ((currentPlayerCapable == Capable.JUMPABLE && currentPlayerTokens < 3)
+            || invalidTokens == currentPlayerTokens) {
+        gameBoard.showWinnerDisplay(image);
+        return true;
+    } else {
+      return false;
+    }
+  }
+
+  private void killGame(HashMap<String, Intersection> intersectionHashMap){
+    for (String key : intersectionHashMap.keySet()) {
+      Intersection current = intersectionHashMap.get(key);
+        current.removeToken();
+      }
+    }
 
   public GameBoardGui getGameBoard() {
     return gameBoard;
