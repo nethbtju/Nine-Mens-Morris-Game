@@ -1,8 +1,10 @@
 package actions;
 
 import gameengine.Intersection;
+import gameplayers.Capable;
 import gameplayers.Player;
 import tokens.Token;
+import tokens.TokenType;
 
 /** Selects a token for a Player to act upon. */
 public class SelectTokenAction implements Action {
@@ -26,13 +28,35 @@ public class SelectTokenAction implements Action {
       }
     }
     selectedIntersection.unhighlightTokens();
-    boolean result = selectedIntersection.setLegalMoves();
 
+    boolean result = this.setForRelevantAction(selectedIntersection, player);
+    this.highlightRelevantTokens(result, selectedIntersection);
+    return result;
+  }
+
+  private boolean setForRelevantAction(Intersection selectedIntersection, Player player){
+    if(player.getTokenType() == TokenType.WHITE) {
+      System.out.println(player.getTokenCount());
+    }
+    boolean result;
+    Capable currentCapability = player.getCurrentCapability();
+    if(currentCapability == Capable.JUMPABLE) {
+      System.out.println("rabbitusin");
+      result = selectedIntersection.setLegalJumpMoves();
+    }
+    else {
+      result = selectedIntersection.setLegalMoves();
+    }
+    return result;
+  }
+
+  private void highlightRelevantTokens(boolean result, Intersection selectedIntersection){
     if (result) {
       selectedIntersection.highlightSelectedTokenLegal();
     } else {
       selectedIntersection.highlightSelectedTokenIllegal();
     }
-    return result;
   }
+
+
 }

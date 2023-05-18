@@ -183,6 +183,18 @@ public class GameBoardGui extends JPanel {
     return hasMoveableIntersection;
   }
 
+  public boolean setLegalJumpIntersections(){
+    boolean isMoveable = false;
+    for (String key : intersectionMap.keySet()) {
+      Intersection current = intersectionMap.get(key);
+      if(current.isEmpty()){
+        isMoveable = true;
+        current.setLegalMoveState();
+      }
+    }
+    return isMoveable;
+  }
+
   /** Highlights all the Intersections that are currently open to move to. */
   public void highlightOpenIntersections() {
     for (String key : intersectionMap.keySet()) {

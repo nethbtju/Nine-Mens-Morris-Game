@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+
+import tokens.Token;
 import tokens.TokenBank;
 import tokens.TokenType;
 
@@ -51,6 +53,7 @@ public class Game {
 
     Action action = this.actionQueue.peek();
     boolean actionValid = action.isValid(selectedIntersection, currentPlayer);
+
     if (actionValid) {
       this.gameBoard.unhighlightAllIntersections();
       this.gameBoard.highlightOpenIntersections();
@@ -128,9 +131,8 @@ public class Game {
     Capable currentCapability = currentPlayer.getCurrentCapability();
 
     if (currentCapability == Capable.PLACEABLE) {
-      currentPlayer.incrementTokenCount();
       this.actionQueue.add(new PlaceTokenAction());
-    } else if (currentCapability == Capable.MOVEABLE) {
+    } else if (currentCapability == Capable.MOVEABLE || currentCapability == Capable.JUMPABLE) {
       this.gameBoard.setIntersectionsAsClosed();
       this.actionQueue.add(new SelectTokenAction());
       this.actionQueue.add(new MoveTokenAction());
@@ -147,7 +149,7 @@ public class Game {
                 "img/BoardImages/WhiteTokenPlain.png",
                 "img/BoardImages/WhiteTokenSelected.png",
                     "img/BoardImages/WhiteTokenIllegal.png",
-                "img/BoardImages/WhiteTokenIllegal.png"));
+                "img/BoardImages/WhiteTokenMill.png"));
     Player player2 =
         new Player(
             TokenType.BLACK,
@@ -156,7 +158,7 @@ public class Game {
                 "img/BoardImages/BlackTokenPlain.png",
                 "img/BoardImages/BlackTokenSelected.png",
                     "img/BoardImages/BlackTokenIllegal.png",
-                "img/BoardImages/BlackTokenIllegal.png"));
+                "img/BoardImages/BlackTokenMill.png"));
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
   }
@@ -177,5 +179,16 @@ public class Game {
 
   public GameBoardGui getGameBoard() {
     return gameBoard;
+  }
+
+  public void decrementOpposingPlayerTokenCount(){
+    Player currentPlayer = this.playerQueue.remove();
+    Player attackedPlayer = this.playerQueue.remove();
+
+    attackedPlayer.decrementTokenCount();
+
+    this.playerQueue.add(currentPlayer);
+    this.playerQueue.add(attackedPlayer);
+
   }
 }
