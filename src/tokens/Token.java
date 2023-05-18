@@ -15,7 +15,12 @@ public class Token {
    *     the token belongs.
    * @param tokenImagePath The filepath to the image used to represent the Token.
    */
-  public Token(TokenType tokenType, String tokenImagePath, String selectedTokenImagePath, String selectedTokenIllegalImagePath, String millTokenImagePath) {
+  public Token(
+      TokenType tokenType,
+      String tokenImagePath,
+      String selectedTokenImagePath,
+      String selectedTokenIllegalImagePath,
+      String millTokenImagePath) {
     this.tokenType = tokenType;
     this.tokenImagePath = tokenImagePath;
     this.selectedTokenImagePath = selectedTokenImagePath;
@@ -38,12 +43,17 @@ public class Token {
    * @return A string descriptor of the Token's type, which is used to identify the Player to whom
    *     the Token belongs.
    */
-
-  public String getSelectedTokenIllegalImagePath(){
-    return this.selectedTokenIllegalImagePath;
-  }
   public TokenType getTokenType() {
     return this.tokenType;
+  }
+
+  /**
+   * Get the filepath to the image used to display the Token's 'illegal action' image variant.
+   *
+   * @return The token's illegal action image path.
+   */
+  public String getSelectedTokenIllegalImagePath() {
+    return this.selectedTokenIllegalImagePath;
   }
 
   /**
@@ -55,9 +65,12 @@ public class Token {
     return this.tokenImagePath;
   }
 
+  /**
+   * Get the filepath to the image used to display the Token's 'mill' image variant.
+   *
+   * @return The token's mill image path.
+   */
   public String getMillTokenImagePath() {
     return this.millTokenImagePath;
   }
 }
-
-
