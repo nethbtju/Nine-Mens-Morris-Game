@@ -27,7 +27,7 @@ public class SelectTokenAction implements Action {
         return false;
       }
     }
-    selectedIntersection.unhighlightTokens();
+
 
     boolean result = this.setForRelevantAction(selectedIntersection, player);
     this.highlightRelevantTokens(result, selectedIntersection);
@@ -35,13 +35,10 @@ public class SelectTokenAction implements Action {
   }
 
   private boolean setForRelevantAction(Intersection selectedIntersection, Player player){
-    if(player.getTokenType() == TokenType.WHITE) {
-      System.out.println(player.getTokenCount());
-    }
     boolean result;
     Capable currentCapability = player.getCurrentCapability();
+
     if(currentCapability == Capable.JUMPABLE) {
-      System.out.println("rabbitusin");
       result = selectedIntersection.setLegalJumpMoves();
     }
     else {
@@ -51,6 +48,7 @@ public class SelectTokenAction implements Action {
   }
 
   private void highlightRelevantTokens(boolean result, Intersection selectedIntersection){
+    selectedIntersection.unhighlightTokens();
     if (result) {
       selectedIntersection.highlightSelectedTokenLegal();
     } else {

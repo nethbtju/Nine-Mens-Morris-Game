@@ -153,7 +153,12 @@ public class GameBoardGui extends JPanel {
   public void unhighlightAllIntersections() {
     for (String key : intersectionMap.keySet()) {
       Intersection current = intersectionMap.get(key);
-      current.resetIntersectionImage();
+      if(!current.getMillState()) {
+        current.resetIntersectionImage();
+      }
+      else{
+        current.highlightMill();
+      }
     }
   }
 

@@ -170,7 +170,7 @@ public class Intersection extends JButton implements ActionListener {
    * @return True if legal, false if not.
    */
   public boolean isLegalMove() {
-    return this.legalMoveState;
+    return this.legalMoveState && this.isEmpty();
   }
 
   public void setLegalMoveState() {
