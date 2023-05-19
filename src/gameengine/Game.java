@@ -29,7 +29,7 @@ public class Game {
     gameBoard.createGui();
     this.initialisePlayers();
     this.initialiseMillObservers();
-    this.gameBoard.showWinnerDisplay("img/BoardImages/WhitePlayTurn.png", 270, 600,50, 250);
+    this.updatePlayTurnDisplay();
   }
 
   /**
@@ -63,7 +63,8 @@ public class Game {
     if (this.actionQueue.isEmpty()) {
       this.playerQueue.add(this.playerQueue.remove());
     }
-    updatePlayTurnDisplay();
+
+    this.updatePlayTurnDisplay();
   }
 
   /**
@@ -179,9 +180,9 @@ public class Game {
     TokenType playerType = currentPlayer.getTokenType();
 
     if (playerType == TokenType.WHITE) {
-      this.gameBoard.showWinnerDisplay("img/BoardImages/WhitePlayTurn.png", 270, 600,50, 250);
+      this.gameBoard.updatePlayerTurnDisplay("Player 1 Turn!");
     } else {
-      this.gameBoard.showWinnerDisplay("img/BoardImages/BlackPlayTurn.png", 270, 600,50, 250);
+      this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
     }
   }
 
@@ -215,7 +216,7 @@ public class Game {
     } else {
       image = "img/BoardImages/BlackWinScreen.png";
     }
-    this.gameBoard.showWinnerDisplay(image, 150, 260,200, 500);
+    this.gameBoard.showWinnerDisplay(image);
   }
 
   public void decrementOpposingPlayerTokenCount() {
