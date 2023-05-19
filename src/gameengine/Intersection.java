@@ -161,6 +161,11 @@ public class Intersection extends JButton implements ActionListener {
     return this.tokenStack.isEmpty();
   }
 
+  /**
+   * Updates the image path of the button to show relevant images
+   *
+   * @param imagePath the string of the image path
+   */
   private void updateImagePath(String imagePath) {
     Image image = null;
     if (imagePath != null) {
