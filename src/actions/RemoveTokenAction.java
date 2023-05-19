@@ -10,6 +10,7 @@ public class RemoveTokenAction implements Action {
   public void execute(Intersection selectedIntersection, Player player) {
     selectedIntersection.removeToken();
     selectedIntersection.removeAttackedPlayerToken();
+    selectedIntersection.unhighlightTokens();
   }
   
   @Override

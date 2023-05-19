@@ -69,7 +69,9 @@ public class Intersection extends JButton implements ActionListener {
   /** Set the image of the Intersection to display a Token in a mill. */
   public void highlightMill() {
     Token token = this.peekToken();
-    this.updateImagePath(token.getMillTokenImagePath());
+    if(token != null) {
+      this.updateImagePath(token.getMillTokenImagePath());
+    }
   }
 
   /** Set the image of the Intersection to display an empty and accessible intersection. */
