@@ -160,19 +160,19 @@ public class Game {
             TokenType.WHITE,
             new TokenBank(
                 TokenType.WHITE,
-                "img/BoardImages/WhiteTokenPlain.png",
-                "img/BoardImages/WhiteTokenSelected.png",
-                "img/BoardImages/WhiteTokenIllegal.png",
-                "img/BoardImages/WhiteTokenMill.png"));
+                "/resources/META-INF/img/BoardImages/WhiteTokenPlain.png",
+                "/resources/META-INF/img/BoardImages/WhiteTokenSelected.png",
+                "/resources/META-INF/img/BoardImages/WhiteTokenIllegal.png",
+                "/resources/META-INF/img/BoardImages/WhiteTokenMill.png"));
     Player player2 =
         new Player(
             TokenType.BLACK,
             new TokenBank(
                 TokenType.BLACK,
-                "img/BoardImages/BlackTokenPlain.png",
-                "img/BoardImages/BlackTokenSelected.png",
-                "img/BoardImages/BlackTokenIllegal.png",
-                "img/BoardImages/BlackTokenMill.png"));
+                "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
+                "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
+                "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
+                "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
   }

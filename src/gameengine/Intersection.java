@@ -3,7 +3,10 @@ package gameengine;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import tokens.Token;
 import tokens.TokenStack;
@@ -159,11 +162,18 @@ public class Intersection extends JButton implements ActionListener {
   }
 
   private void updateImagePath(String imagePath) {
-    this.setIcon(
-        new ImageIcon(
-            new ImageIcon(imagePath)
-                .getImage()
-                .getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
+    Image image = null;
+    if (imagePath != null) {
+      try {
+        image = ImageIO.read(Objects.requireNonNull(getClass().getResource(imagePath)));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      ImageIcon icon = new ImageIcon(image);
+      this.setIcon(new ImageIcon(icon.getImage().getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
+    } else {
+      this.setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
+    }
   }
 
   /**

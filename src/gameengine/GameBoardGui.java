@@ -44,8 +44,8 @@ public class GameBoardGui extends JPanel {
     this.currentGame = newGame;
 
     setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-    String path = "img/BoardImages/board600pxls.png";
-    backgroundImage = ImageIO.read(new File(path));
+    String path = "/resources/META-INF/img/BoardImages/board600pxls.png";
+    backgroundImage = ImageIO.read(getClass().getResource(path));
     for (int i = 0; i < X.length; i++) {
 
       String intersectionKey = String.valueOf(COORDINATES[i][0]) + COORDINATES[i][1];
