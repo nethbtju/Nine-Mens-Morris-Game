@@ -30,7 +30,6 @@ public class Game {
     this.initialisePlayers();
     this.initialiseMillObservers();
     this.updatePlayTurnDisplay();
-    //this.gameBoard.showWinnerDisplay("/resources/META-INF/img/BoardImages/whiteWinScreen.png");
   }
 
   /**
