@@ -100,31 +100,25 @@ public class GameBoardGui extends JPanel {
     frame.setVisible(true);
   }
 
-  public void showWinnerDisplay(String image) {
+  public void showWinnerDisplay(String image, int xLocation, int yLocation, int height, int width) {
     setWinnerDisplayerString(image);
-    add(winningPlayerDisplay(winnerDisplayerString));
+    add(winningPlayerDisplay(winnerDisplayerString, xLocation,yLocation,height,width));
   }
 
   public void setWinnerDisplayerString(String winnerDisplayerString) {
     this.winnerDisplayerString = winnerDisplayerString;
   }
 
-  public JLabel winningPlayerDisplay(String winningPlayerColour) {
-    String winnerImage = winningPlayerColour;
+  public JLabel winningPlayerDisplay(String playerColourString,int xLocation, int yLocation, int height, int width) {
+    String winnerImage = playerColourString;
     JLabel winLabel = new JLabel();
-    winLabel.setLocation(150, 260);
-    winLabel.setSize(500, 200);
+    winLabel.setLocation(xLocation, yLocation);
+    winLabel.setSize(width, height);
     winLabel.setOpaque(false);
     winLabel.setIcon(
         new ImageIcon(
-            new ImageIcon(winnerImage).getImage().getScaledInstance(500, 200, Image.SCALE_SMOOTH)));
+            new ImageIcon(winnerImage).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
     return winLabel;
-  }
-
-  public void updatePlayerTurnDisplay(String newDisplay) {
-    this.winningPlayerDisplay("white");
-    this.validate();
-    this.repaint();
   }
 
   /**
