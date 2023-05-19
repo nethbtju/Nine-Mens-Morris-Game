@@ -29,8 +29,7 @@ public class Game {
     gameBoard.createGui();
     this.initialisePlayers();
     this.initialiseMillObservers();
-    //this.updatePlayTurnDisplay();
-    //this.gameBoard.showWinnerDisplay("/resources/META-INF/img/BoardImages/whiteWinScreen.png");
+    this.updatePlayTurnDisplay();
   }
 
   /**
@@ -65,7 +64,7 @@ public class Game {
       this.playerQueue.add(this.playerQueue.remove());
     }
 
-    //this.updatePlayTurnDisplay();
+    this.updatePlayTurnDisplay();
   }
 
   /**
@@ -230,9 +229,9 @@ public class Game {
   public void printWinScreen(Player attackedPlayer) {
     String image;
     if (attackedPlayer.getTokenType() == TokenType.BLACK) {
-      image = "/resources/META-INF/img/BoardImages/whiteWinScreen.png";
+      image = "img/BoardImages/WhiteWinScreen.png";
     } else {
-      image = "/resources/META-INF/img/BoardImages/blackWinScreen.png";
+      image = "img/BoardImages/BlackWinScreen.png";
     }
     this.gameBoard.showWinnerDisplay(image);
   }

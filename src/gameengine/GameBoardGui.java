@@ -5,7 +5,6 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Objects;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import tokens.TokenType;
@@ -133,21 +132,13 @@ public class GameBoardGui extends JPanel {
    */
   public JLabel winningPlayerDisplay(String winningPlayerColour) {
     String winnerImage = winningPlayerColour;
-    Image image = null;
-    if (winningPlayerColour != null) {
-      try {
-        image = ImageIO.read(Objects.requireNonNull(getClass().getResource(winnerImage)));
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    }
     JLabel winLabel = new JLabel();
     winLabel.setLocation(150, 260);
     winLabel.setSize(500, 200);
     winLabel.setOpaque(false);
     winLabel.setIcon(
         new ImageIcon(
-            new ImageIcon(image).getImage().getScaledInstance(500, 200, Image.SCALE_SMOOTH)));
+            new ImageIcon(winnerImage).getImage().getScaledInstance(500, 200, Image.SCALE_SMOOTH)));
     return winLabel;
   }
 
@@ -156,7 +147,7 @@ public class GameBoardGui extends JPanel {
    *
    */
   public void updatePlayerTurnDisplay(String newDisplay) {
-    //this.winningPlayerDisplay("white");
+    this.winningPlayerDisplay("white");
     this.validate();
     this.repaint();
   }
