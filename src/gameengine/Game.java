@@ -70,6 +70,7 @@ public class Game {
   /**
    * Push the appropriate Action to the current player's actionQueue depending on whether their
    * opponent has all of their Tokens in mills.
+   *
    */
   private void pushMillActions() {
     Player currentPlayer = this.playerQueue.remove();
@@ -85,7 +86,9 @@ public class Game {
     this.playerQueue.add(attackedPlayer);
   }
   
-  /** Initialise the MillObservers, which detect Mill formation. */
+  /** Initialise the MillObservers,
+   * which detect Mill formation.
+   */
   private void initialiseMillObservers() {
     String[] OUTER_LEFT_COLUMN = {"00", "03", "06"};
     String[] OUTER_RIGHT_COLUMN = {"60", "63", "66"};
@@ -198,10 +201,20 @@ public class Game {
         || !this.gameBoard.hasAnyLegalMoves(player.getTokenType());
   }
 
+  /**
+   * Gets the game board
+   *
+   * @return instance of the current gameBoard GUI
+   */
   public GameBoardGui getGameBoard() {
     return gameBoard;
   }
 
+  /**
+   * Checks if the current play has lost before executing the kill method
+   *
+   * @param attackedPlayer - The current player who have been popped off the queue
+   */
   public void checkIfGameOver(Player attackedPlayer) {
     if (this.checkPlayerLose(attackedPlayer)) {
       printWinScreen(attackedPlayer);
@@ -209,6 +222,10 @@ public class Game {
     }
   }
 
+  /**
+   * Prints the label on the GUI that shows which player has won
+   *
+   */
   public void printWinScreen(Player attackedPlayer) {
     String image;
     if (attackedPlayer.getTokenType() == TokenType.BLACK) {
@@ -219,6 +236,10 @@ public class Game {
     this.gameBoard.showWinnerDisplay(image);
   }
 
+  /**
+   * Gets both players and removes the attacked players tokens,
+   * then checks if the game is over
+   */
   public void decrementOpposingPlayerTokenCount() {
     Player currentPlayer = this.playerQueue.remove();
     Player attackedPlayer = this.playerQueue.remove();

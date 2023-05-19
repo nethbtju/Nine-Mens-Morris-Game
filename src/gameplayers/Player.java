@@ -55,6 +55,10 @@ public class Player {
     return null;
   }
 
+  /**
+   * See if the player currently has a token in hand
+   * @return Token that the player has
+   */
   public Token peekTokenInHand() {
     if (this.tokenInHand != null) {
       Token token = this.tokenInHand;
@@ -106,6 +110,10 @@ public class Player {
     this.tokenCount -= 1;
   }
 
+  /**
+   * getter of the token count
+   * @return int of tokens left
+   */
   public int getTokenCount() {
     return this.tokenCount;
   }

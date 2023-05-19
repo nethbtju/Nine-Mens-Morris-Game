@@ -7,6 +7,11 @@ import tokens.Token;
 /** Moves a token from one intersection to another. */
 public class MoveTokenAction extends PlaceTokenAction implements Action {
 
+  /**
+   * Move the token from intersection to intersection
+   * @param tokenDestination - Intersection that the token is to be moved to
+   * @param player The player performing the Action.
+   */
   @Override
   public void execute(Intersection tokenDestination, Player player) {
     System.out.println(player.getTokenType());
@@ -15,6 +20,14 @@ public class MoveTokenAction extends PlaceTokenAction implements Action {
     tokenDestination.setToken(token);
   }
 
+  /**
+   * Checks if the selected intersection is valid to be moved to
+   *
+   * @param selectedIntersection The intersection selected by the user on the frontend.
+   * @param player The player performing the action.
+   *
+   * @return
+   */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
     return selectedIntersection.isLegalMove();

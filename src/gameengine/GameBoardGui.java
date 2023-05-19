@@ -11,7 +11,9 @@ import tokens.TokenType;
 
 /** Represents the GameBoard in which Intersections exist. */
 public class GameBoardGui extends JPanel {
+
   private final Image backgroundImage;
+
   private final int[] X = {
     208, 208, 208, 265, 265, 265, 320, 320, 320, 375, 542, 430, 487, 542, 375, 375, 430, 430, 375,
     375, 375, 542, 487, 487
@@ -21,13 +23,16 @@ public class GameBoardGui extends JPanel {
     452, 508, 508, 452, 234
   };
   private final Game currentGame;
+
   private final int[][] COORDINATES = {
     {0, 0, 3, 3}, {0, 3, 1, 3}, {0, 6, 3, 3}, {1, 1, 2, 2}, {1, 3, 1, 2}, {1, 5, 2, 2},
     {2, 2, 1, 1}, {2, 3, 1, 1}, {2, 4, 1, 1}, {3, 0, 3, 1}, {6, 0, 3, 3}, {4, 3, 1, 1},
     {5, 3, 1, 2}, {6, 3, 1, 3}, {3, 1, 2, 1}, {3, 2, 1, 1}, {4, 2, 1, 1}, {4, 4, 1, 1},
     {3, 4, 1, 1}, {3, 5, 2, 1}, {3, 6, 3, 1}, {6, 6, 3, 3}, {5, 5, 2, 2}, {5, 1, 2, 2}
   };
+
   HashMap<String, Intersection> intersectionMap = new HashMap<>();
+
   private String winnerDisplayerString = "";
 
   /**
@@ -100,15 +105,31 @@ public class GameBoardGui extends JPanel {
     frame.setVisible(true);
   }
 
+  /**
+   * Adds the image path to the winner display and shows it on the GUI
+   *
+   * @param image - string of the image path from root
+   */
   public void showWinnerDisplay(String image) {
     setWinnerDisplayerString(image);
     add(winningPlayerDisplay(winnerDisplayerString));
   }
 
+  /**
+   * Sets the string of the winnerDisplay
+   *
+   * @param winnerDisplayerString - string image path from root
+   */
   public void setWinnerDisplayerString(String winnerDisplayerString) {
     this.winnerDisplayerString = winnerDisplayerString;
   }
 
+  /**
+   * Creates a GUI element of the winner display
+   *
+   * @param winningPlayerColour - takes which player has won
+   * @return JLabel of the winning player image
+   */
   public JLabel winningPlayerDisplay(String winningPlayerColour) {
     String winnerImage = winningPlayerColour;
     JLabel winLabel = new JLabel();
@@ -121,6 +142,10 @@ public class GameBoardGui extends JPanel {
     return winLabel;
   }
 
+  /**
+   * Updates the display with which player is currently playing
+   *
+   */
   public void updatePlayerTurnDisplay(String newDisplay) {
     this.winningPlayerDisplay("white");
     this.validate();
@@ -255,6 +280,9 @@ public class GameBoardGui extends JPanel {
     return millIntersectionCount;
   }
 
+  /**
+   * Ends the game when a winner has been reached
+   */
   public void killGame() {
     for (String key : this.intersectionMap.keySet()) {
       Intersection current = this.intersectionMap.get(key);
@@ -262,6 +290,13 @@ public class GameBoardGui extends JPanel {
     }
   }
 
+  /**
+   * Checks if the token type has any legal moves left
+   *
+   * @param playerTokenType - Enum TokenType
+   *
+   * @return boolean whether the player has moves left or not
+   */
   public boolean hasAnyLegalMoves(TokenType playerTokenType) {
     boolean hasLegalMoves = false;
     for (String key : intersectionMap.keySet()) {

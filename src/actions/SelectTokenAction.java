@@ -8,12 +8,27 @@ import tokens.TokenType;
 
 /** Selects a token for a Player to act upon. */
 public class SelectTokenAction implements Action {
+
+  /**
+   * Lets player pick up the token they are about to move
+   *
+   * @param selectedIntersection The intersection selected by the user on the frontend.
+   * @param player The player performing the Action.
+   */
   @Override
   public void execute(Intersection selectedIntersection, Player player) {
     Token token = selectedIntersection.selectToken();
     player.setTokenInHand(token);
   }
 
+  /**
+   * Checks if the intersection is valid by seeing if it is empty
+   *
+   * @param selectedIntersection The intersection selected by the user on the frontend.
+   * @param player The player performing the action.
+   *
+   * @return
+   */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
 

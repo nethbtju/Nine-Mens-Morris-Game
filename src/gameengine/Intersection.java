@@ -29,6 +29,11 @@ public class Intersection extends JButton implements ActionListener {
     this.coordinates = coordinates;
   }
 
+  /**
+   * Perform the playing turn action
+   *
+   * @param e - action
+   */
   @Override
   public void actionPerformed(ActionEvent e) {
     this.currentGame.playTurn(this);
@@ -137,6 +142,9 @@ public class Intersection extends JButton implements ActionListener {
     this.unhighlightTokens();
   }
 
+  /**
+   * Unhighlight the tokens once a move has been made
+   */
   public void unhighlightTokens() {
     this.currentGame.getGameBoard().unhighlightAllIntersections();
   }
@@ -176,26 +184,50 @@ public class Intersection extends JButton implements ActionListener {
     return this.legalMoveState && this.isEmpty();
   }
 
+  /**
+   * Setter for the legal move state
+   */
   public void setLegalMoveState() {
     this.legalMoveState = true;
   }
 
+  /**
+   * Setter for the illegal move state
+   */
   public void setIllegalMoveState() {
     this.legalMoveState = false;
   }
 
+  /**
+   * getter of the cooridnates of the tokens
+   *
+   * @return array of token coordinates
+   */
   public int[] getCoordinates() {
     return this.coordinates;
   }
 
+  /**
+   * Sets a token with legal moves
+   *
+   * @return boolean whether it can be done or not
+   */
   public boolean setLegalMoves() {
     return this.currentGame.getGameBoard().setLegalIntersections(this, true);
   }
 
+  /**
+   * Sets the game board to have legal jumps on the intersection
+   * @return boolean whether it can be done or not
+   */
   public boolean setLegalJumpMoves() {
     return this.currentGame.getGameBoard().setLegalJumpIntersections();
   }
 
+  /**
+   * Remove the attacked player token off the board
+   *
+   */
   public void removeAttackedPlayerToken(){
     this.currentGame.decrementOpposingPlayerTokenCount();
   }
