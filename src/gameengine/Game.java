@@ -29,7 +29,7 @@ public class Game {
     gameBoard.createGui();
     this.initialisePlayers();
     this.initialiseMillObservers();
-    //this.updatePlayTurnDisplay();
+    this.updatePlayTurnDisplay();
     //this.gameBoard.showWinnerDisplay("/resources/META-INF/img/BoardImages/whiteWinScreen.png");
   }
 
@@ -65,7 +65,7 @@ public class Game {
       this.playerQueue.add(this.playerQueue.remove());
     }
 
-    //this.updatePlayTurnDisplay();
+    this.updatePlayTurnDisplay();
   }
 
   /**
