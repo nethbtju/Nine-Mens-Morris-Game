@@ -85,7 +85,7 @@ public class Intersection extends JButton implements ActionListener {
 
   /** Set the image of the Intersection to display an empty and accessible intersection. */
   public void highlightAsOpen() {
-    this.updateImagePath("img/BoardImages/dotSelected.png");
+    this.updateImagePath("/resources/META-INF/img/BoardImages/dotSelected.png");
   }
 
   /** Reset the image of an Intersection from any highlighting back to its normal appearance. */
