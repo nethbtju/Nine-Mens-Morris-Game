@@ -29,7 +29,7 @@ public class Game {
     gameBoard.createGui();
     this.initialisePlayers();
     this.initialiseMillObservers();
-    this.updatePlayTurnDisplay();
+    //this.updatePlayTurnDisplay();
   }
 
   /**
@@ -64,7 +64,7 @@ public class Game {
       this.playerQueue.add(this.playerQueue.remove());
     }
 
-    this.updatePlayTurnDisplay();
+    //this.updatePlayTurnDisplay();
   }
 
   /**
@@ -175,16 +175,16 @@ public class Game {
   }
 
   /** Prints the Player whose turn it is. */
-  public void updatePlayTurnDisplay() {
+  /*public void updatePlayTurnDisplay() {
     Player currentPlayer = playerQueue.peek();
     TokenType playerType = currentPlayer.getTokenType();
 
     if (playerType == TokenType.WHITE) {
-      this.gameBoard.updatePlayerTurnDisplay("Player 1 Turn!");
+      this.gameBoard.updatePlayerTurnDisplay("img/BoardImages/WhitePlayTurn.png");
     } else {
-      this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
+      this.gameBoard.updatePlayerTurnDisplay("img/BoardImages/BlackPlayTurn.png");
     }
-  }
+  }*/
 
   /**
    * Checks whether a Player has lost the game.

@@ -102,30 +102,34 @@ public class GameBoardGui extends JPanel {
 
   public void showWinnerDisplay(String image) {
     setWinnerDisplayerString(image);
-    add(winningPlayerDisplay(winnerDisplayerString));
+    add(winningPlayerDisplay(winnerDisplayerString, 150, 260, 500, 200));
   }
 
   public void setWinnerDisplayerString(String winnerDisplayerString) {
     this.winnerDisplayerString = winnerDisplayerString;
   }
 
-  public JLabel winningPlayerDisplay(String winningPlayerColour) {
+  public JLabel winningPlayerDisplay(String winningPlayerColour, int x, int y, int w, int h) {
     String winnerImage = winningPlayerColour;
     JLabel winLabel = new JLabel();
-    winLabel.setLocation(150, 260);
-    winLabel.setSize(500, 200);
+    winLabel.setLocation(x, y);
+    winLabel.setSize(w, h);
     winLabel.setOpaque(false);
     winLabel.setIcon(
         new ImageIcon(
-            new ImageIcon(winnerImage).getImage().getScaledInstance(500, 200, Image.SCALE_SMOOTH)));
+            new ImageIcon(winnerImage).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH)));
     return winLabel;
   }
 
-  public void updatePlayerTurnDisplay(String newDisplay) {
-    this.winningPlayerDisplay("white");
-    this.validate();
-    this.repaint();
-  }
+  /**
+   *
+   */
+  /*public void updatePlayerTurnDisplay(String newDisplay) {
+    setWinnerDisplayerString(newDisplay);
+    add(winningPlayerDisplay(winnerDisplayerString, 250, 600, 300, 50));
+    //this.validate();
+    //this.repaint();
+  }*/
 
   /**
    * Attach a single MillObserver to a set of Intersections by specifying their keys.
