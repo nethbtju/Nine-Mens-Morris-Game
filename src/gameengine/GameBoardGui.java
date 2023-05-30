@@ -310,4 +310,15 @@ public class GameBoardGui extends JPanel {
     }
     return hasLegalMoves;
   }
+
+  public void highlightRemoveTokens(TokenType attackedTokenType){
+    for (String key : intersectionMap.keySet()) {
+      Intersection current = intersectionMap.get(key);
+      if(current.peekToken() != null) {
+        if (current.peekToken().getTokenType() == attackedTokenType && !current.getMillState()) {
+          current.highlightSelectedTokenLegal();
+        }
+      }
+    }
+  }
 }
