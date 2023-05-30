@@ -311,11 +311,11 @@ public class GameBoardGui extends JPanel {
     return hasLegalMoves;
   }
 
-  public void highlightRemoveTokens(TokenType attackedTokenType){
+  public void highlightRemoveTokens(TokenType attackedTokenType, boolean isMillRemove){
     for (String key : intersectionMap.keySet()) {
       Intersection current = intersectionMap.get(key);
       if(current.peekToken() != null) {
-        if (current.peekToken().getTokenType() == attackedTokenType && !current.getMillState()) {
+        if (current.peekToken().getTokenType() == attackedTokenType && (!current.getMillState() || isMillRemove)) {
           current.highlightSelectedTokenLegal();
         }
       }

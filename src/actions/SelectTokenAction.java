@@ -18,7 +18,7 @@ public class SelectTokenAction implements Action {
   @Override
   public void execute(Intersection selectedIntersection, Player player) {
     Token token = selectedIntersection.selectToken();
-    player.setTokenInHand(token);
+    player.setTokenInHand(token, selectedIntersection);
   }
 
   /**
@@ -31,7 +31,7 @@ public class SelectTokenAction implements Action {
    */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
-
+    player.returnToken();
     if (selectedIntersection.isEmpty()) {
       System.out.println("Intersection is empty!");
       return false;
@@ -59,6 +59,7 @@ public class SelectTokenAction implements Action {
     else {
       result = selectedIntersection.setLegalMoves();
     }
+    System.out.println(result);
     return result;
   }
 

@@ -45,6 +45,14 @@ public class Game {
     if (this.actionQueue.isEmpty()) {
       this.pushPlayerActions(currentPlayer);
     }
+    else{
+      this.updateMoveSequence(currentPlayer, selectedIntersection);
+    }
+
+
+
+
+
 
     Action action = this.actionQueue.peek();
     boolean actionValid = action.isValid(selectedIntersection, currentPlayer);
@@ -58,11 +66,18 @@ public class Game {
         this.pushMillActions();
       }
       this.actionQueue.remove();
+
+
     }
 
     if (this.actionQueue.isEmpty()) {
       this.playerQueue.add(this.playerQueue.remove());
     }
+
+
+
+
+
 
     this.updatePlayTurnDisplay();
   }
@@ -79,15 +94,30 @@ public class Game {
     if (this.gameBoard.getMillIntersectionCount(attackedPlayer.getTokenType()) == attackedPlayer.getTokenCount()) {
       //highlight all tokens
       this.actionQueue.add(new RemoveMillTokenAction());
+      this.gameBoard.highlightRemoveTokens(attackedPlayer.getTokenType(), true);
     } else {
       //only highlight tokens that can be removed
       this.actionQueue.add(new RemoveTokenAction());
-      this.gameBoard.highlightRemoveTokens(attackedPlayer.getTokenType());
+      this.gameBoard.highlightRemoveTokens(attackedPlayer.getTokenType(), false);
       System.out.println(attackedPlayer.getTokenType());
     }
 
     this.playerQueue.add(currentPlayer);
     this.playerQueue.add(attackedPlayer);
+  }
+
+  private void updateMoveSequence(Player currentPlayer, Intersection selectedIntersection){
+
+      if(selectedIntersection.peekToken() != null) {
+        if (selectedIntersection.peekToken().getTokenType() == currentPlayer.getTokenType() && currentPlayer.hasTokenInHand()) {
+          System.out.println(currentPlayer.hasTokenInHand());
+          System.out.println("yo");
+          this.actionQueue.remove();
+          this.actionQueue.add(new SelectTokenAction());
+          this.actionQueue.add(new MoveTokenAction());
+          this.gameBoard.setIntersectionsAsClosed();
+        }
+      }
   }
   
   /** Initialise the MillObservers,

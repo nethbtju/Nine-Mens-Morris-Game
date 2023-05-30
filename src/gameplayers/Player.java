@@ -1,5 +1,6 @@
 package gameplayers;
 
+import gameengine.Intersection;
 import tokens.Token;
 import tokens.TokenBank;
 import tokens.TokenType;
@@ -10,6 +11,8 @@ public class Player {
   private final TokenBank tokenBank;
   private int tokenCount = 0;
   private Token tokenInHand;
+
+  private Intersection selectedIntersection;
 
   /**
    * Constructor for Players.
@@ -81,9 +84,13 @@ public class Player {
    *
    * @param token The Token that the player is selecting.
    */
-  public void setTokenInHand(Token token) {
+  public void setTokenInHand(Token token, Intersection selectedIntersection) {
+
+
+    this.selectedIntersection = selectedIntersection;
     this.tokenInHand = token;
   }
+
 
   /**
    * Get the capability of the Player that determines what Actions it can take.
@@ -116,5 +123,16 @@ public class Player {
    */
   public int getTokenCount() {
     return this.tokenCount;
+  }
+
+  public void returnToken(){
+    System.out.println(1);
+
+    if(this.hasTokenInHand()){
+      this.selectedIntersection.setToken(this.tokenInHand);
+      this.tokenInHand = null;
+      this.selectedIntersection = null;
+
+    }
   }
 }
