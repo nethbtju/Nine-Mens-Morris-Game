@@ -35,6 +35,8 @@ public class GameBoardGui extends JPanel {
 
   private String winnerDisplayerString = "";
 
+  private boolean hasMoveHinting = false;
+
   /**
    * Constructor for the GameBoard, puts everything together.
    *
@@ -54,6 +56,8 @@ public class GameBoardGui extends JPanel {
       this.intersectionMap.put(intersectionKey, button);
       add(button);
     }
+
+    this.initialiseToggleHintButton();
     this.setLayout(null);
   }
 
@@ -103,6 +107,22 @@ public class GameBoardGui extends JPanel {
 
     // Display the window.
     frame.setVisible(true);
+  }
+
+  private void initialiseToggleHintButton(){
+
+    JButton button = new JButton();
+    button.addActionListener(e -> this.changeMoveHintSettings(button));
+
+    button.setLocation(500, 40);
+    button.setSize(200, 200);
+    button.setOpaque(false);
+    button.setContentAreaFilled(false);
+    button.setBorderPainted(false);
+    button.setFocusPainted(false);
+    button.setText("Enable Hinting");
+    button.setBackground(Color.BLUE);
+    add(button);
   }
 
   /**
@@ -176,15 +196,14 @@ public class GameBoardGui extends JPanel {
 
   /** Reset any visual highlights of Intersections. */
   public void unhighlightAllIntersections() {
-    for (String key : intersectionMap.keySet()) {
-      Intersection current = intersectionMap.get(key);
-      if(!current.getMillState()) {
-        current.resetIntersectionImage();
+      for (String key : intersectionMap.keySet()) {
+        Intersection current = intersectionMap.get(key);
+        if (!current.getMillState()) {
+          current.resetIntersectionImage();
+        } else {
+          current.highlightMill();
+        }
       }
-      else{
-        current.highlightMill();
-      }
-    }
   }
 
   /**
@@ -244,10 +263,12 @@ public class GameBoardGui extends JPanel {
 
   /** Highlights all the Intersections that are currently open to move to. */
   public void highlightOpenIntersections() {
-    for (String key : intersectionMap.keySet()) {
-      Intersection current = intersectionMap.get(key);
-      if (current.isLegalMove() && current.isEmpty()) {
-        current.highlightAsOpen();
+    if(this.hasMoveHinting) {
+      for (String key : intersectionMap.keySet()) {
+        Intersection current = intersectionMap.get(key);
+        if (current.isLegalMove() && current.isEmpty()) {
+          current.highlightAsOpen();
+        }
       }
     }
   }
@@ -311,14 +332,27 @@ public class GameBoardGui extends JPanel {
     return hasLegalMoves;
   }
 
-  public void highlightRemoveTokens(TokenType attackedTokenType, boolean isMillRemove){
-    for (String key : intersectionMap.keySet()) {
-      Intersection current = intersectionMap.get(key);
-      if(current.peekToken() != null) {
-        if (current.peekToken().getTokenType() == attackedTokenType && (!current.getMillState() || isMillRemove)) {
-          current.highlightSelectedTokenLegal();
+  public void highlightRemoveTokens(TokenType attackedTokenType, boolean isMillRemove) {
+    if (this.hasMoveHinting) {
+      for (String key : intersectionMap.keySet()) {
+        Intersection current = intersectionMap.get(key);
+        if (current.peekToken() != null) {
+          if (current.peekToken().getTokenType() == attackedTokenType && (!current.getMillState() || isMillRemove)) {
+            current.highlightSelectedTokenLegal();
+          }
         }
       }
+    }
+  }
+
+  public void changeMoveHintSettings(JButton button){
+    System.out.println("settings have been changed");
+    this.hasMoveHinting = !this.hasMoveHinting;
+    if(this.hasMoveHinting){
+      button.setText("Disable Hinting");
+    }
+    else{
+      button.setText("Enable Hinting");
     }
   }
 }
