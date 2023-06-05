@@ -2,6 +2,7 @@ package gameengine;
 
 import actions.*;
 import gameplayers.Capable;
+import gameplayers.GameState;
 import gameplayers.Player;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,10 +10,15 @@ import java.util.LinkedList;
 import java.util.Queue;
 import tokens.TokenBank;
 import tokens.TokenType;
+import tutorials.BasicMilltoRemoveTokenTutorial;
+import tutorials.MoveTokenTutorial;
+import tutorials.PlaceTokenTutorial;
+import tutorials.TutorialState;
+
 
 /** An instance of a Nine Man's Morris game. Highest level class in the game architecture. */
 public class Game {
-
+  int x = 0;
   private final GameBoardGui gameBoard;
   private final Queue<Player> playerQueue = new LinkedList<>();
   private final Queue<Action> actionQueue = new LinkedList<>();
@@ -42,16 +48,13 @@ public class Game {
 
     boolean initialMillState = selectedIntersection.getMillState();
 
+
     if (this.actionQueue.isEmpty()) {
       this.pushPlayerActions(currentPlayer);
     }
     else{
       this.updateMoveSequence(currentPlayer, selectedIntersection);
     }
-
-
-
-
 
 
     Action action = this.actionQueue.peek();
@@ -72,6 +75,22 @@ public class Game {
 
     if (this.actionQueue.isEmpty()) {
       this.playerQueue.add(this.playerQueue.remove());
+      //this.gameBoard.setAllAsTutorialLocked();
+      /**if(x == 0){
+        TutorialState bundo = new MoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameboardSaturated.png");
+        bundo.execute();
+
+      }
+      if(x == 2){
+       TutorialState bundo = new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png");
+        bundo.execute();
+      }
+
+      if(x == 4){
+        TutorialState bundo = new BasicMilltoRemoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameboardSaturated.png");
+        bundo.execute();
+      }**/
+     x = x + 1;
     }
 
 
@@ -80,6 +99,13 @@ public class Game {
 
 
     this.updatePlayTurnDisplay();
+
+
+
+
+
+
+    //this.updatePlayTurnDisplay();
   }
 
   /**
@@ -101,7 +127,7 @@ public class Game {
       this.gameBoard.highlightRemoveTokens(attackedPlayer.getTokenType(), false);
       System.out.println(attackedPlayer.getTokenType());
     }
-
+    this.playerQueue.clear();
     this.playerQueue.add(currentPlayer);
     this.playerQueue.add(attackedPlayer);
   }
@@ -123,7 +149,7 @@ public class Game {
   /** Initialise the MillObservers,
    * which detect Mill formation.
    */
-  private void initialiseMillObservers() {
+  public void initialiseMillObservers() {
     String[] OUTER_LEFT_COLUMN = {"00", "03", "06"};
     String[] OUTER_RIGHT_COLUMN = {"60", "63", "66"};
     String[] OUTER_BOTTOM_ROW = {"00", "30", "60"};
@@ -188,7 +214,7 @@ public class Game {
   }
 
   /** Enqueue two players to the game. */
-  private void initialisePlayers() {
+  public void initialisePlayers() {
     Player player1 =
         new Player(
             TokenType.WHITE,
@@ -197,7 +223,7 @@ public class Game {
                 "/resources/META-INF/img/BoardImages/WhiteTokenPlain.png",
                 "/resources/META-INF/img/BoardImages/WhiteTokenSelected.png",
                 "/resources/META-INF/img/BoardImages/WhiteTokenIllegal.png",
-                "/resources/META-INF/img/BoardImages/WhiteTokenMill.png"));
+                "/resources/META-INF/img/BoardImages/WhiteTokenMill.png"), GameState.NORMAL);
     Player player2 =
         new Player(
             TokenType.BLACK,
@@ -206,7 +232,8 @@ public class Game {
                 "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
                 "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
                 "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
-                "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
+                "/resources/META-INF/img/BoardImages/BlackTokenMill.png"),GameState.NORMAL);
+    this.playerQueue.clear();
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
   }
@@ -285,5 +312,36 @@ public class Game {
 
     // check when game is lost
     this.checkIfGameOver(attackedPlayer);
+  }
+
+  public void wait(int ms)
+  {
+    try
+    {
+      Thread.sleep(ms);
+    }
+    catch(InterruptedException ex)
+    {
+      Thread.currentThread().interrupt();
+    }
+  }
+
+  public void updateActionQueue(Action[] actions){
+    System.out.println("yessir");
+    this.actionQueue.clear();
+    for(int i = 0; i < actions.length; i++) {
+      this.actionQueue.add(actions[i]);
+    }
+
+  }
+
+  public Queue<Player> getPlayerQueue(){
+    return this.playerQueue;
+  }
+
+  public void updatePlayerQueue(Player player1, Player player2){
+    this.playerQueue.clear();
+    this.playerQueue.add(player1);
+    this.playerQueue.add(player2);
   }
 }

@@ -22,6 +22,8 @@ public class Intersection extends JButton implements ActionListener {
   private boolean legalMoveState = false;
   private boolean millState = false;
 
+  private boolean tutorialLockedState = true;
+
   /**
    * Constructor for an Intersection.
    *
@@ -39,6 +41,7 @@ public class Intersection extends JButton implements ActionListener {
    */
   @Override
   public void actionPerformed(ActionEvent e) {
+    System.out.println("ive been clicked");
     this.currentGame.playTurn(this);
   }
 
@@ -241,5 +244,27 @@ public class Intersection extends JButton implements ActionListener {
   public void removeAttackedPlayerToken(){
     this.currentGame.decrementOpposingPlayerTokenCount();
   }
+
+  public boolean isTutorialLockedState(){
+    return this.tutorialLockedState;
+  }
+
+  public void lockTutorialState(){
+    this.tutorialLockedState = true;
+  }
+
+  public void unlockTutorialState(){
+    this.tutorialLockedState = false;
+  }
+
+  public String getKey(){
+    return String.valueOf(this.coordinates[0]) + this.coordinates[1];
+  }
+  public boolean equals(Intersection target){
+    System.out.println(target.getKey());
+    System.out.println(this.getKey());
+    return target.getKey() == this.getKey();
+  }
+
 
 }

@@ -5,14 +5,23 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Objects;
+import java.util.Queue;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import actions.Action;
+import actions.PlaceTokenAction;
+import actions.SelectTokenAction;
+import gameplayers.Player;
+import tokens.Token;
 import tokens.TokenType;
+import actions.Action;
 
 /** Represents the GameBoard in which Intersections exist. */
 public class GameBoardGui extends JPanel {
 
-  private final Image backgroundImage;
+  private Image backgroundImage;
 
   private final int[] X = {
     208, 208, 208, 265, 265, 265, 320, 320, 320, 375, 542, 430, 487, 542, 375, 375, 430, 430, 375,
@@ -25,10 +34,10 @@ public class GameBoardGui extends JPanel {
   private final Game currentGame;
 
   private final int[][] COORDINATES = {
-    {0, 0, 3, 3}, {0, 3, 1, 3}, {0, 6, 3, 3}, {1, 1, 2, 2}, {1, 3, 1, 2}, {1, 5, 2, 2},
-    {2, 2, 1, 1}, {2, 3, 1, 1}, {2, 4, 1, 1}, {3, 0, 3, 1}, {6, 0, 3, 3}, {4, 3, 1, 1},
-    {5, 3, 1, 2}, {6, 3, 1, 3}, {3, 1, 2, 1}, {3, 2, 1, 1}, {4, 2, 1, 1}, {4, 4, 1, 1},
-    {3, 4, 1, 1}, {3, 5, 2, 1}, {3, 6, 3, 1}, {6, 6, 3, 3}, {5, 5, 2, 2}, {5, 1, 2, 2}
+    {0, 0, 3, 3,0}, {0, 3, 1, 3,1}, {0, 6, 3, 3,2}, {1, 1, 2, 2,3}, {1, 3, 1, 2,4}, {1, 5, 2, 2,5},
+    {2, 2, 1, 1,6}, {2, 3, 1, 1,7}, {2, 4, 1, 1,8}, {3, 0, 3, 1,9}, {6, 0, 3, 3,10}, {4, 3, 1, 1,11},
+    {5, 3, 1, 2,12}, {6, 3, 1, 3,13}, {3, 1, 2, 1,14}, {3, 2, 1, 1,15}, {4, 2, 1, 1,16}, {4, 4, 1, 1,17},
+    {3, 4, 1, 1,18}, {3, 5, 2, 1,19}, {3, 6, 3, 1,20}, {6, 6, 3, 3,21}, {5, 5, 2, 2,22}, {5, 1, 2, 2,23}
   };
 
   HashMap<String, Intersection> intersectionMap = new HashMap<>();
@@ -48,6 +57,13 @@ public class GameBoardGui extends JPanel {
     setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     String path = "/resources/META-INF/img/BoardImages/board600pxls.png";
     backgroundImage = ImageIO.read(getClass().getResource(path));
+
+    this.addAllIntersections();
+    this.initialiseToggleHintButton();
+    this.setLayout(null);
+  }
+
+  public void addAllIntersections(){
     for (int i = 0; i < X.length; i++) {
 
       String intersectionKey = String.valueOf(COORDINATES[i][0]) + COORDINATES[i][1];
@@ -56,9 +72,6 @@ public class GameBoardGui extends JPanel {
       this.intersectionMap.put(intersectionKey, button);
       add(button);
     }
-
-    this.initialiseToggleHintButton();
-    this.setLayout(null);
   }
 
   /**
@@ -68,6 +81,8 @@ public class GameBoardGui extends JPanel {
    * @param y The y coordinate of the new Intersection.
    * @return The newly created Intersection.
    */
+
+
   public Intersection newButton(int x, int y, int[] coordinates) {
     Intersection button = new Intersection(this.currentGame, coordinates);
     button.setLocation(x, y);
@@ -216,6 +231,7 @@ public class GameBoardGui extends JPanel {
   @SuppressWarnings("checkstyle:LocalVariableName")
   public boolean setLegalIntersections(
       Intersection selectedIntersection, boolean updateIntersection) {
+    System.out.println("legaltoken");
     int[] selectedCoordinates = selectedIntersection.getCoordinates();
     int xShift = selectedCoordinates[2];
     int yShift = selectedCoordinates[3];
@@ -234,6 +250,7 @@ public class GameBoardGui extends JPanel {
         Intersection currentIntersection = intersectionMap.get(currentKey);
         if (currentIntersection.isEmpty()) {
           if (updateIntersection) {
+            System.out.println("legaltoken");
             currentIntersection.setLegalMoveState();
           }
           hasMoveableIntersection = true;
@@ -266,12 +283,13 @@ public class GameBoardGui extends JPanel {
     if(this.hasMoveHinting) {
       for (String key : intersectionMap.keySet()) {
         Intersection current = intersectionMap.get(key);
-        if (current.isLegalMove() && current.isEmpty()) {
+        if ((current.isLegalMove() || !current.isTutorialLockedState() ) && current.isEmpty()) {
           current.highlightAsOpen();
         }
       }
     }
   }
+
 
   /** Highlight all the Intersections that are currently part of a mill. */
   public void setMillStates() {
@@ -355,4 +373,108 @@ public class GameBoardGui extends JPanel {
       button.setText("Enable Hinting");
     }
   }
+
+  public void test(Player currentplayer){
+    this.killGame();
+
+    Intersection current = this.intersectionMap.get("00");
+    current.setToken(new Token(TokenType.BLACK,
+            "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
+            "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
+            "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
+            "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
+
+    Intersection current2 = this.intersectionMap.get("03");
+    current2.setToken(new Token(TokenType.BLACK,
+            "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
+            "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
+            "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
+            "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
+
+    Intersection current3 = this.intersectionMap.get("06");
+    current3.setToken(new Token(TokenType.BLACK,
+            "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
+            "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
+            "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
+            "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
+
+    //this.currentGame.updateActionQueue();
+
+  }
+
+  //remove all tokens, set tokens specifically, set moveable intersections, set next player, set actions
+
+  public void populateGameBoard() {
+
+    this.updateBackgroundImage("/resources/META-INF/img/BoardImages/board600pxls.png");
+
+
+    //empty gameboard, reinitialise players, pop players, set tokens at specific points, provide relevant action,
+    // set desired place intersection, set player positions from previously popped players
+    this.removeAllIntersections();
+    int[] coords = {2,20,21};
+    this.addNewIntersections(coords);
+    this.currentGame.initialiseMillObservers();
+
+    Action[] actions = {new SelectTokenAction(), new PlaceTokenAction()};
+    this.currentGame.updateActionQueue(actions);
+
+    //Queue<Player> players = this.currentGame.getPlayerQueue();
+    //Player player1 = players.remove();
+    //Player player2 = players.remove();
+
+    //this.currentGame.updatePlayerQueue(player2, player1);
+
+  }
+  public void removeAllIntersections(){
+    for (String key : this.intersectionMap.keySet()) {
+      Intersection current = this.intersectionMap.get(key);
+      super.remove(current);
+      super.repaint();
+    }
+  }
+
+  public void addNewIntersections(int[] indexes){
+    for(int i = 0; i < indexes.length; i++) {
+      int currentIndex = indexes[i];
+      String intersectionKey = String.valueOf(COORDINATES[currentIndex][0]) + COORDINATES[currentIndex][1];
+      System.out.println(intersectionKey);
+
+      Intersection button = this.newButton(X[currentIndex], Y[currentIndex], COORDINATES[2]);
+      this.intersectionMap.put(intersectionKey, button);
+      add(button);
+    }
+
+    super.repaint();
+  }
+
+  public void updateBackgroundImage(String imagePath){
+
+    Image image = null;
+    if (imagePath != null) {
+      try {
+        image = ImageIO.read(Objects.requireNonNull(getClass().getResource(imagePath)));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+    this.backgroundImage = image;
+    super.repaint();
+  }
+
+  public HashMap<String, Intersection> getIntersectionMap(){
+    return this.intersectionMap;
+  }
+
+  public String getIntersectionKey(int index){
+    return String.valueOf(COORDINATES[index][0]) + COORDINATES[index][1];
+  }
+
+  public void setAllAsTutorialLocked(){
+    for (String key : this.intersectionMap.keySet()) {
+      Intersection current = this.intersectionMap.get(key);
+      current.lockTutorialState();
+    }
+  }
+
 }

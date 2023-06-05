@@ -2,6 +2,7 @@ package actions;
 
 import gameengine.Intersection;
 import gameplayers.Capable;
+import gameplayers.GameState;
 import gameplayers.Player;
 import tokens.Token;
 import tokens.TokenType;
@@ -31,6 +32,11 @@ public class SelectTokenAction implements Action {
    */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
+    if(player.getCurrentGameState() == GameState.TUTORIAL && selectedIntersection.isTutorialLockedState()){
+      System.out.println("fooksskae");
+      return false;
+    }
+
     player.returnToken();
     if (selectedIntersection.isEmpty()) {
       System.out.println("Intersection is empty!");

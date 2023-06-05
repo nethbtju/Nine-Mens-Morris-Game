@@ -1,6 +1,7 @@
 package actions;
 
 import gameengine.Intersection;
+import gameplayers.GameState;
 import gameplayers.Player;
 import tokens.Token;
 
@@ -14,6 +15,7 @@ public class MoveTokenAction extends PlaceTokenAction implements Action {
    */
   @Override
   public void execute(Intersection tokenDestination, Player player) {
+    System.out.println("Ive been placed");
     System.out.println(player.getTokenType());
     System.out.println(player.getTokenCount());
     Token token = player.popTokenInHand();
@@ -30,6 +32,12 @@ public class MoveTokenAction extends PlaceTokenAction implements Action {
    */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
+  if(player.getCurrentGameState() == GameState.TUTORIAL){
+    return !selectedIntersection.equals(player.getSelectedIntersection()) && !selectedIntersection.isTutorialLockedState();
+  }else {
+
     return selectedIntersection.isLegalMove();
+  }
+
   }
 }

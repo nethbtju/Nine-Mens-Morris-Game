@@ -14,6 +14,10 @@ public class Player {
 
   private Intersection selectedIntersection;
 
+  private GameState currentGameState;
+
+
+
   /**
    * Constructor for Players.
    *
@@ -21,9 +25,10 @@ public class Player {
    *     belong to the Player.
    * @param tokenBank A TokenSource from which the Player can draw Tokens while using the
    */
-  public Player(TokenType tokenType, TokenBank tokenBank) {
+  public Player(TokenType tokenType, TokenBank tokenBank, GameState currentGamestate) {
     this.tokenType = tokenType;
     this.tokenBank = tokenBank;
+    this.currentGameState = currentGamestate;
   }
 
   /**
@@ -107,6 +112,8 @@ public class Player {
     }
   }
 
+
+
   /** Increment the number of tokens the player has on the board. */
   public void incrementTokenCount() {
     this.tokenCount += 1;
@@ -135,4 +142,17 @@ public class Player {
 
     }
   }
+
+  public GameState getCurrentGameState(){
+    return this.currentGameState;
+  }
+
+  public void setTutorialState(){
+    this.currentGameState = GameState.TUTORIAL;
+  }
+
+  public Intersection getSelectedIntersection(){
+    return this.selectedIntersection;
+  }
+
 }
