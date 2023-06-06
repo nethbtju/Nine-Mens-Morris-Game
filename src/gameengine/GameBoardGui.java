@@ -14,6 +14,7 @@ import actions.Action;
 import actions.PlaceTokenAction;
 import actions.SelectTokenAction;
 import gameplayers.Player;
+import jdk.swing.interop.SwingInterOpUtils;
 import tokens.Token;
 import tokens.TokenType;
 import actions.Action;
@@ -44,6 +45,12 @@ public class GameBoardGui extends JPanel {
 
   private String winnerDisplayerString = "";
 
+  private Image blackTokenCover = ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/TokenCover0.png"));
+  private Image whiteTokenCover = ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/TokenCover0.png"));
+
+  JLabel blackCoverLabel = new JLabel();
+  JLabel whiteCoverLabel = new JLabel();
+
   private boolean hasMoveHinting = false;
 
   /**
@@ -60,7 +67,53 @@ public class GameBoardGui extends JPanel {
 
     this.addAllIntersections();
     this.initialiseToggleHintButton();
+    this.addIntialCovers();
+
     this.setLayout(null);
+  }
+
+  public void addIntialCovers(){
+    System.out.println("Adding Cover");
+    blackCoverLabel.setLocation(122, 278);
+    whiteCoverLabel.setLocation(610, 277);
+
+    blackCoverLabel.setSize(63, 180);
+    whiteCoverLabel.setSize(63, 180);
+
+    blackCoverLabel.setOpaque(false);
+    whiteCoverLabel.setOpaque(false);
+
+    blackCoverLabel.setIcon(
+            new ImageIcon(
+                    new ImageIcon(blackTokenCover).getImage().getScaledInstance(63, 180, Image.SCALE_SMOOTH)));
+    whiteCoverLabel.setIcon(
+            new ImageIcon(
+                    new ImageIcon(whiteTokenCover).getImage().getScaledInstance(63, 180, Image.SCALE_SMOOTH)));
+    add(blackCoverLabel,0);
+    add(whiteCoverLabel,0);
+  }
+
+  public void updateCover(Player player) throws IOException {
+    System.out.println("Updating cover");
+    TokenType currentPlayer = player.getTokenType();
+    int tokensLeft = player.getTokenBank().getTokensLeft();
+    int coverName = 9 - tokensLeft;
+    if (currentPlayer == TokenType.BLACK) {
+      String newimage = "/resources/META-INF/img/BoardImages/TokenCover" + coverName + ".png";
+      try {
+        blackTokenCover = ImageIO.read(getClass().getResource(newimage));
+      } catch(IOException e) {
+        System.out.println("Could not black token fetch Image");
+      }
+    } else {
+      String newimage = "/resources/META-INF/img/BoardImages/TokenCover" + coverName + ".png";
+      try {
+        whiteTokenCover = ImageIO.read(getClass().getResource(newimage));
+      } catch(IOException e) {
+        System.out.println("Could not white token fetch image");
+      }
+    }
+    this.addIntialCovers();
   }
 
   public void addAllIntersections(){

@@ -36,6 +36,7 @@ public class Game {
     this.initialisePlayers();
     this.initialiseMillObservers();
     this.updatePlayTurnDisplay();
+    this.gameBoard.updatePlayerTurnDisplay("/resources/META-INF/img/BoardImages/whiteWinScreen.png");
   }
 
   /**
@@ -70,7 +71,13 @@ public class Game {
       }
       this.actionQueue.remove();
 
-
+    }
+    if (!currentPlayer.getTokenBank().isEmpty()){
+      try {
+        this.gameBoard.updateCover(currentPlayer);
+      } catch (IOException e) {
+        System.out.println("Could not update cover");
+      }
     }
 
     if (this.actionQueue.isEmpty()) {

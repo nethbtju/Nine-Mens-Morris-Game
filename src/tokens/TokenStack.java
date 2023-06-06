@@ -34,6 +34,10 @@ public class TokenStack {
     return null;
   }
 
+  public int getTokensLeft() {
+    int length = tokens.size();
+    return length;
+  }
   /**
    * Pop a Token from the TokenStack.
    *
