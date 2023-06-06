@@ -40,6 +40,11 @@ public class GameBoardGui extends JPanel {
     {5, 3, 1, 2,12}, {6, 3, 1, 3,13}, {3, 1, 2, 1,14}, {3, 2, 1, 1,15}, {4, 2, 1, 1,16}, {4, 4, 1, 1,17},
     {3, 4, 1, 1,18}, {3, 5, 2, 1,19}, {3, 6, 3, 1,20}, {6, 6, 3, 3,21}, {5, 5, 2, 2,22}, {5, 1, 2, 2,23}
   };
+  // public void addIntialBlackCovers(int xBound, int yBound, int width, int height)
+  // 5
+  private final int[][] blackCovers = {{125,278,68,180}, {127,279,60,180}, {125,278,60,180}, {123,276,67,180}, {121,276,72,180}, {117,278,73,180}, {117,279,72,180}, {121,279,71,180}, {121,276,71,180}};
+  private final int[][] whiteCovers = {{125,278,65,180}};
+
 
   HashMap<String, Intersection> intersectionMap = new HashMap<>();
 
@@ -67,29 +72,39 @@ public class GameBoardGui extends JPanel {
 
     this.addAllIntersections();
     this.initialiseToggleHintButton();
-    this.addIntialCovers();
+
+    int[] blackCover = blackCovers[0];
+    this.addIntialBlackCovers(blackCover[0], blackCover[1], blackCover[2], blackCover[3]);
+    this.addIntialWhiteCovers(125,278,65,180);
 
     this.setLayout(null);
   }
 
-  public void addIntialCovers(){
-    System.out.println("Adding Cover");
-    blackCoverLabel.setLocation(122, 278);
-    whiteCoverLabel.setLocation(610, 277);
+  public void addIntialBlackCovers(int xBound, int yBound, int width, int height){
+    System.out.println("Adding Black Cover");
 
-    blackCoverLabel.setSize(63, 180);
-    whiteCoverLabel.setSize(63, 180);
+    blackCoverLabel.setBounds(xBound,yBound,width,height);
+    blackCoverLabel.setSize(65, 180);
 
     blackCoverLabel.setOpaque(false);
-    whiteCoverLabel.setOpaque(false);
 
     blackCoverLabel.setIcon(
-            new ImageIcon(
-                    new ImageIcon(blackTokenCover).getImage().getScaledInstance(63, 180, Image.SCALE_SMOOTH)));
+            new ImageIcon(new ImageIcon(blackTokenCover).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+
+    add(blackCoverLabel,1);
+  }
+
+  public void addIntialWhiteCovers(int xBound, int yBound, int width, int height){
+    System.out.println("Adding white Cover");
+
+    whiteCoverLabel.setBounds(615, 277, 65,180);
+    whiteCoverLabel.setSize(65, 180);
+
+    whiteCoverLabel.setOpaque(false);
+
     whiteCoverLabel.setIcon(
             new ImageIcon(
                     new ImageIcon(whiteTokenCover).getImage().getScaledInstance(63, 180, Image.SCALE_SMOOTH)));
-    add(blackCoverLabel,0);
     add(whiteCoverLabel,0);
   }
 
@@ -99,12 +114,15 @@ public class GameBoardGui extends JPanel {
     int tokensLeft = player.getTokenBank().getTokensLeft();
     int coverName = 9 - tokensLeft;
     if (currentPlayer == TokenType.BLACK) {
+      System.out.println(coverName);
       String newimage = "/resources/META-INF/img/BoardImages/TokenCover" + coverName + ".png";
       try {
         blackTokenCover = ImageIO.read(getClass().getResource(newimage));
       } catch(IOException e) {
         System.out.println("Could not black token fetch Image");
       }
+      int[] cover = blackCovers[coverName];
+      addIntialBlackCovers(cover[0],cover[1],cover[2],cover[3]);
     } else {
       String newimage = "/resources/META-INF/img/BoardImages/TokenCover" + coverName + ".png";
       try {
@@ -112,8 +130,8 @@ public class GameBoardGui extends JPanel {
       } catch(IOException e) {
         System.out.println("Could not white token fetch image");
       }
+      this.addIntialWhiteCovers(615, 277, 65,180);
     }
-    this.addIntialCovers();
   }
 
   public void addAllIntersections(){
