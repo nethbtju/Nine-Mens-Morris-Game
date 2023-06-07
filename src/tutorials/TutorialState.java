@@ -25,13 +25,11 @@ public abstract class TutorialState {
         this.currentGame = currentGame;
         this.currentGameBoard = currentGameBoard;
         this.backgroundImage = backgroundImagePath;
-        this.currentGameBoard.updateBackgroundImage(this.backgroundImage);
-
-
 
     }
 
     public void execute(){
+        this.currentGameBoard.updateBackgroundImage(this.backgroundImage);
         this.setIntersections();
         this.setTokens();
         this.setLegalIntersections();

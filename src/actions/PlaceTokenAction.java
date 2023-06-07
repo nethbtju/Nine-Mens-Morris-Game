@@ -1,6 +1,7 @@
 package actions;
 
 import gameengine.Intersection;
+import gameplayers.GameState;
 import gameplayers.Player;
 import tokens.Token;
 
@@ -31,9 +32,13 @@ public class PlaceTokenAction implements Action {
    */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
+
     if (!selectedIntersection.isEmpty()) {
       System.out.println("Intersection is occupied!");
       return false;
+    }
+    else if(player.getCurrentGameState() == GameState.TUTORIAL){
+      return !selectedIntersection.isTutorialLockedState();
     }
     return true;
   }

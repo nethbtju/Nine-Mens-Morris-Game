@@ -10,10 +10,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import tokens.TokenBank;
 import tokens.TokenType;
-import tutorials.BasicMilltoRemoveTokenTutorial;
-import tutorials.MoveTokenTutorial;
-import tutorials.PlaceTokenTutorial;
-import tutorials.TutorialState;
+import tutorials.*;
 
 
 /** An instance of a Nine Man's Morris game. Highest level class in the game architecture. */
@@ -23,6 +20,8 @@ public class Game {
   private final Queue<Player> playerQueue = new LinkedList<>();
   private final Queue<Action> actionQueue = new LinkedList<>();
   private final ArrayList<MillObserver> millObservers = new ArrayList<>();
+
+  private TutorialManager newManager = new TutorialManager();
 
   /**
    * Constructor for the Game, initialises game backend.
@@ -37,6 +36,12 @@ public class Game {
     this.initialiseMillObservers();
     this.updatePlayTurnDisplay();
     this.gameBoard.updatePlayerTurnDisplay("/resources/META-INF/img/BoardImages/whiteWinScreen.png");
+
+    //this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
+    this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
+    this.newManager.add(new MoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameboardSaturated.png"));
+    this.newManager.add(new BasicMilltoRemoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameboardSaturated.png"));
+
   }
 
   /**
@@ -81,22 +86,34 @@ public class Game {
     }
 
     if (this.actionQueue.isEmpty()) {
+      System.out.println(x);
       this.playerQueue.add(this.playerQueue.remove());
       //this.gameBoard.setAllAsTutorialLocked();
-      /**if(x == 0){
-        TutorialState bundo = new MoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameboardSaturated.png");
-        bundo.execute();
+      if(x == 1) {
+        this.newManager.executeNext();
 
       }
-      if(x == 2){
-       TutorialState bundo = new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png");
-        bundo.execute();
+      if(x == 3){
+        this.newManager.executeNext();
+
       }
 
-      if(x == 4){
-        TutorialState bundo = new BasicMilltoRemoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameboardSaturated.png");
-        bundo.execute();
-      }**/
+      if(x == 5){
+        this.newManager.executeNext();
+      }
+
+      if(x == 7){
+        this.newManager.executePrevious();
+      }
+
+      if(x == 9){
+        this.newManager.executePrevious();
+      }
+
+      if(x == 11){
+        this.newManager.executePrevious();
+      }
+
      x = x + 1;
     }
 

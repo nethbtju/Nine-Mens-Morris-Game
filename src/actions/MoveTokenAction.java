@@ -32,8 +32,13 @@ public class MoveTokenAction extends PlaceTokenAction implements Action {
    */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
+    System.out.println("bundos");
+    System.out.println(player.getSelectedIntersection().getCoordinates());
+    System.out.println(selectedIntersection.getCoordinates());
+    System.out.println(player.getSelectedIntersection().getKey() == selectedIntersection.getKey());
+    System.out.println("closebundos");
   if(player.getCurrentGameState() == GameState.TUTORIAL){
-    return !selectedIntersection.equals(player.getSelectedIntersection()) && !selectedIntersection.isTutorialLockedState();
+    return !(player.getSelectedIntersection().getKey() == selectedIntersection.getKey()) && !selectedIntersection.isTutorialLockedState();
   }else {
 
     return selectedIntersection.isLegalMove();
