@@ -19,6 +19,7 @@ import jdk.swing.interop.SwingInterOpUtils;
 import tokens.Token;
 import tokens.TokenType;
 import actions.Action;
+import tutorials.TutorialManager;
 
 /** Represents the GameBoard in which Intersections exist. */
 public class GameBoardGui extends JPanel {
@@ -73,7 +74,7 @@ public class GameBoardGui extends JPanel {
 
     this.addAllIntersections();
     this.initialiseToggleHintButton();
-
+    this.initialiseTutorialButtons();
     int[] blackCover = blackCovers[0];
     this.addIntialBlackCovers(blackCover[0], blackCover[1], blackCover[2], blackCover[3]);
     this.addIntialWhiteCovers(125,278,65,180);
@@ -212,15 +213,16 @@ public class GameBoardGui extends JPanel {
       System.out.println("enable");
       this.disableMoveHinting();
       button.setText("Enable Hinting");
+      button.setBackground(Color.BLUE);
+      add(button);
     }
     else if (this.currentGame.getGameState() == GameState.TUTORIAL){
       System.out.println("disable");
       this.enableMoveHinting();
-      button.setText("Disable Hinting");
+
     }
 
-    button.setBackground(Color.BLUE);
-    add(button);
+
   }
 
   private void initialiseTutorialMode(){
@@ -569,6 +571,39 @@ public class GameBoardGui extends JPanel {
     for (String key : this.intersectionMap.keySet()) {
       Intersection current = this.intersectionMap.get(key);
       current.lockTutorialState();
+    }
+  }
+
+  public void initialiseTutorialButtons(){
+    if(this.currentGame.getGameState() == GameState.TUTORIAL) {
+        TutorialManager currentManager = this.currentGame.getTutorialManager();
+        JButton button = new JButton();
+        button.addActionListener(e -> currentManager.executePrevious());
+
+        button.setLocation(150, -40);
+        button.setSize(200, 200);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+      button.setText("Previous Tutorial");
+      button.setBackground(Color.BLUE);
+      add(button);
+
+      JButton button2 = new JButton();
+      button2.addActionListener(e -> currentManager.executeNext());
+
+      button2.setLocation(400, -40);
+      button2.setSize(200, 200);
+      button2.setOpaque(false);
+      button2.setContentAreaFilled(false);
+      button2.setBorderPainted(false);
+      button2.setFocusPainted(false);
+      button2.setText("Next Tutorial");
+      button2.setBackground(Color.BLUE);
+      add(button2);
+
+
     }
   }
 

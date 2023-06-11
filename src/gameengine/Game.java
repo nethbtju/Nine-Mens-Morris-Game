@@ -33,19 +33,19 @@ public class Game {
    */
   public Game(GameState currentGamestate) throws IOException {
     this.currentGamestate = currentGamestate;
+
     gameBoard = new GameBoardGui(this);
     gameBoard.createGui();
+
 
 
     this.initialisePlayers();
     this.initialiseMillObservers();
     this.updatePlayTurnDisplay();
     this.gameBoard.updatePlayerTurnDisplay("/resources/META-INF/img/BoardImages/whiteWinScreen.png");
+    this.initialiseTutorials();
 
-    //this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
-    this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
-    this.newManager.add(new MoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameboardSaturated.png"));
-    this.newManager.add(new BasicMilltoRemoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameboardSaturated.png"));
+
 
   }
 
@@ -93,35 +93,41 @@ public class Game {
     if (this.actionQueue.isEmpty()) {
       System.out.println(x);
       this.playerQueue.add(this.playerQueue.remove());
-      //this.gameBoard.setAllAsTutorialLocked();
 
 
-      if(x == 1) {
-        this.newManager.executeNext();
-
-      }
-      if(x == 3){
-        this.newManager.executeNext();
+    if(this.currentGamestate == GameState.TUTORIAL) {
+      this.gameBoard.setAllAsTutorialLocked();
+      if(x % 2 == 0){
 
       }
+      if (x == 1) {
+        //this.newManager.executeNext();
 
-      if(x == 5){
-        this.newManager.executeNext();
       }
 
-      if(x == 7){
-        this.newManager.executePrevious();
+      if (x == 3) {
+        //this.newManager.executeNext();
+
       }
 
-      if(x == 9){
-        this.newManager.executePrevious();
+      if (x == 5) {
+        //this.newManager.executeNext();
       }
 
-      if(x == 11){
-        this.newManager.executePrevious();
+      if (x == 7) {
+        //this.newManager.executePrevious();
       }
 
-     x = x + 1;
+      if (x == 9) {
+        //this.newManager.executePrevious();
+      }
+
+      if (x == 11) {
+        //this.newManager.executePrevious();
+      }
+
+      x = x + 1;
+    }
     }
 
 
@@ -385,4 +391,20 @@ public class Game {
   public GameState getGameState(){
     return this.currentGamestate;
   }
+
+  private void initialiseTutorials(){
+    //this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
+    this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
+    this.newManager.add(new MoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameboardSaturated.png"));
+    this.newManager.add(new BasicMilltoRemoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameboardSaturated.png"));
+
+    if(this.currentGamestate == GameState.TUTORIAL) {
+      this.newManager.executeNext();
+    }
+  }
+
+  public TutorialManager getTutorialManager(){
+    return this.newManager;
+  }
+
 }
