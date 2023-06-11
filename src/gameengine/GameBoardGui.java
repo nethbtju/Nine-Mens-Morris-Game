@@ -13,6 +13,7 @@ import javax.swing.*;
 import actions.Action;
 import actions.PlaceTokenAction;
 import actions.SelectTokenAction;
+import gameplayers.GameState;
 import gameplayers.Player;
 import jdk.swing.interop.SwingInterOpUtils;
 import tokens.Token;
@@ -206,9 +207,24 @@ public class GameBoardGui extends JPanel {
     button.setContentAreaFilled(false);
     button.setBorderPainted(false);
     button.setFocusPainted(false);
-    button.setText("Enable Hinting");
+
+    if (this.currentGame.getGameState() == GameState.NORMAL) {
+      System.out.println("enable");
+      this.disableMoveHinting();
+      button.setText("Enable Hinting");
+    }
+    else if (this.currentGame.getGameState() == GameState.TUTORIAL){
+      System.out.println("disable");
+      this.enableMoveHinting();
+      button.setText("Disable Hinting");
+    }
+
     button.setBackground(Color.BLUE);
     add(button);
+  }
+
+  private void initialiseTutorialMode(){
+
   }
 
   /**
@@ -443,6 +459,14 @@ public class GameBoardGui extends JPanel {
     else{
       button.setText("Enable Hinting");
     }
+  }
+
+  public void enableMoveHinting(){
+    this.hasMoveHinting = true;
+  }
+
+  public void disableMoveHinting(){
+    this.hasMoveHinting = false;
   }
 
   public void test(Player currentplayer){

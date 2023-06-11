@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import gameengine.Game;
 import gameengine.LaunchScreenGui;
+import gameplayers.GameState;
 
 import java.io.IOException;
 
@@ -18,7 +19,8 @@ public class LaunchScreenGui extends JPanel implements ActionListener {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         String path = "/resources/META-INF/img/BoardImages/LaunchScreen.png";
         backgroundImage = ImageIO.read(getClass().getResource(path));
-        add(playGameButton());
+        add(newButton(300, 425, GameState.NORMAL));
+        add(newButton(300, 500, GameState.TUTORIAL));
         this.setLayout(null);
     }
 
@@ -44,9 +46,9 @@ public class LaunchScreenGui extends JPanel implements ActionListener {
         frame.setVisible(true);
     }
 
-    public JButton playGameButton() {
+    public JButton newButton(int x, int y, GameState newGameState) {
         JButton button = new JButton();
-        button.setLocation(300, 425);
+        button.setLocation(x, y);
         button.setSize(200, 60);
         button.setOpaque(false);
         button.setContentAreaFilled(false);
@@ -55,19 +57,44 @@ public class LaunchScreenGui extends JPanel implements ActionListener {
         Image image = null;
         String path = "/resources/META-INF/img/BoardImages/Empty.png";
         try {
+
             image = ImageIO.read(getClass().getResource(path));
             button.setIcon(
                     new ImageIcon(image));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        button.addActionListener(e -> this.startGame());
+        button.addActionListener(e -> this.initialiseGame(e, newGameState));
        return button;
     }
 
-    public void startGame(){
+    public JButton playTutorialButton() {
+        JButton button = new JButton();
+        button.setLocation(300, 500);
+        button.setSize(200, 60);
+        button.setOpaque(false);
+        button.setContentAreaFilled(false);
+        button.setBorderPainted(false);
+        button.setFocusPainted(false);
+        Image image = null;
+        String path = "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png";
         try {
-            Game theGame = new Game();
+
+            image = ImageIO.read(getClass().getResource(path));
+            button.setIcon(
+                    new ImageIcon(image));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        button.addActionListener(e -> this.initialiseGame(e, GameState.NORMAL));
+        return button;
+    }
+
+
+
+    public void startGame(GameState gameState){
+        try {
+            Game theGame = new Game(gameState);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -80,6 +107,13 @@ public class LaunchScreenGui extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("bob");
         //
     }
+
+    private void initialiseGame(ActionEvent e, GameState newGameState){
+        JComponent comp = (JComponent) e.getSource();
+        Window win = SwingUtilities.getWindowAncestor(comp);
+        win.dispose();
+        this.startGame(newGameState);}
 }

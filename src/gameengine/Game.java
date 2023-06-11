@@ -23,15 +23,20 @@ public class Game {
 
   private TutorialManager newManager = new TutorialManager();
 
+  private GameState currentGamestate = GameState.TUTORIAL;
+
   /**
    * Constructor for the Game, initialises game backend.
    *
    * @throws IOException Excepts if the GameBoard fails to initialise due to a missing background
    *     image.
    */
-  public Game() throws IOException {
+  public Game(GameState currentGamestate) throws IOException {
+    this.currentGamestate = currentGamestate;
     gameBoard = new GameBoardGui(this);
     gameBoard.createGui();
+
+
     this.initialisePlayers();
     this.initialiseMillObservers();
     this.updatePlayTurnDisplay();
@@ -89,6 +94,8 @@ public class Game {
       System.out.println(x);
       this.playerQueue.add(this.playerQueue.remove());
       //this.gameBoard.setAllAsTutorialLocked();
+
+
       if(x == 1) {
         this.newManager.executeNext();
 
@@ -367,5 +374,15 @@ public class Game {
     this.playerQueue.clear();
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
+  }
+
+  private void tutorialGameMode(){
+
+  }
+
+
+
+  public GameState getGameState(){
+    return this.currentGamestate;
   }
 }
