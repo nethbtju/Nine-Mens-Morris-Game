@@ -666,7 +666,15 @@ public class GameBoardGui extends JPanel {
 
 
     if(isPastEnd){
-
+      Image tutNext = null;
+      try {
+        tutNext =  ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/tutorialNext.png"));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      currentButton.setIcon(new ImageIcon(
+              new ImageIcon(tutNext).getImage().getScaledInstance(160, 40, Image.SCALE_SMOOTH)));
+      currentButton.setBackground(Color.BLUE);
       System.out.println("ADGADGADGADG");
 
     }
@@ -695,6 +703,15 @@ public class GameBoardGui extends JPanel {
 
     if(isAtEnd){
       //currentButton.setText("Return to Home screen");
+      Image homeScreen = null;
+      try {
+        homeScreen =  ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/mainScreen.png"));
+      } catch (IOException e2) {
+        e2.printStackTrace();
+      }
+      currentButton.setIcon(new ImageIcon(
+              new ImageIcon(homeScreen).getImage().getScaledInstance(160, 40, Image.SCALE_SMOOTH)));
+      currentButton.setBackground(Color.BLUE);
       System.out.println("at end");
 
     }
