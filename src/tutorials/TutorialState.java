@@ -74,9 +74,6 @@ public abstract class TutorialState {
                         "/resources/META-INF/img/BoardImages/BlackTokenMill.png");
                 current.setToken(blackToken);
             }
-
-
-
         }
 
     }

@@ -620,7 +620,15 @@ public class GameBoardGui extends JPanel {
         button.setContentAreaFilled(false);
         button.setBorderPainted(false);
         button.setFocusPainted(false);
-      button.setText("Previous Tutorial");
+
+        Image tutPrev = null;
+      try {
+        tutPrev =  ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/tutorialPrev.png"));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      button.setIcon(new ImageIcon(
+              new ImageIcon(tutPrev).getImage().getScaledInstance(160, 38, Image.SCALE_SMOOTH)));
       button.setBackground(Color.BLUE);
       add(button);
 
@@ -633,7 +641,15 @@ public class GameBoardGui extends JPanel {
       button2.setContentAreaFilled(false);
       button2.setBorderPainted(false);
       button2.setFocusPainted(false);
-      button2.setText("Next Tutorial");
+
+      Image tutNext = null;
+      try {
+        tutNext =  ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/tutorialNext.png"));
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+      button2.setIcon(new ImageIcon(
+              new ImageIcon(tutNext).getImage().getScaledInstance(160, 40, Image.SCALE_SMOOTH)));
       button2.setBackground(Color.BLUE);
       add(button2);
 
