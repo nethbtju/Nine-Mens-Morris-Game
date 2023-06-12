@@ -2,6 +2,7 @@ package gameengine;
 
 import java.awt.*;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -612,7 +613,7 @@ public class GameBoardGui extends JPanel {
     if(this.currentGame.getGameState() == GameState.TUTORIAL) {
         TutorialManager currentManager = this.currentGame.getTutorialManager();
         JButton button = new JButton();
-        button.addActionListener(e -> currentManager.executePrevious());
+
 
         button.setLocation(150, -40);
         button.setSize(200, 200);
@@ -633,7 +634,7 @@ public class GameBoardGui extends JPanel {
       add(button);
 
       JButton button2 = new JButton();
-      button2.addActionListener(e -> currentManager.executeNext());
+
 
       button2.setLocation(400, -40);
       button2.setSize(200, 200);
@@ -653,8 +654,54 @@ public class GameBoardGui extends JPanel {
       button2.setBackground(Color.BLUE);
       add(button2);
 
+      button.addActionListener(e -> this.executePreviousTutorial(button2));
+      button2.addActionListener(e -> this.executeNextTutorial(button2, e));
 
     }
+  }
+
+  public void  executePreviousTutorial(JButton currentButton){
+    TutorialManager currentManager = this.currentGame.getTutorialManager();
+    boolean isPastEnd = currentManager.isPastEnd;
+
+
+    if(isPastEnd){
+
+      System.out.println("ADGADGADGADG");
+
+    }
+
+    currentManager.executePrevious();
+  }
+  public void executeNextTutorial(JButton currentButton, ActionEvent e){
+    TutorialManager currentManager = this.currentGame.getTutorialManager();
+    boolean isAtEnd = currentManager.isAtEnd();
+    boolean isPastEnd = currentManager.isPastEnd;
+
+    if(isPastEnd){
+      System.out.println("past end");
+
+      JComponent comp = (JComponent) e.getSource();
+      Window win = SwingUtilities.getWindowAncestor(comp);
+      win.dispose();
+
+      try {
+        LaunchScreenGui game = new LaunchScreenGui();
+        game.createGui();
+      } catch (IOException e2) {
+        e2.printStackTrace();
+      }
+    }
+
+    if(isAtEnd){
+      //currentButton.setText("Return to Home screen");
+      System.out.println("at end");
+
+    }
+
+
+    currentManager.executeNext();
+
   }
 
 }
