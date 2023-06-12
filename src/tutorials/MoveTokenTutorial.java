@@ -39,7 +39,7 @@ public class MoveTokenTutorial extends TutorialState{
         int[] coords = {20,21};
         int[] highlightCoords = {20};
         super.setAsTutorialLegal(coords);
-        //super.highLightIntersection(highlightCoords);
+        super.highLightIntersection(highlightCoords);
 
 
 
