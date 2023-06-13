@@ -62,20 +62,6 @@ public class Player {
   }
 
   /**
-   * See if the player currently has a token in hand
-   *
-   * @return Token that the player has
-   */
-  // TODO: get rid of this?
-  public Token peekTokenInHand() {
-    if (this.tokenInHand != null) {
-      Token token = this.tokenInHand;
-      return token;
-    }
-    return null;
-  }
-
-  /**
    * Check if the Player has selected a Token. Do not remove the Token from the Player.
    *
    * @return true if the Player has a Token, false if not.

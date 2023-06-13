@@ -86,29 +86,6 @@ public class LaunchScreenGui extends JPanel implements ActionListener {
        return button;
     }
 
-    // TODO: get rid of this?
-    public JButton playTutorialButton() {
-        JButton button = new JButton();
-        button.setLocation(300, 500);
-        button.setSize(200, 60);
-        button.setOpaque(false);
-        button.setContentAreaFilled(false);
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
-        Image image = null;
-        String path = "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png";
-        try {
-
-            image = ImageIO.read(getClass().getResource(path));
-            button.setIcon(
-                    new ImageIcon(image));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        button.addActionListener(e -> this.initialiseGame(e, GameState.NORMAL));
-        return button;
-    }
-
     /**
      * Start the game by creating a new instance of the Game class
      *
