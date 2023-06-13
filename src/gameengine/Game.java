@@ -265,10 +265,10 @@ public class Game {
     if (this.currentGamestate == GameState.NORMAL) {
       if (playerType == TokenType.WHITE) {
         this.gameBoard.updatePlayerTurnDisplay("Player 1 Turn!");
-        this.gameBoard.changeCaptionString("Player 1 Turn!");
+        this.gameBoard.changeCaptionString("White token turn!");
       } else {
         this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
-        this.gameBoard.changeCaptionString("Player 2 Turn!");
+        this.gameBoard.changeCaptionString("Black token turn!");
       }
     }
   }
