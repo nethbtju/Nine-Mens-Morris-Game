@@ -105,6 +105,8 @@ public class GameBoardGui extends JPanel {
 
   private boolean hasMoveHinting = false;
 
+  public JLabel captionLabel;
+
   /**
    * Constructor for the GameBoard, puts everything together.
    *
@@ -124,10 +126,34 @@ public class GameBoardGui extends JPanel {
     int[] whiteCover = whiteCovers[0];
     this.addIntialBlackCovers(blackCover[0], blackCover[1], blackCover[2], blackCover[3]);
     this.addIntialWhiteCovers(whiteCover[0], whiteCover[1], whiteCover[2], whiteCover[3]);
+    this.initialiseCaption();
 
     this.setLayout(null);
   }
 
+  private void initialiseCaption(){
+    JLabel label = new JLabel();
+    label.setHorizontalAlignment(SwingConstants.CENTER);
+    label.setVerticalAlignment(SwingConstants.CENTER);
+    label.setText("<html><div style='text-align: center;'>Place token on any open intersection</div></html>");
+    label.setLocation(240,587);
+    label.setSize(320, 70);
+    //label.setBackground(Color.BLUE);
+    label.setOpaque(true);
+    label.setFont(new Font("BM Hanna 11yrs Old", Font.BOLD, 20));
+    add(label);
+
+    this.captionLabel = label;
+  }
+
+  public void changeCaptionString(String newText){
+    this.captionLabel.setText(newText);
+
+  }
+
+  public void changeCaptionReplace(JLabel newCaption){
+    this.captionLabel = newCaption;
+  }
   public void addIntialBlackCovers(int xBound, int yBound, int width, int height) {
     System.out.println("Adding Black Cover");
 
