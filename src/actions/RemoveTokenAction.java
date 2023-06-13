@@ -20,12 +20,12 @@ public class RemoveTokenAction implements Action {
   }
 
   /**
-   * Checks if the intersection selected has a token of the right type before allowing removal
+   * Checks if the intersection selected has a token of the right type before allowing removal.
    *
    * @param selectedIntersection The intersection selected by the user on the frontend.
    * @param player The player performing the action.
    *
-   * @return
+   * @return True if the Token is valid to remove from, false if it is not.
    */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
