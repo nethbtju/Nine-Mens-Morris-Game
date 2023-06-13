@@ -9,16 +9,12 @@ public class TutorialManager {
 
   private final List<TutorialState> tutorialList = new ArrayList<>();
   private int currentIndex = -1;
+  public boolean isPastEnd = false;
 
+  /** Append a new TutorialState to this TutorialManager's tutorialList. */
   public void add(TutorialState newTutorial) {
     this.tutorialList.add(newTutorial);
   }
-
-  public TutorialState getAtIndex(int index) {
-    return this.tutorialList.get(index);
-  }
-
-  public boolean isPastEnd = false;
 
   /** Executes the next TutorialState in the tutorialList. */
   public void executeNext() {
