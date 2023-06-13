@@ -197,6 +197,8 @@ public class GameBoardGui extends JPanel {
     int tokensLeft = player.getTokenBank().getTokensLeft();
     System.out.println("Tokens left:" + tokensLeft);
     int coverName = totalTokens - tokensLeft;
+    System.out.println("cover name");
+    System.out.println(coverName);
     System.out.println("Cover Name:" + coverName);
     if (currentPlayer == TokenType.BLACK) {
       System.out.println(coverName);

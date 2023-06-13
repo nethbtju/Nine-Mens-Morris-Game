@@ -61,7 +61,7 @@ public class TwoTokenWinTutorial extends TutorialState{
      */
     @Override
     public void setPlayerQueue() {
-        super.updatePlayerQueue(true);
+        super.updatePlayerQueue(true, 2,2 );
     }
 
     @Override
