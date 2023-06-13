@@ -3,11 +3,9 @@ package gameengine;
 import java.awt.*;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Queue;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -16,10 +14,8 @@ import actions.PlaceTokenAction;
 import actions.SelectTokenAction;
 import gameplayers.GameState;
 import gameplayers.Player;
-import jdk.swing.interop.SwingInterOpUtils;
 import tokens.Token;
 import tokens.TokenType;
-import actions.Action;
 import tutorials.TutorialManager;
 
 /** Represents the GameBoard in which Intersections exist. */
@@ -90,7 +86,7 @@ public class GameBoardGui extends JPanel {
 
   HashMap<String, Intersection> intersectionMap = new HashMap<>();
 
-  private String winnerDisplayerString = "";
+  private String player = "";
 
   private Image blackTokenCover =
       ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/TokenCover0.png"));
@@ -100,8 +96,11 @@ public class GameBoardGui extends JPanel {
   JLabel blackCoverLabel = new JLabel();
   JLabel whiteCoverLabel = new JLabel();
 
+  JLabel playerDisplay = new JLabel();
+
   private Image buttonImage =
       ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
+
 
   private boolean hasMoveHinting = false;
 
@@ -122,6 +121,11 @@ public class GameBoardGui extends JPanel {
     this.initialiseTutorialButtons();
     int[] blackCover = blackCovers[0];
     int[] whiteCover = whiteCovers[0];
+
+    playerDisplay.setLocation(300, 600);
+    playerDisplay.setSize(200, 50);
+    playerDisplay.setOpaque(false);
+
     this.addIntialBlackCovers(blackCover[0], blackCover[1], blackCover[2], blackCover[3]);
     this.addIntialWhiteCovers(whiteCover[0], whiteCover[1], whiteCover[2], whiteCover[3]);
 
@@ -304,7 +308,9 @@ public class GameBoardGui extends JPanel {
    */
   public void showWinnerDisplay(String image) {
     setWinnerDisplayerString(image);
-    add(winningPlayerDisplay(winnerDisplayerString));
+    remove(blackCoverLabel);
+    remove(whiteCoverLabel);
+    add(winningPlayerDisplay(player));
   }
 
   /**
@@ -313,7 +319,7 @@ public class GameBoardGui extends JPanel {
    * @param winnerDisplayerString - string image path from root
    */
   public void setWinnerDisplayerString(String winnerDisplayerString) {
-    this.winnerDisplayerString = winnerDisplayerString;
+    this.player = winnerDisplayerString;
   }
 
   /**
@@ -324,22 +330,30 @@ public class GameBoardGui extends JPanel {
    */
   public JLabel winningPlayerDisplay(String winningPlayerColour) {
     String winnerImage = winningPlayerColour;
+    Image winner = null;
+    try {
+      winner = ImageIO.read(getClass().getResource(winnerImage));
+    } catch (IOException e) {
+      System.out.println("Could not white token fetch image");
+    }
     JLabel winLabel = new JLabel();
     winLabel.setLocation(150, 260);
     winLabel.setSize(500, 200);
     winLabel.setOpaque(false);
     winLabel.setIcon(
         new ImageIcon(
-            new ImageIcon(winnerImage).getImage().getScaledInstance(500, 200, Image.SCALE_SMOOTH)));
+            new ImageIcon(winner).getImage().getScaledInstance(500, 200, Image.SCALE_SMOOTH)));
     return winLabel;
   }
 
   /** Updates the display with which player is currently playing */
-  public void updatePlayerTurnDisplay(String newDisplay) {
-    this.winningPlayerDisplay("white");
-    this.validate();
-    this.repaint();
+  public void updatePlayerTurnDisplay(Image newDisplay) {
+    playerDisplay.setIcon(
+            new ImageIcon(
+                    new ImageIcon(newDisplay).getImage().getScaledInstance(200, 50, Image.SCALE_SMOOTH)));
+    add(playerDisplay);
   }
+
 
   /**
    * Attach a single MillObserver to a set of Intersections by specifying their keys.
