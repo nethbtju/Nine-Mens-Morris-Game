@@ -42,4 +42,10 @@ public class PlaceTokenTutorial extends TutorialState{
     public void setPlayerQueue() {
         super.updatePlayerQueue(true);
     }
+
+    @Override
+    public void setCaption() {
+        GameBoardGui currentGameBoard = this.getCurrentGameBoard();
+        currentGameBoard.changeCaptionString("Place token on any open intersection");
+    }
 }

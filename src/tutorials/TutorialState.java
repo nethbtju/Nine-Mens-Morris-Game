@@ -35,6 +35,7 @@ public abstract class TutorialState {
         this.setLegalIntersections();
         this.setActionQueue();
         this.setPlayerQueue();
+        this.setCaption();
 
     }
 
@@ -47,6 +48,10 @@ public abstract class TutorialState {
     public abstract void setActionQueue();
 
     public abstract void setPlayerQueue();
+
+    public abstract void setCaption();
+
+
 
     public void setTokens(int [][] coords){
         HashMap<String, Intersection> intersectionHashMap = this.currentGameBoard.getIntersectionMap();

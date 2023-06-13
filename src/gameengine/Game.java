@@ -280,12 +280,14 @@ public class Game {
     Player currentPlayer = playerQueue.peek();
     TokenType playerType = currentPlayer.getTokenType();
 
-    if (playerType == TokenType.WHITE) {
-      this.gameBoard.updatePlayerTurnDisplay("Player 1 Turn!");
-      this.gameBoard.changeCaptionString("Player 1 Turn!");
-    } else {
-      this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
-      this.gameBoard.changeCaptionString("Player 2 Turn!");
+    if(this.currentGamestate == GameState.NORMAL) {
+      if (playerType == TokenType.WHITE) {
+        this.gameBoard.updatePlayerTurnDisplay("Player 1 Turn!");
+        this.gameBoard.changeCaptionString("Player 1 Turn!");
+      } else {
+        this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
+        this.gameBoard.changeCaptionString("Player 2 Turn!");
+      }
     }
   }
 

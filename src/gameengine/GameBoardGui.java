@@ -105,7 +105,7 @@ public class GameBoardGui extends JPanel {
 
   private boolean hasMoveHinting = false;
 
-  public JLabel captionLabel;
+  private JLabel captionLabel;
 
   /**
    * Constructor for the GameBoard, puts everything together.
@@ -147,7 +147,7 @@ public class GameBoardGui extends JPanel {
   }
 
   public void changeCaptionString(String newText){
-    this.captionLabel.setText(newText);
+    this.captionLabel.setText("<html><div style='text-align: center;'>" + newText + "</div></html>");
 
   }
 

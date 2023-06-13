@@ -57,4 +57,10 @@ public class MoveTokenTutorial extends TutorialState{
         super.updatePlayerQueue(false);
 
     }
+
+    @Override
+    public void setCaption() {
+        GameBoardGui currentGameBoard = this.getCurrentGameBoard();
+        currentGameBoard.changeCaptionString("Select highlighted token and move to open intersection");
+    }
 }
