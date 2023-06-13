@@ -12,7 +12,6 @@ import tokens.TokenBank;
 import tokens.TokenType;
 import tutorials.*;
 
-
 /** An instance of a Nine Man's Morris game. Highest level class in the game architecture. */
 public class Game {
   int x = 0;
@@ -37,16 +36,12 @@ public class Game {
     gameBoard = new GameBoardGui(this);
     gameBoard.createGui();
 
-
-
     this.initialisePlayers();
     this.initialiseMillObservers();
     this.updatePlayTurnDisplay();
-    this.gameBoard.updatePlayerTurnDisplay("/resources/META-INF/img/BoardImages/whiteWinScreen.png");
+    this.gameBoard.updatePlayerTurnDisplay(
+        "/resources/META-INF/img/BoardImages/whiteWinScreen.png");
     this.initialiseTutorials();
-
-
-
   }
 
   /**
@@ -59,14 +54,11 @@ public class Game {
 
     boolean initialMillState = selectedIntersection.getMillState();
 
-
     if (this.actionQueue.isEmpty()) {
       this.pushPlayerActions(currentPlayer);
-    }
-    else{
+    } else {
       this.updateMoveSequence(currentPlayer, selectedIntersection);
     }
-
 
     Action action = this.actionQueue.peek();
     boolean actionValid = action.isValid(selectedIntersection, currentPlayer);
@@ -80,9 +72,8 @@ public class Game {
         this.pushMillActions();
       }
       this.actionQueue.remove();
-
     }
-    if (!currentPlayer.getTokenBank().isEmpty()){
+    if (!currentPlayer.getTokenBank().isEmpty()) {
       try {
         this.gameBoard.updateCover(currentPlayer);
       } catch (IOException e) {
@@ -94,72 +85,60 @@ public class Game {
       System.out.println(x);
       this.playerQueue.add(this.playerQueue.remove());
 
+      if (this.currentGamestate == GameState.TUTORIAL) {
+        this.gameBoard.setAllAsTutorialLocked();
+        if (x % 2 == 0) {}
 
-    if(this.currentGamestate == GameState.TUTORIAL) {
-      this.gameBoard.setAllAsTutorialLocked();
-      if(x % 2 == 0){
+        if (x == 1) {
+          // this.newManager.executeNext();
 
+        }
+
+        if (x == 3) {
+          // this.newManager.executeNext();
+
+        }
+
+        if (x == 5) {
+          // this.newManager.executeNext();
+        }
+
+        if (x == 7) {
+          // this.newManager.executePrevious();
+        }
+
+        if (x == 9) {
+          // this.newManager.executePrevious();
+        }
+
+        if (x == 11) {
+          // this.newManager.executePrevious();
+        }
+
+        x = x + 1;
       }
-      if (x == 1) {
-        //this.newManager.executeNext();
-
-      }
-
-      if (x == 3) {
-        //this.newManager.executeNext();
-
-      }
-
-      if (x == 5) {
-        //this.newManager.executeNext();
-      }
-
-      if (x == 7) {
-        //this.newManager.executePrevious();
-      }
-
-      if (x == 9) {
-        //this.newManager.executePrevious();
-      }
-
-      if (x == 11) {
-        //this.newManager.executePrevious();
-      }
-
-      x = x + 1;
     }
-    }
-
-
-
-
-
 
     this.updatePlayTurnDisplay();
 
-
-
-
-
-
-    //this.updatePlayTurnDisplay();
+    // this.updatePlayTurnDisplay();
   }
 
   /**
    * Push the appropriate Action to the current player's actionQueue depending on whether their
    * opponent has all of their Tokens in mills.
-   *
    */
   private void pushMillActions() {
     Player currentPlayer = this.playerQueue.remove();
     Player attackedPlayer = this.playerQueue.remove();
 
-    if (this.gameBoard.getMillIntersectionCount(attackedPlayer.getTokenType()) == attackedPlayer.getTokenCount()) {
-      //highlight all tokens
+    if (this.gameBoard.getMillIntersectionCount(attackedPlayer.getTokenType())
+        == attackedPlayer.getTokenCount()) {
+      // highlight all tokens
       this.actionQueue.add(new RemoveMillTokenAction());
       this.gameBoard.highlightRemoveTokens(attackedPlayer.getTokenType(), true);
     } else {
-      //only highlight tokens that can be removed
+      // only highlight tokens that can be removed
       this.actionQueue.add(new RemoveTokenAction());
       this.gameBoard.highlightRemoveTokens(attackedPlayer.getTokenType(), false);
       System.out.println(attackedPlayer.getTokenType());
@@ -169,23 +148,22 @@ public class Game {
     this.playerQueue.add(attackedPlayer);
   }
 
-  private void updateMoveSequence(Player currentPlayer, Intersection selectedIntersection){
+  private void updateMoveSequence(Player currentPlayer, Intersection selectedIntersection) {
 
-      if(selectedIntersection.peekToken() != null) {
-        if (selectedIntersection.peekToken().getTokenType() == currentPlayer.getTokenType() && currentPlayer.hasTokenInHand()) {
-          System.out.println(currentPlayer.hasTokenInHand());
-          System.out.println("yo");
-          this.actionQueue.remove();
-          this.actionQueue.add(new SelectTokenAction());
-          this.actionQueue.add(new MoveTokenAction());
-          this.gameBoard.setIntersectionsAsClosed();
-        }
+    if (selectedIntersection.peekToken() != null) {
+      if (selectedIntersection.peekToken().getTokenType() == currentPlayer.getTokenType()
+          && currentPlayer.hasTokenInHand()) {
+        System.out.println(currentPlayer.hasTokenInHand());
+        System.out.println("yo");
+        this.actionQueue.remove();
+        this.actionQueue.add(new SelectTokenAction());
+        this.actionQueue.add(new MoveTokenAction());
+        this.gameBoard.setIntersectionsAsClosed();
       }
+    }
   }
-  
-  /** Initialise the MillObservers,
-   * which detect Mill formation.
-   */
+
+  /** Initialise the MillObservers, which detect Mill formation. */
   public void initialiseMillObservers() {
     String[] OUTER_LEFT_COLUMN = {"00", "03", "06"};
     String[] OUTER_RIGHT_COLUMN = {"60", "63", "66"};
@@ -260,7 +238,8 @@ public class Game {
                 "/resources/META-INF/img/BoardImages/WhiteTokenPlain.png",
                 "/resources/META-INF/img/BoardImages/WhiteTokenSelected.png",
                 "/resources/META-INF/img/BoardImages/WhiteTokenIllegal.png",
-                "/resources/META-INF/img/BoardImages/WhiteTokenMill.png"), GameState.NORMAL);
+                "/resources/META-INF/img/BoardImages/WhiteTokenMill.png"),
+            GameState.NORMAL);
     Player player2 =
         new Player(
             TokenType.BLACK,
@@ -269,7 +248,8 @@ public class Game {
                 "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
                 "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
                 "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
-                "/resources/META-INF/img/BoardImages/BlackTokenMill.png"),GameState.NORMAL);
+                "/resources/META-INF/img/BoardImages/BlackTokenMill.png"),
+            GameState.NORMAL);
     this.playerQueue.clear();
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
@@ -320,10 +300,7 @@ public class Game {
     }
   }
 
-  /**
-   * Prints the label on the GUI that shows which player has won
-   *
-   */
+  /** Prints the label on the GUI that shows which player has won */
   public void printWinScreen(Player attackedPlayer) {
     String image;
     if (attackedPlayer.getTokenType() == TokenType.BLACK) {
@@ -334,10 +311,7 @@ public class Game {
     this.gameBoard.showWinnerDisplay(image);
   }
 
-  /**
-   * Gets both players and removes the attacked players tokens,
-   * then checks if the game is over
-   */
+  /** Gets both players and removes the attacked players tokens, then checks if the game is over */
   public void decrementOpposingPlayerTokenCount() {
     Player currentPlayer = this.playerQueue.remove();
     Player attackedPlayer = this.playerQueue.remove();
@@ -351,60 +325,57 @@ public class Game {
     this.checkIfGameOver(attackedPlayer);
   }
 
-  public void wait(int ms)
-  {
-    try
-    {
+  public void wait(int ms) {
+    try {
       Thread.sleep(ms);
-    }
-    catch(InterruptedException ex)
-    {
+    } catch (InterruptedException ex) {
       Thread.currentThread().interrupt();
     }
   }
 
-  public void updateActionQueue(Action[] actions){
+  public void updateActionQueue(Action[] actions) {
     System.out.println("yessir");
     this.actionQueue.clear();
-    for(int i = 0; i < actions.length; i++) {
+    for (int i = 0; i < actions.length; i++) {
       this.actionQueue.add(actions[i]);
     }
-
   }
 
-  public Queue<Player> getPlayerQueue(){
+  public Queue<Player> getPlayerQueue() {
     return this.playerQueue;
   }
 
-  public void updatePlayerQueue(Player player1, Player player2){
+  public void updatePlayerQueue(Player player1, Player player2) {
     this.playerQueue.clear();
     this.playerQueue.add(player1);
     this.playerQueue.add(player2);
   }
 
-  private void tutorialGameMode(){
+  private void tutorialGameMode() {}
 
-  }
-
-
-
-  public GameState getGameState(){
+  public GameState getGameState() {
     return this.currentGamestate;
   }
 
-  private void initialiseTutorials(){
-    //this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
-    this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
-    this.newManager.add(new MoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameBoardSaturated.png"));
-    this.newManager.add(new BasicMillToRemoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameBoardSaturated.png"));
+  private void initialiseTutorials() {
+    // this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard,
+    // "/resources/META-INF/img/BoardImages/board600pxls.png"));
+    this.newManager.add(
+        new PlaceTokenTutorial(
+            this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
+    this.newManager.add(
+        new MoveTokenTutorial(
+            this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameBoardSaturated.png"));
+    this.newManager.add(
+        new BasicMillToRemoveTokenTutorial(
+            this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameBoardSaturated.png"));
 
-    if(this.currentGamestate == GameState.TUTORIAL) {
+    if (this.currentGamestate == GameState.TUTORIAL) {
       this.newManager.executeNext();
     }
   }
 
-  public TutorialManager getTutorialManager(){
+  public TutorialManager getTutorialManager() {
     return this.newManager;
   }
-
 }
