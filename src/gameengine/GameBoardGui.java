@@ -159,10 +159,6 @@ public class GameBoardGui extends JPanel {
         "<html><div style='text-align: center;'>" + newText + "</div></html>");
   }
 
-  // TODO: Do we need this?
-  public void changeCaptionReplace(JLabel newCaption) {
-    this.captionLabel = newCaption;
-  }
 
   /**
    * Add the initial Jlabel of the black token covers on the GUI when it initialises
@@ -647,67 +643,7 @@ public class GameBoardGui extends JPanel {
     this.hasMoveHinting = false;
   }
 
-  //TODO: get rid of this?
-  public void test(Player currentplayer) {
-    this.killGame();
 
-    Intersection current = this.intersectionMap.get("00");
-    current.setToken(
-        new Token(
-            TokenType.BLACK,
-            "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
-
-    Intersection current2 = this.intersectionMap.get("03");
-    current2.setToken(
-        new Token(
-            TokenType.BLACK,
-            "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
-
-    Intersection current3 = this.intersectionMap.get("06");
-    current3.setToken(
-        new Token(
-            TokenType.BLACK,
-            "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
-
-    // this.currentGame.updateActionQueue();
-
-  }
-
-  // remove all tokens, set tokens specifically, set moveable intersections, set next player, set
-  // actions
-
-  // TODO: get rid of this?
-  public void populateGameBoard() {
-
-    this.updateBackgroundImage("/resources/META-INF/img/BoardImages/board600pxls.png");
-
-    // empty gameboard, reinitialise players, pop players, set tokens at specific points, provide
-    // relevant action,
-    // set desired place intersection, set player positions from previously popped players
-    this.removeAllIntersections();
-    int[] coords = {2, 20, 21};
-    this.addNewIntersections(coords);
-    this.currentGame.initialiseMillObservers();
-
-    Action[] actions = {new SelectTokenAction(), new PlaceTokenAction()};
-    this.currentGame.updateActionQueue(actions);
-
-    // Queue<Player> players = this.currentGame.getPlayerQueue();
-    // Player player1 = players.remove();
-    // Player player2 = players.remove();
-
-    // this.currentGame.updatePlayerQueue(player2, player1);
-
-  }
 
   /**
    * Removes all intersections off the map
