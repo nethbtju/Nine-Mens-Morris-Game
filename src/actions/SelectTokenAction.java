@@ -27,7 +27,6 @@ public class SelectTokenAction implements Action {
    *
    * @param selectedIntersection The intersection selected by the user on the frontend.
    * @param player The player performing the action.
-   *
    * @return True if the Intersection is valid, false if not.
    */
   @Override
@@ -55,8 +54,8 @@ public class SelectTokenAction implements Action {
   }
 
   /**
-   * Allows for the right action to be added to the intersection for the player
-   * clicking it by seeing if it has legal moves
+   * Allows for the right action to be added to the intersection for the player clicking it by
+   * seeing if it has legal moves.
    *
    * @param selectedIntersection - The intersection the player has selected
    * @param player - The player that has selected the intersection
@@ -76,11 +75,10 @@ public class SelectTokenAction implements Action {
   }
 
   /**
-   * Allows for the tokens to be highlighted to show the user certain indications
+   * Allows for the tokens to be highlighted to show the user certain indications.
    *
    * @param result Bool - if the intersection needs to be highlighted
    * @param selectedIntersection - The intersection that needs to be highlighted or not
-   *
    */
   private void highlightRelevantTokens(boolean result, Intersection selectedIntersection) {
     selectedIntersection.unhighlightTokens();
