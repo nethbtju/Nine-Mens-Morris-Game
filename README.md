@@ -14,7 +14,7 @@ Using IntelliJ IDEA:
     - click run or Windows + R or Cmd + R
 Without using Intellij IDEA:
 
-    - Open out file labelled project.jar in the provided files
+    - Open out file labelled project.jar inside the project_jar folder located in the project files 
     - The app should run automatically and display the launch screen
 
     **DISCLAIMER** 
