@@ -4,6 +4,8 @@ import actions.*;
 import gameplayers.Capable;
 import gameplayers.GameState;
 import gameplayers.Player;
+
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,6 +13,8 @@ import java.util.Queue;
 import tokens.TokenBank;
 import tokens.TokenType;
 import tutorials.*;
+
+import javax.imageio.ImageIO;
 
 
 /** An instance of a Nine Man's Morris game. Highest level class in the game architecture. */
@@ -24,6 +28,10 @@ public class Game {
   private TutorialManager newManager = new TutorialManager();
 
   private GameState currentGamestate = GameState.TUTORIAL;
+
+  private Image blackPlayer = ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/playerBlack.png"));
+
+  private Image whitePlayer = ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/playerWhite.png"));
 
   /**
    * Constructor for the Game, initialises game backend.
@@ -42,10 +50,7 @@ public class Game {
     this.initialisePlayers();
     this.initialiseMillObservers();
     this.updatePlayTurnDisplay();
-    this.gameBoard.updatePlayerTurnDisplay("/resources/META-INF/img/BoardImages/whiteWinScreen.png");
     this.initialiseTutorials();
-
-
 
   }
 
@@ -130,19 +135,8 @@ public class Game {
     }
     }
 
-
-
-
-
-
     this.updatePlayTurnDisplay();
 
-
-
-
-
-
-    //this.updatePlayTurnDisplay();
   }
 
   /**
@@ -279,11 +273,10 @@ public class Game {
   public void updatePlayTurnDisplay() {
     Player currentPlayer = playerQueue.peek();
     TokenType playerType = currentPlayer.getTokenType();
-
     if (playerType == TokenType.WHITE) {
-      this.gameBoard.updatePlayerTurnDisplay("Player 1 Turn!");
+      this.gameBoard.updatePlayerTurnDisplay(whitePlayer);
     } else {
-      this.gameBoard.updatePlayerTurnDisplay("Player 2 Turn!");
+      this.gameBoard.updatePlayerTurnDisplay(blackPlayer);
     }
   }
 
