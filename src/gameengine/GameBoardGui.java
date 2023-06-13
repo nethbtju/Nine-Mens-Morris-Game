@@ -3,11 +3,9 @@ package gameengine;
 import java.awt.*;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Queue;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -16,10 +14,8 @@ import actions.PlaceTokenAction;
 import actions.SelectTokenAction;
 import gameplayers.GameState;
 import gameplayers.Player;
-import jdk.swing.interop.SwingInterOpUtils;
 import tokens.Token;
 import tokens.TokenType;
-import actions.Action;
 import tutorials.TutorialManager;
 
 /** Represents the GameBoard in which Intersections exist. */
@@ -101,7 +97,7 @@ public class GameBoardGui extends JPanel {
   JLabel blackCoverLabel = new JLabel();
   JLabel whiteCoverLabel = new JLabel();
 
-  private Image buttonImage =
+  private Image toggleImage =
       ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
 
   private int totalTokens = 9;
@@ -282,8 +278,8 @@ public class GameBoardGui extends JPanel {
     frame.setVisible(true);
   }
 
-  public void setButtonImage(Image buttonImage) {
-    this.buttonImage = buttonImage;
+  public void setToggleImage(Image toggleImage) {
+    this.toggleImage = toggleImage;
   }
 
   private void initialiseToggleHintButton() {
@@ -302,7 +298,7 @@ public class GameBoardGui extends JPanel {
       System.out.println("enable");
       this.disableMoveHinting();
       try {
-        setButtonImage(
+        setToggleImage(
             ImageIO.read(
                 getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png")));
       } catch (IOException e) {
@@ -310,12 +306,12 @@ public class GameBoardGui extends JPanel {
       }
       button.setIcon(
           new ImageIcon(
-              new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(toggleImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
       button.setBackground(Color.BLUE);
       add(button);
     } else if (this.currentGame.getGameState() == GameState.TUTORIAL) {
       try {
-        setButtonImage(
+        setToggleImage(
             ImageIO.read(
                 getClass().getResource("/resources/META-INF/img/BoardImages/toggleOn.png")));
       } catch (IOException e) {
@@ -323,7 +319,7 @@ public class GameBoardGui extends JPanel {
       }
       button.setIcon(
           new ImageIcon(
-              new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(toggleImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
       System.out.println("disable");
       this.enableMoveHinting();
     }
@@ -560,7 +556,7 @@ public class GameBoardGui extends JPanel {
     this.hasMoveHinting = !this.hasMoveHinting;
     if (this.hasMoveHinting) {
       try {
-        buttonImage =
+        toggleImage =
             ImageIO.read(
                 getClass().getResource("/resources/META-INF/img/BoardImages/toggleOn.png"));
       } catch (IOException e) {
@@ -568,10 +564,10 @@ public class GameBoardGui extends JPanel {
       }
       button.setIcon(
           new ImageIcon(
-              new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(toggleImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
     } else {
       try {
-        buttonImage =
+        toggleImage =
             ImageIO.read(
                 getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
       } catch (IOException e) {
@@ -579,7 +575,7 @@ public class GameBoardGui extends JPanel {
       }
       button.setIcon(
           new ImageIcon(
-              new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(toggleImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
     }
   }
 
