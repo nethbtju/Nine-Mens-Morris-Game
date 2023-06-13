@@ -6,13 +6,10 @@ import actions.SelectTokenAction;
 import gameengine.Game;
 import gameengine.GameBoardGui;
 
-/**
- * A tutorial for moving a Token to any space if a Player has only 3 tokens left on the board and
- * has already placed all of their Tokens.
- */
-public class JumpTokenTutorial extends TutorialState {
+/** A Tutorial for winning the game by blocking the opponent from making any legal moves. */
+public class NoLegalMovesWinTutorial extends TutorialState {
 
-  public JumpTokenTutorial(
+  public NoLegalMovesWinTutorial(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     super(currentGame, currentGameBoard, backgroundImagePath);
   }
@@ -27,14 +24,15 @@ public class JumpTokenTutorial extends TutorialState {
 
   @Override
   public void setTokens() {
-    int[][] coordinates = {{3, 0}, {22, 0}, {0, 0}, {13, 1}, {10, 1}, {5, 1}, {4, 1}};
+    int[][] coordinates = {{0, 0}, {9, 0}, {10, 0}, {1, 0}, {2, 1}, {4, 1}, {3, 1}, {13, 1}};
     super.setTokens(coordinates);
   }
 
   @Override
   public void setLegalIntersections() {
-    int[] highlightCoordinates = {22};
-    super.setAllAsLegal();
+    int[] coordinates = {3, 14};
+    int[] highlightCoordinates = {3};
+    super.setAsTutorialLegal(coordinates);
     super.highLightIntersection(highlightCoordinates);
   }
 
@@ -46,13 +44,14 @@ public class JumpTokenTutorial extends TutorialState {
 
   @Override
   public void setPlayerQueue() {
-    super.updatePlayerQueue(true, 3, 4);
+    super.updatePlayerQueue(false, 4, 4);
   }
 
   @Override
   public void setCaption() {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();
     currentGameBoard.changeCaptionString(
-        "Select a Token with only two remaining, then jump it to anywhere.");
+        "Block your opponent's last legal move option and win the game."
+    );
   }
 }
