@@ -103,6 +103,7 @@ public class GameBoardGui extends JPanel {
 
   private Image buttonImage =
       ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
+
   private int totalTokens = 9;
   private boolean hasMoveHinting = false;
 
@@ -359,7 +360,7 @@ public class GameBoardGui extends JPanel {
     Image winnerImage = null;
     try {
       winnerImage = ImageIO.read(
-                      getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
+                      getClass().getResource(winningPlayerColour));
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -374,7 +375,7 @@ public class GameBoardGui extends JPanel {
 
   /** Updates the display with which player is currently playing */
   public void updatePlayerTurnDisplay(String newDisplay) {
-    this.winningPlayerDisplay("white");
+    //this.winningPlayerDisplay("white");
     this.validate();
     this.repaint();
   }
