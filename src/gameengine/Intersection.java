@@ -251,16 +251,12 @@ public class Intersection extends JButton implements ActionListener {
     return this.tutorialLockedState;
   }
 
-  /**
-   * Lock the tutorial state
-   */
+  /** Lock the tutorial state */
   public void lockTutorialState() {
     this.tutorialLockedState = true;
   }
 
-  /**
-   * unlock the tutorial state
-   */
+  /** unlock the tutorial state */
   public void unlockTutorialState() {
     this.tutorialLockedState = false;
   }
@@ -272,12 +268,5 @@ public class Intersection extends JButton implements ActionListener {
    */
   public String getKey() {
     return String.valueOf(this.coordinates[0]) + this.coordinates[1];
-  }
-
-  // TODO: get rid of this?
-  public boolean equals(Intersection target) {
-    System.out.println(target.getKey());
-    System.out.println(this.getKey());
-    return target.getKey() == this.getKey();
   }
 }
