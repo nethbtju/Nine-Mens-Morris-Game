@@ -73,7 +73,6 @@ public class Game {
       }
       this.actionQueue.remove();
     }
-    System.out.println("playerTokenCount");
 
     if (!currentPlayer.getTokenBank().isEmpty()) {
       try {

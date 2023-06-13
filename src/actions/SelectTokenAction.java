@@ -23,17 +23,17 @@ public class SelectTokenAction implements Action {
   }
 
   /**
-   * Checks if the intersection is valid by seeing if it is empty
+   * Checks if the intersection is valid to select.
    *
    * @param selectedIntersection The intersection selected by the user on the frontend.
    * @param player The player performing the action.
    *
-   * @return
+   * @return True if the Intersection is valid, false if not.
    */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
-    if(player.getCurrentGameState() == GameState.TUTORIAL && selectedIntersection.isTutorialLockedState()){
-      System.out.println("fooksskae");
+    if (player.getCurrentGameState() == GameState.TUTORIAL
+        && selectedIntersection.isTutorialLockedState()) {
       return false;
     }
 
@@ -49,27 +49,25 @@ public class SelectTokenAction implements Action {
       }
     }
 
-
     boolean result = this.setForRelevantAction(selectedIntersection, player);
     this.highlightRelevantTokens(result, selectedIntersection);
     return result;
   }
 
-  private boolean setForRelevantAction(Intersection selectedIntersection, Player player){
+  private boolean setForRelevantAction(Intersection selectedIntersection, Player player) {
     boolean result;
     Capable currentCapability = player.getCurrentCapability();
 
-    if(currentCapability == Capable.JUMPABLE) {
+    if (currentCapability == Capable.JUMPABLE) {
       result = selectedIntersection.setLegalJumpMoves();
-    }
-    else {
+    } else {
       result = selectedIntersection.setLegalMoves();
     }
     System.out.println(result);
     return result;
   }
 
-  private void highlightRelevantTokens(boolean result, Intersection selectedIntersection){
+  private void highlightRelevantTokens(boolean result, Intersection selectedIntersection) {
     selectedIntersection.unhighlightTokens();
     if (result) {
       selectedIntersection.highlightSelectedTokenLegal();
@@ -77,6 +75,4 @@ public class SelectTokenAction implements Action {
       selectedIntersection.highlightSelectedTokenIllegal();
     }
   }
-
-
 }
