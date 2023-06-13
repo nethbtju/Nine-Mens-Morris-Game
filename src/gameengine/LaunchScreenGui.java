@@ -15,6 +15,11 @@ import java.io.IOException;
 public class LaunchScreenGui extends JPanel implements ActionListener {
     private Image backgroundImage;
 
+    /**
+     * Launch the GUI game screen when the application is launched
+     *
+     * @throws IOException if the image path could not return the background image
+     */
     public LaunchScreenGui() throws IOException {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         String path = "/resources/META-INF/img/BoardImages/LaunchScreen.png";
@@ -24,6 +29,11 @@ public class LaunchScreenGui extends JPanel implements ActionListener {
         this.setLayout(null);
     }
 
+    /**
+     * Paint the GUI components on the background
+     *
+     * @param g - the graphics
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -46,6 +56,14 @@ public class LaunchScreenGui extends JPanel implements ActionListener {
         frame.setVisible(true);
     }
 
+    /**
+     * Setting up the main screen buttons
+     *
+     * @param x - x coordinate of the button
+     * @param y - y coordinate of the button
+     * @param newGameState - Which game state the button leads to
+     * @return the new button
+     */
     public JButton newButton(int x, int y, GameState newGameState) {
         JButton button = new JButton();
         button.setLocation(x, y);
@@ -68,6 +86,7 @@ public class LaunchScreenGui extends JPanel implements ActionListener {
        return button;
     }
 
+    // TODO: get rid of this?
     public JButton playTutorialButton() {
         JButton button = new JButton();
         button.setLocation(300, 500);
@@ -90,8 +109,11 @@ public class LaunchScreenGui extends JPanel implements ActionListener {
         return button;
     }
 
-
-
+    /**
+     * Start the game by creating a new instance of the Game class
+     *
+     * @param gameState - the game state that is executed
+     */
     public void startGame(GameState gameState){
         try {
             Game theGame = new Game(gameState);
@@ -111,6 +133,12 @@ public class LaunchScreenGui extends JPanel implements ActionListener {
         //
     }
 
+    /**
+     * If the user clicks the start game button, the game is initialised as normal
+     *
+     * @param e - the action performed with the button
+     * @param newGameState - The new game state to be executed
+     */
     private void initialiseGame(ActionEvent e, GameState newGameState){
         JComponent comp = (JComponent) e.getSource();
         Window win = SwingUtilities.getWindowAncestor(comp);

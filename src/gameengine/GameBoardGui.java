@@ -770,15 +770,20 @@ public class GameBoardGui extends JPanel {
   }
 
   /**
+   * Get the intersection keys
    *
-   * @param index
-   * @return
+   * @param index - the index of the key needed
+   * @return key of the coordinates
    */
   public String getIntersectionKey(int index) {
     return String.valueOf(COORDINATES[index][0]) + COORDINATES[index][1];
   }
 
 
+  /**
+   * Lock all the intersections of the tutorial
+   *
+   */
   public void setAllAsTutorialLocked() {
     for (String key : this.intersectionMap.keySet()) {
       Intersection current = this.intersectionMap.get(key);
@@ -786,6 +791,9 @@ public class GameBoardGui extends JPanel {
     }
   }
 
+  /**
+   * set up the tutorial toggle next and prev buttons on the gameboard GUI
+   */
   public void initialiseTutorialButtons() {
     if (this.currentGame.getGameState() == GameState.TUTORIAL) {
       TutorialManager currentManager = this.currentGame.getTutorialManager();
@@ -840,6 +848,11 @@ public class GameBoardGui extends JPanel {
     }
   }
 
+  /**
+   * Shift the tutorials to the previous tutorial state
+   *
+   * @param currentButton - the prev button
+   */
   public void executePreviousTutorial(JButton currentButton) {
     TutorialManager currentManager = this.currentGame.getTutorialManager();
     boolean isPastEnd = currentManager.isPastEnd;
@@ -863,6 +876,12 @@ public class GameBoardGui extends JPanel {
     currentManager.executePrevious();
   }
 
+  /**
+   * Shift the game state to the next tutorial
+   *
+   * @param currentButton - clicked button
+   * @param e - action that needs to be executed
+   */
   public void executeNextTutorial(JButton currentButton, ActionEvent e) {
     TutorialManager currentManager = this.currentGame.getTutorialManager();
     boolean isAtEnd = currentManager.isAtEnd();

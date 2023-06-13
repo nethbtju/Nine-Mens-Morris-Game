@@ -66,6 +66,7 @@ public class Player {
    *
    * @return Token that the player has
    */
+  // TODO: get rid of this?
   public Token peekTokenInHand() {
     if (this.tokenInHand != null) {
       Token token = this.tokenInHand;

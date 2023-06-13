@@ -242,22 +242,39 @@ public class Intersection extends JButton implements ActionListener {
     this.currentGame.decrementOpposingPlayerTokenCount();
   }
 
+  /**
+   * checks if the tutorial states are locked or not
+   *
+   * @return Bool whether the state is locked or not
+   */
   public boolean isTutorialLockedState() {
     return this.tutorialLockedState;
   }
 
+  /**
+   * Lock the tutorial state
+   */
   public void lockTutorialState() {
     this.tutorialLockedState = true;
   }
 
+  /**
+   * unlock the tutorial state
+   */
   public void unlockTutorialState() {
     this.tutorialLockedState = false;
   }
 
+  /**
+   * Get the get of the intersection coordinates
+   *
+   * @return string of the coordinates
+   */
   public String getKey() {
     return String.valueOf(this.coordinates[0]) + this.coordinates[1];
   }
 
+  // TODO: get rid of this?
   public boolean equals(Intersection target) {
     System.out.println(target.getKey());
     System.out.println(this.getKey());
