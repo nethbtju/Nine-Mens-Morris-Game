@@ -3,9 +3,11 @@ package gameengine;
 import java.awt.*;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Queue;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -14,8 +16,10 @@ import actions.PlaceTokenAction;
 import actions.SelectTokenAction;
 import gameplayers.GameState;
 import gameplayers.Player;
+import jdk.swing.interop.SwingInterOpUtils;
 import tokens.Token;
 import tokens.TokenType;
+import actions.Action;
 import tutorials.TutorialManager;
 
 /** Represents the GameBoard in which Intersections exist. */
@@ -24,83 +28,80 @@ public class GameBoardGui extends JPanel {
   private Image backgroundImage;
 
   private final int[] X = {
-    208, 208, 208, 265, 265, 265, 320, 320, 320, 375, 542, 430, 487, 542, 375, 375, 430, 430, 375,
-    375, 375, 542, 487, 487
+          208, 208, 208, 265, 265, 265, 320, 320, 320, 375, 542, 430, 487, 542, 375, 375, 430, 430, 375,
+          375, 375, 542, 487, 487
   };
   private final int[] Y = {
-    178, 343, 508, 234, 343, 452, 288, 343, 398, 178, 178, 343, 343, 343, 234, 288, 288, 398, 398,
-    452, 508, 508, 452, 234
+          178, 343, 508, 234, 343, 452, 288, 343, 398, 178, 178, 343, 343, 343, 234, 288, 288, 398, 398,
+          452, 508, 508, 452, 234
   };
   private final Game currentGame;
 
   private final int[][] COORDINATES = {
-    {0, 0, 3, 3, 0},
-    {0, 3, 1, 3, 1},
-    {0, 6, 3, 3, 2},
-    {1, 1, 2, 2, 3},
-    {1, 3, 1, 2, 4},
-    {1, 5, 2, 2, 5},
-    {2, 2, 1, 1, 6},
-    {2, 3, 1, 1, 7},
-    {2, 4, 1, 1, 8},
-    {3, 0, 3, 1, 9},
-    {6, 0, 3, 3, 10},
-    {4, 3, 1, 1, 11},
-    {5, 3, 1, 2, 12},
-    {6, 3, 1, 3, 13},
-    {3, 1, 2, 1, 14},
-    {3, 2, 1, 1, 15},
-    {4, 2, 1, 1, 16},
-    {4, 4, 1, 1, 17},
-    {3, 4, 1, 1, 18},
-    {3, 5, 2, 1, 19},
-    {3, 6, 3, 1, 20},
-    {6, 6, 3, 3, 21},
-    {5, 5, 2, 2, 22},
-    {5, 1, 2, 2, 23}
+          {0, 0, 3, 3, 0},
+          {0, 3, 1, 3, 1},
+          {0, 6, 3, 3, 2},
+          {1, 1, 2, 2, 3},
+          {1, 3, 1, 2, 4},
+          {1, 5, 2, 2, 5},
+          {2, 2, 1, 1, 6},
+          {2, 3, 1, 1, 7},
+          {2, 4, 1, 1, 8},
+          {3, 0, 3, 1, 9},
+          {6, 0, 3, 3, 10},
+          {4, 3, 1, 1, 11},
+          {5, 3, 1, 2, 12},
+          {6, 3, 1, 3, 13},
+          {3, 1, 2, 1, 14},
+          {3, 2, 1, 1, 15},
+          {4, 2, 1, 1, 16},
+          {4, 4, 1, 1, 17},
+          {3, 4, 1, 1, 18},
+          {3, 5, 2, 1, 19},
+          {3, 6, 3, 1, 20},
+          {6, 6, 3, 3, 21},
+          {5, 5, 2, 2, 22},
+          {5, 1, 2, 2, 23}
   };
   // public void addIntialBlackCovers(int xBound, int yBound, int width, int height)
   // 5
   private final int[][] blackCovers = {
-    {125, 278, 68, 180},
-    {127, 279, 60, 180},
-    {125, 278, 60, 180},
-    {123, 276, 67, 180},
-    {121, 276, 72, 180},
-    {117, 278, 73, 180},
-    {117, 279, 72, 180},
-    {121, 279, 71, 180},
-    {121, 276, 71, 180}
+          {125, 278, 68, 180},
+          {127, 279, 60, 180},
+          {125, 278, 60, 180},
+          {123, 276, 67, 180},
+          {121, 276, 72, 180},
+          {117, 278, 73, 180},
+          {117, 279, 72, 180},
+          {121, 279, 71, 180},
+          {121, 276, 71, 180}
   };
   private final int[][] whiteCovers = {
-    {615, 277, 65, 180},
-    {615, 277, 65, 180},
-    {612, 277, 65, 180},
-    {611, 275, 67, 180},
-    {609, 275, 70, 178},
-    {609, 277, 68, 180},
-    {609, 277, 65, 180},
-    {609, 277, 65, 180},
-    {609, 275, 65, 179}
+          {615, 277, 65, 180},
+          {615, 277, 65, 180},
+          {612, 277, 65, 180},
+          {611, 275, 67, 180},
+          {609, 275, 70, 178},
+          {609, 277, 68, 180},
+          {609, 277, 65, 180},
+          {609, 277, 65, 180},
+          {609, 275, 65, 179}
   };
 
   HashMap<String, Intersection> intersectionMap = new HashMap<>();
 
-  private String player = "";
+  private String winnerDisplayerString = "";
 
   private Image blackTokenCover =
-      ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/TokenCover0.png"));
+          ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/TokenCover0.png"));
   private Image whiteTokenCover =
-      ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/TokenCover0.png"));
+          ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/TokenCover0.png"));
 
   JLabel blackCoverLabel = new JLabel();
   JLabel whiteCoverLabel = new JLabel();
 
-  JLabel playerDisplay = new JLabel();
-
   private Image buttonImage =
-      ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
-
+          ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
 
   private boolean hasMoveHinting = false;
 
@@ -121,11 +122,6 @@ public class GameBoardGui extends JPanel {
     this.initialiseTutorialButtons();
     int[] blackCover = blackCovers[0];
     int[] whiteCover = whiteCovers[0];
-
-    playerDisplay.setLocation(300, 600);
-    playerDisplay.setSize(200, 50);
-    playerDisplay.setOpaque(false);
-
     this.addIntialBlackCovers(blackCover[0], blackCover[1], blackCover[2], blackCover[3]);
     this.addIntialWhiteCovers(whiteCover[0], whiteCover[1], whiteCover[2], whiteCover[3]);
 
@@ -141,10 +137,10 @@ public class GameBoardGui extends JPanel {
     blackCoverLabel.setOpaque(false);
 
     blackCoverLabel.setIcon(
-        new ImageIcon(
-            new ImageIcon(blackTokenCover)
-                .getImage()
-                .getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+            new ImageIcon(
+                    new ImageIcon(blackTokenCover)
+                            .getImage()
+                            .getScaledInstance(width, height, Image.SCALE_SMOOTH)));
 
     add(blackCoverLabel, 1);
   }
@@ -158,10 +154,10 @@ public class GameBoardGui extends JPanel {
     whiteCoverLabel.setOpaque(false);
 
     whiteCoverLabel.setIcon(
-        new ImageIcon(
-            new ImageIcon(whiteTokenCover)
-                .getImage()
-                .getScaledInstance(width, height, Image.SCALE_SMOOTH)));
+            new ImageIcon(
+                    new ImageIcon(whiteTokenCover)
+                            .getImage()
+                            .getScaledInstance(width, height, Image.SCALE_SMOOTH)));
     add(whiteCoverLabel, 0);
   }
 
@@ -220,7 +216,7 @@ public class GameBoardGui extends JPanel {
     button.setBorderPainted(false);
     button.setFocusPainted(false);
     button.setIcon(
-        new ImageIcon(new ImageIcon("").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+            new ImageIcon(new ImageIcon("").getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
     button.addActionListener(button);
     return button;
   }
@@ -273,27 +269,27 @@ public class GameBoardGui extends JPanel {
       this.disableMoveHinting();
       try {
         setButtonImage(
-            ImageIO.read(
-                getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png")));
+                ImageIO.read(
+                        getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png")));
       } catch (IOException e) {
         e.printStackTrace();
       }
       button.setIcon(
-          new ImageIcon(
-              new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(
+                      new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
       button.setBackground(Color.BLUE);
       add(button);
     } else if (this.currentGame.getGameState() == GameState.TUTORIAL) {
       try {
         setButtonImage(
-            ImageIO.read(
-                getClass().getResource("/resources/META-INF/img/BoardImages/toggleOn.png")));
+                ImageIO.read(
+                        getClass().getResource("/resources/META-INF/img/BoardImages/toggleOn.png")));
       } catch (IOException e) {
         e.printStackTrace();
       }
       button.setIcon(
-          new ImageIcon(
-              new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(
+                      new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
       System.out.println("disable");
       this.enableMoveHinting();
     }
@@ -308,9 +304,7 @@ public class GameBoardGui extends JPanel {
    */
   public void showWinnerDisplay(String image) {
     setWinnerDisplayerString(image);
-    remove(blackCoverLabel);
-    remove(whiteCoverLabel);
-    add(winningPlayerDisplay(player));
+    add(winningPlayerDisplay(winnerDisplayerString));
   }
 
   /**
@@ -319,7 +313,7 @@ public class GameBoardGui extends JPanel {
    * @param winnerDisplayerString - string image path from root
    */
   public void setWinnerDisplayerString(String winnerDisplayerString) {
-    this.player = winnerDisplayerString;
+    this.winnerDisplayerString = winnerDisplayerString;
   }
 
   /**
@@ -330,30 +324,22 @@ public class GameBoardGui extends JPanel {
    */
   public JLabel winningPlayerDisplay(String winningPlayerColour) {
     String winnerImage = winningPlayerColour;
-    Image winner = null;
-    try {
-      winner = ImageIO.read(getClass().getResource(winnerImage));
-    } catch (IOException e) {
-      System.out.println("Could not white token fetch image");
-    }
     JLabel winLabel = new JLabel();
     winLabel.setLocation(150, 260);
     winLabel.setSize(500, 200);
     winLabel.setOpaque(false);
     winLabel.setIcon(
-        new ImageIcon(
-            new ImageIcon(winner).getImage().getScaledInstance(500, 200, Image.SCALE_SMOOTH)));
+            new ImageIcon(
+                    new ImageIcon(winnerImage).getImage().getScaledInstance(500, 200, Image.SCALE_SMOOTH)));
     return winLabel;
   }
 
   /** Updates the display with which player is currently playing */
-  public void updatePlayerTurnDisplay(Image newDisplay) {
-    playerDisplay.setIcon(
-            new ImageIcon(
-                    new ImageIcon(newDisplay).getImage().getScaledInstance(200, 50, Image.SCALE_SMOOTH)));
-    add(playerDisplay);
+  public void updatePlayerTurnDisplay(String newDisplay) {
+    this.winningPlayerDisplay("white");
+    this.validate();
+    this.repaint();
   }
-
 
   /**
    * Attach a single MillObserver to a set of Intersections by specifying their keys.
@@ -398,7 +384,7 @@ public class GameBoardGui extends JPanel {
    */
   @SuppressWarnings("checkstyle:LocalVariableName")
   public boolean setLegalIntersections(
-      Intersection selectedIntersection, boolean updateIntersection) {
+          Intersection selectedIntersection, boolean updateIntersection) {
     System.out.println("legaltoken");
     int[] selectedCoordinates = selectedIntersection.getCoordinates();
     int xShift = selectedCoordinates[2];
@@ -506,7 +492,7 @@ public class GameBoardGui extends JPanel {
       Intersection current = intersectionMap.get(key);
       if (current.peekToken() != null) {
         if (current.peekToken().getTokenType() == playerTokenType
-            && this.setLegalIntersections(current, false)) {
+                && this.setLegalIntersections(current, false)) {
           hasLegalMoves = true;
         }
       }
@@ -520,7 +506,7 @@ public class GameBoardGui extends JPanel {
         Intersection current = intersectionMap.get(key);
         if (current.peekToken() != null) {
           if (current.peekToken().getTokenType() == attackedTokenType
-              && (!current.getMillState() || isMillRemove)) {
+                  && (!current.getMillState() || isMillRemove)) {
             current.highlightSelectedTokenLegal();
           }
         }
@@ -534,25 +520,25 @@ public class GameBoardGui extends JPanel {
     if (this.hasMoveHinting) {
       try {
         buttonImage =
-            ImageIO.read(
-                getClass().getResource("/resources/META-INF/img/BoardImages/toggleOn.png"));
+                ImageIO.read(
+                        getClass().getResource("/resources/META-INF/img/BoardImages/toggleOn.png"));
       } catch (IOException e) {
         e.printStackTrace();
       }
       button.setIcon(
-          new ImageIcon(
-              new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(
+                      new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
     } else {
       try {
         buttonImage =
-            ImageIO.read(
-                getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
+                ImageIO.read(
+                        getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
       } catch (IOException e) {
         e.printStackTrace();
       }
       button.setIcon(
-          new ImageIcon(
-              new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(
+                      new ImageIcon(buttonImage).getImage().getScaledInstance(90, 40, Image.SCALE_SMOOTH)));
     }
   }
 
@@ -569,30 +555,30 @@ public class GameBoardGui extends JPanel {
 
     Intersection current = this.intersectionMap.get("00");
     current.setToken(
-        new Token(
-            TokenType.BLACK,
-            "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
+            new Token(
+                    TokenType.BLACK,
+                    "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
+                    "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
+                    "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
+                    "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
 
     Intersection current2 = this.intersectionMap.get("03");
     current2.setToken(
-        new Token(
-            TokenType.BLACK,
-            "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
+            new Token(
+                    TokenType.BLACK,
+                    "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
+                    "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
+                    "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
+                    "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
 
     Intersection current3 = this.intersectionMap.get("06");
     current3.setToken(
-        new Token(
-            TokenType.BLACK,
-            "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
-            "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
+            new Token(
+                    TokenType.BLACK,
+                    "/resources/META-INF/img/BoardImages/BlackTokenPlain.png",
+                    "/resources/META-INF/img/BoardImages/BlackTokenSelected.png",
+                    "/resources/META-INF/img/BoardImages/BlackTokenIllegal.png",
+                    "/resources/META-INF/img/BoardImages/BlackTokenMill.png"));
 
     // this.currentGame.updateActionQueue();
 
@@ -641,7 +627,7 @@ public class GameBoardGui extends JPanel {
   public void addNewIntersections(int[] indexes) {
     for (int currentIndex : indexes) {
       String intersectionKey =
-          String.valueOf(COORDINATES[currentIndex][0]) + COORDINATES[currentIndex][1];
+              String.valueOf(COORDINATES[currentIndex][0]) + COORDINATES[currentIndex][1];
       System.out.println("Adding intersection at:" + intersectionKey);
 
       Intersection button = this.newButton(X[currentIndex], Y[currentIndex], COORDINATES[2]);
@@ -696,14 +682,14 @@ public class GameBoardGui extends JPanel {
       Image tutPrev = null;
       try {
         tutPrev =
-            ImageIO.read(
-                getClass().getResource("/resources/META-INF/img/BoardImages/tutorialPrev.png"));
+                ImageIO.read(
+                        getClass().getResource("/resources/META-INF/img/BoardImages/tutorialPrev.png"));
       } catch (IOException e) {
         e.printStackTrace();
       }
       button.setIcon(
-          new ImageIcon(
-              new ImageIcon(tutPrev).getImage().getScaledInstance(160, 38, Image.SCALE_SMOOTH)));
+              new ImageIcon(
+                      new ImageIcon(tutPrev).getImage().getScaledInstance(160, 38, Image.SCALE_SMOOTH)));
       button.setBackground(Color.BLUE);
       add(button);
 
@@ -719,14 +705,14 @@ public class GameBoardGui extends JPanel {
       Image tutNext = null;
       try {
         tutNext =
-            ImageIO.read(
-                getClass().getResource("/resources/META-INF/img/BoardImages/tutorialNext.png"));
+                ImageIO.read(
+                        getClass().getResource("/resources/META-INF/img/BoardImages/tutorialNext.png"));
       } catch (IOException e) {
         e.printStackTrace();
       }
       button2.setIcon(
-          new ImageIcon(
-              new ImageIcon(tutNext).getImage().getScaledInstance(160, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(
+                      new ImageIcon(tutNext).getImage().getScaledInstance(160, 40, Image.SCALE_SMOOTH)));
       button2.setBackground(Color.BLUE);
       add(button2);
 
@@ -743,14 +729,14 @@ public class GameBoardGui extends JPanel {
       Image tutNext = null;
       try {
         tutNext =
-            ImageIO.read(
-                getClass().getResource("/resources/META-INF/img/BoardImages/tutorialNext.png"));
+                ImageIO.read(
+                        getClass().getResource("/resources/META-INF/img/BoardImages/tutorialNext.png"));
       } catch (IOException e) {
         e.printStackTrace();
       }
       currentButton.setIcon(
-          new ImageIcon(
-              new ImageIcon(tutNext).getImage().getScaledInstance(160, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(
+                      new ImageIcon(tutNext).getImage().getScaledInstance(160, 40, Image.SCALE_SMOOTH)));
       currentButton.setBackground(Color.BLUE);
       System.out.println("ADGADGADGADG");
     }
@@ -783,14 +769,14 @@ public class GameBoardGui extends JPanel {
       Image homeScreen = null;
       try {
         homeScreen =
-            ImageIO.read(
-                getClass().getResource("/resources/META-INF/img/BoardImages/mainScreen.png"));
+                ImageIO.read(
+                        getClass().getResource("/resources/META-INF/img/BoardImages/mainScreen.png"));
       } catch (IOException e2) {
         e2.printStackTrace();
       }
       currentButton.setIcon(
-          new ImageIcon(
-              new ImageIcon(homeScreen).getImage().getScaledInstance(160, 40, Image.SCALE_SMOOTH)));
+              new ImageIcon(
+                      new ImageIcon(homeScreen).getImage().getScaledInstance(160, 40, Image.SCALE_SMOOTH)));
       currentButton.setBackground(Color.BLUE);
       System.out.println("at end");
     }
