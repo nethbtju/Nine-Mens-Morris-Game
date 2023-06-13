@@ -343,6 +343,9 @@ public class Game {
     this.newManager.add(
         new TwoTokenWinTutorial(
             this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
+    this.newManager.add(
+        new NoLegalMovesWinTutorial(
+            this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
 
     if (this.currentGamestate == GameState.TUTORIAL) {
       this.newManager.executeNext();
