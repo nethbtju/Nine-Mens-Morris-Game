@@ -82,6 +82,12 @@ public class Game {
       }
     }
 
+    Player poppedCurrentPlayer = playerQueue.remove();
+    Player opposingPlayer = playerQueue.remove();
+    this.checkIfGameOver(opposingPlayer);
+    playerQueue.add(poppedCurrentPlayer);
+    playerQueue.add(opposingPlayer);
+
     if (this.actionQueue.isEmpty()) {
       System.out.println(x);
       this.gameBoard.setAllAsTutorialLocked();
@@ -245,10 +251,9 @@ public class Game {
    */
   public boolean checkPlayerLose(Player player) {
     int currentPlayerTokens = player.getTokenCount();
-    System.out.println("tutorial mode");
-    System.out.println(currentPlayerTokens);
     return (currentPlayerTokens < 3 && player.getTokenBank().isEmpty())
-        || !this.gameBoard.hasAnyLegalMoves(player.getTokenType());
+        || (!this.gameBoard.hasAnyLegalMoves(player.getTokenType())
+            && player.getTokenBank().isEmpty());
   }
 
   /**
@@ -333,8 +338,8 @@ public class Game {
         new RemoveMillTokenTutorial(
             this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
     this.newManager.add(
-        new JumpTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png")
-    );
+        new JumpTokenTutorial(
+            this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
     this.newManager.add(
         new TwoTokenWinTutorial(
             this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
