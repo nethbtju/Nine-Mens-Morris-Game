@@ -27,7 +27,7 @@ public class JumpTokenTutorial extends TutorialState {
 
   @Override
   public void setTokens() {
-    int[][] coordinates = {{3, 0}, {22, 0}, {13, 1}, {10, 1}, {5, 1}, {4, 1}};
+    int[][] coordinates = {{3, 0}, {22, 0}, {0, 0}, {13, 1}, {10, 1}, {5, 1}, {4, 1}};
     super.setTokens(coordinates);
   }
 
@@ -46,7 +46,7 @@ public class JumpTokenTutorial extends TutorialState {
 
   @Override
   public void setPlayerQueue() {
-    super.updatePlayerQueue(true, 2, 4);
+    super.updatePlayerQueue(true, 3, 4);
   }
 
   @Override
