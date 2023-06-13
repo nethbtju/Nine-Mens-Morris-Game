@@ -139,7 +139,7 @@ public class GameBoardGui extends JPanel {
     label.setLocation(240,587);
     label.setSize(320, 70);
     //label.setBackground(Color.BLUE);
-    label.setOpaque(true);
+    //label.setOpaque(true);
     label.setFont(new Font("BM Hanna 11yrs Old", Font.BOLD, 20));
     add(label);
 
