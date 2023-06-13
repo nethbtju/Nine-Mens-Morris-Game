@@ -37,6 +37,8 @@ public class GameBoardGui extends JPanel {
   };
   private final Game currentGame;
 
+  private JLabel winLabel = new JLabel();
+
   private final int[][] COORDINATES = {
     {0, 0, 3, 3, 0},
     {0, 3, 1, 3, 1},
@@ -63,8 +65,7 @@ public class GameBoardGui extends JPanel {
     {5, 5, 2, 2, 22},
     {5, 1, 2, 2, 23}
   };
-  // public void addIntialBlackCovers(int xBound, int yBound, int width, int height)
-  // 5
+
   private final int[][] blackCovers = {
     {125, 278, 68, 180},
     {127, 279, 60, 180},
@@ -102,7 +103,7 @@ public class GameBoardGui extends JPanel {
 
   private Image buttonImage =
       ImageIO.read(getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
-
+  private int totalTokens = 9;
   private boolean hasMoveHinting = false;
 
   private JLabel captionLabel;
@@ -193,7 +194,9 @@ public class GameBoardGui extends JPanel {
     System.out.println("Updating cover");
     TokenType currentPlayer = player.getTokenType();
     int tokensLeft = player.getTokenBank().getTokensLeft();
-    int coverName = 9 - tokensLeft;
+    System.out.println("Tokens left:" + tokensLeft);
+    int coverName = totalTokens - tokensLeft;
+    System.out.println("Cover Name:" + coverName);
     if (currentPlayer == TokenType.BLACK) {
       System.out.println(coverName);
       String newimage = "/resources/META-INF/img/BoardImages/TokenCover" + coverName + ".png";
@@ -332,6 +335,8 @@ public class GameBoardGui extends JPanel {
    */
   public void showWinnerDisplay(String image) {
     setWinnerDisplayerString(image);
+    remove(blackCoverLabel);
+    remove(whiteCoverLabel);
     add(winningPlayerDisplay(winnerDisplayerString));
   }
 
@@ -351,8 +356,13 @@ public class GameBoardGui extends JPanel {
    * @return JLabel of the winning player image
    */
   public JLabel winningPlayerDisplay(String winningPlayerColour) {
-    String winnerImage = winningPlayerColour;
-    JLabel winLabel = new JLabel();
+    Image winnerImage = null;
+    try {
+      winnerImage = ImageIO.read(
+                      getClass().getResource("/resources/META-INF/img/BoardImages/toggleOff.png"));
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
     winLabel.setLocation(150, 260);
     winLabel.setSize(500, 200);
     winLabel.setOpaque(false);
