@@ -263,7 +263,7 @@ public class Game {
    * @param attackedPlayer - The current player who have been popped off the queue
    */
   public void checkIfGameOver(Player attackedPlayer) {
-    if (this.checkPlayerLose(attackedPlayer)) {
+    if (this.checkPlayerLose(attackedPlayer) && this.currentGamestate == GameState.NORMAL) {
       printWinScreen(attackedPlayer);
       this.gameBoard.killGame();
     }
