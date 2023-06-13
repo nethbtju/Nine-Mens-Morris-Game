@@ -85,44 +85,8 @@ public class Game {
     if (this.actionQueue.isEmpty()) {
       System.out.println(x);
       this.playerQueue.add(this.playerQueue.remove());
-
-      if (this.currentGamestate == GameState.TUTORIAL) {
-        this.gameBoard.setAllAsTutorialLocked();
-        if (x % 2 == 0) {}
-
-        if (x == 1) {
-          // this.newManager.executeNext();
-
-        }
-
-        if (x == 3) {
-          // this.newManager.executeNext();
-
-        }
-
-        if (x == 5) {
-          // this.newManager.executeNext();
-        }
-
-        if (x == 7) {
-          // this.newManager.executePrevious();
-        }
-
-        if (x == 9) {
-          // this.newManager.executePrevious();
-        }
-
-        if (x == 11) {
-          // this.newManager.executePrevious();
-        }
-
-        x = x + 1;
-      }
     }
-
     this.updatePlayTurnDisplay();
-
-    // this.updatePlayTurnDisplay();
   }
 
   /**
