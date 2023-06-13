@@ -54,7 +54,7 @@ public class MoveTokenTutorial extends TutorialState{
 
     @Override
     public void setPlayerQueue() {
-        super.updatePlayerQueue(false);
+        super.updatePlayerQueue(false, 7, 8);
 
     }
 

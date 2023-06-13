@@ -16,8 +16,6 @@ public class Player {
 
   private GameState currentGameState;
 
-
-
   /**
    * Constructor for Players.
    *
@@ -65,6 +63,7 @@ public class Player {
 
   /**
    * See if the player currently has a token in hand
+   *
    * @return Token that the player has
    */
   public Token peekTokenInHand() {
@@ -91,11 +90,9 @@ public class Player {
    */
   public void setTokenInHand(Token token, Intersection selectedIntersection) {
 
-
     this.selectedIntersection = selectedIntersection;
     this.tokenInHand = token;
   }
-
 
   /**
    * Get the capability of the Player that determines what Actions it can take.
@@ -112,11 +109,17 @@ public class Player {
     }
   }
 
-
-
   /** Increment the number of tokens the player has on the board. */
   public void incrementTokenCount() {
     this.tokenCount += 1;
+  }
+
+  /**
+   * Set the Player's TokenCount to a specific number. Used for game modes where the Player does has
+   * Tokens on the board that were not placed using placeTokenActions, like in TutorialStates.
+   */
+  public void setTokenCount(int tokenCount) {
+    this.tokenCount = tokenCount;
   }
 
   /** Decrement the number of tokens the player has on the board. */
@@ -125,34 +128,33 @@ public class Player {
   }
 
   /**
-   * getter of the token count
-   * @return int of tokens left
+   * Getter method for the number of Tokens the Player has on the board.
+   *
+   * @return The Player's tokenCount.
    */
   public int getTokenCount() {
     return this.tokenCount;
   }
 
-  public void returnToken(){
+  public void returnToken() {
     System.out.println(1);
 
-    if(this.hasTokenInHand()){
+    if (this.hasTokenInHand()) {
       this.selectedIntersection.setToken(this.tokenInHand);
       this.tokenInHand = null;
       this.selectedIntersection = null;
-
     }
   }
 
-  public GameState getCurrentGameState(){
+  public GameState getCurrentGameState() {
     return this.currentGameState;
   }
 
-  public void setTutorialState(){
+  public void setTutorialState() {
     this.currentGameState = GameState.TUTORIAL;
   }
 
-  public Intersection getSelectedIntersection(){
+  public Intersection getSelectedIntersection() {
     return this.selectedIntersection;
   }
-
 }
