@@ -396,7 +396,7 @@ public class Game {
     //this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
     this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
     this.newManager.add(new MoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameBoardSaturated.png"));
-    this.newManager.add(new BasicMilltoRemoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameBoardSaturated.png"));
+    this.newManager.add(new BasicMillToRemoveTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameBoardSaturated.png"));
 
     if(this.currentGamestate == GameState.TUTORIAL) {
       this.newManager.executeNext();

@@ -6,10 +6,10 @@ import actions.SelectTokenAction;
 import gameengine.Game;
 import gameengine.GameBoardGui;
 
-/** The Tutorial for moving a Token from one Intersection to another. */
-public class MoveTokenTutorial extends TutorialState {
+/** The Tutorial to remove a Token from a mill in the case that Tokens exist outside a mill. */
+public class BasicMillToRemoveTokenTutorial extends TutorialState {
 
-  public MoveTokenTutorial(
+  public BasicMillToRemoveTokenTutorial(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     super(currentGame, currentGameBoard, backgroundImagePath);
   }
@@ -19,21 +19,21 @@ public class MoveTokenTutorial extends TutorialState {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();
     currentGameBoard.removeAllIntersections();
 
-    int[] indexes = {2, 20, 21, 22};
+    int[] indexes = {2, 20, 21, 19, 22};
     currentGameBoard.addNewIntersections(indexes);
     getCurrentGame().initialiseMillObservers();
   }
 
   @Override
   public void setTokens() {
-    int[][] coordinates = {{2, 1}, {20, 1}};
+    int[][] coordinates = {{2, 1}, {19, 1}, {21, 1}, {22, 0}};
     super.setTokens(coordinates);
   }
 
   @Override
   public void setLegalIntersections() {
-    int[] coordinates = {20, 21};
-    int[] highlightCoordinates = {20};
+    int[] coordinates = {19, 20, 22};
+    int[] highlightCoordinates = {19};
     super.setAsTutorialLegal(coordinates);
     super.highLightIntersection(highlightCoordinates);
   }

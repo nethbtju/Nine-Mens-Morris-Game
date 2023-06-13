@@ -141,8 +141,8 @@ public abstract class TutorialState {
   /** Highlight a set of accessible Intersections for a Tutorial. */
   public void highLightIntersection(int[] indexes) {
     HashMap<String, Intersection> intersectionHashMap = this.currentGameBoard.getIntersectionMap();
-    for (int i = 0; i < indexes.length; i++) {
-      String intersectionKey = this.currentGameBoard.getIntersectionKey(indexes[i]);
+    for (int index : indexes) {
+      String intersectionKey = this.currentGameBoard.getIntersectionKey(index);
       Intersection current = intersectionHashMap.get(intersectionKey);
       if (!current.isEmpty()) {
         current.highlightSelectedTokenLegal();
