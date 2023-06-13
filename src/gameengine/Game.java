@@ -330,6 +330,9 @@ public class Game {
         new RemoveMillTokenTutorial(
             this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
     this.newManager.add(
+        new JumpTokenTutorial(this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png")
+    );
+    this.newManager.add(
         new TwoTokenWinTutorial(
             this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
 

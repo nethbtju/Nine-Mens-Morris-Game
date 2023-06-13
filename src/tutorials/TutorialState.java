@@ -104,6 +104,14 @@ public abstract class TutorialState {
     for (String key : intersectionHashMap.keySet()) {
       Intersection current = intersectionHashMap.get(key);
       current.unlockTutorialState();
+    }
+  }
+
+  public void setAllAsOpen() {
+    HashMap<String, Intersection> intersectionHashMap = this.currentGameBoard.getIntersectionMap();
+    for (String key : intersectionHashMap.keySet()) {
+      Intersection current = intersectionHashMap.get(key);
+      current.unlockTutorialState();
       current.highlightAsOpen();
     }
   }

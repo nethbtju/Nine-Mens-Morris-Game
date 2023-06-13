@@ -1,9 +1,7 @@
 package tutorials;
 
 import actions.Action;
-import actions.MoveTokenAction;
 import actions.PlaceTokenAction;
-import actions.SelectTokenAction;
 import gameengine.Game;
 import gameengine.GameBoardGui;
 
@@ -27,7 +25,7 @@ public class PlaceTokenTutorial extends TutorialState{
 
     @Override
     public void setLegalIntersections() {
-        super.setAllAsLegal();
+        super.setAllAsOpen();
 
 
     }

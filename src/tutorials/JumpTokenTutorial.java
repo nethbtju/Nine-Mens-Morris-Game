@@ -6,9 +6,13 @@ import actions.SelectTokenAction;
 import gameengine.Game;
 import gameengine.GameBoardGui;
 
-public class MoveTokenTutorial extends TutorialState {
+/**
+ * A tutorial for moving a Token to any space if a Player has only 3 tokens left on the board and
+ * has already placed all of their Tokens.
+ */
+public class JumpTokenTutorial extends TutorialState {
 
-  public MoveTokenTutorial(
+  public JumpTokenTutorial(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     super(currentGame, currentGameBoard, backgroundImagePath);
   }
@@ -17,24 +21,21 @@ public class MoveTokenTutorial extends TutorialState {
   public void setIntersections() {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();
     currentGameBoard.removeAllIntersections();
-
-    int[] indexes = {2, 20, 21, 22};
-    currentGameBoard.addNewIntersections(indexes);
+    currentGameBoard.addAllIntersections();
     getCurrentGame().initialiseMillObservers();
   }
 
   @Override
   public void setTokens() {
-    int[][] coordinates = {{2, 1}, {20, 1}};
+    int[][] coordinates = {{3, 0}, {22, 0}, {13, 1}, {10, 1}, {5, 1}, {4, 1}};
     super.setTokens(coordinates);
   }
 
   @Override
   public void setLegalIntersections() {
-    int[] coordinates = {20, 21};
-    int[] highlightCoords = {20};
-    super.setAsTutorialLegal(coordinates);
-    super.highLightIntersection(highlightCoords);
+    int[] highlightCoordinates = {22};
+    super.setAllAsLegal();
+    super.highLightIntersection(highlightCoordinates);
   }
 
   @Override
@@ -45,12 +46,13 @@ public class MoveTokenTutorial extends TutorialState {
 
   @Override
   public void setPlayerQueue() {
-    super.updatePlayerQueue(false, 7, 8);
+    super.updatePlayerQueue(true, 2, 4);
   }
 
   @Override
   public void setCaption() {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();
-    currentGameBoard.changeCaptionString("Select highlighted token and move to open intersection");
+    currentGameBoard.changeCaptionString(
+        "Select a Token with only two remaining, then jump it to anywhere.");
   }
 }
