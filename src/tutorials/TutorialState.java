@@ -4,23 +4,26 @@ import gameengine.Game;
 import gameengine.GameBoardGui;
 import gameengine.Intersection;
 import gameplayers.Player;
+import java.util.HashMap;
+import java.util.Queue;
 import tokens.Token;
 import tokens.TokenType;
 
-import java.util.HashMap;
-import java.util.Queue;
-
+/** A playable tutorial to teach players game mechanics. */
 public abstract class TutorialState {
 
-  private Game currentGame;
-  private GameBoardGui currentGameBoard;
+  private final Game currentGame;
+  private final GameBoardGui currentGameBoard;
+  private final String backgroundImage;
 
-  private String backgroundImage;
-
-  private Token whiteToken;
-
-  private Token blackToken;
-
+  /**
+   * Constructor for a TutorialState.
+   *
+   * @param currentGame The Game in which the Tutorial exists.
+   * @param currentGameBoard The GameBoard which is being operated on in the Tutorial.
+   * @param backgroundImagePath The image path of a background image, which is used to display a
+   *     preset GameBoard state without the need for actual objects.
+   */
   public TutorialState(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     this.currentGame = currentGame;
@@ -28,6 +31,7 @@ public abstract class TutorialState {
     this.backgroundImage = backgroundImagePath;
   }
 
+  /** Perform all tasks required to set up the game state for a concrete TutorialState. */
   public void execute() {
     this.currentGameBoard.updateBackgroundImage(this.backgroundImage);
     this.setIntersections();
@@ -38,25 +42,24 @@ public abstract class TutorialState {
     this.setCaption();
   }
 
+  /** Create the required Intersections to be used by the TutorialState. */
   public abstract void setIntersections();
 
+  /** Set the required Tokens onto the required Intersections for the given TutorialState. */
   public abstract void setTokens();
 
-  public abstract void setLegalIntersections();
-
-  public abstract void setActionQueue();
-
-  public abstract void setPlayerQueue();
-
-  public abstract void setCaption();
-
-  public void setTokens(int[][] coords) {
+  /**
+   * Sets Tokens on a given set of Intersections as defined by their coordinates.
+   *
+   * @param coordinates The coordinates of the Intersections on which to place Tokens.
+   */
+  public void setTokens(int[][] coordinates) {
     HashMap<String, Intersection> intersectionHashMap = this.currentGameBoard.getIntersectionMap();
 
-    for (int i = 0; i < coords.length; i++) {
-      int playerType = coords[i][1];
-      System.out.println(coords[i][0]);
-      String intersectionKey = this.currentGameBoard.getIntersectionKey(coords[i][0]);
+    for (int[] coordinate : coordinates) {
+      int playerType = coordinate[1];
+      System.out.println(coordinate[0]);
+      String intersectionKey = this.currentGameBoard.getIntersectionKey(coordinate[0]);
       System.out.println(intersectionKey);
       Intersection current = intersectionHashMap.get(intersectionKey);
 
@@ -82,23 +85,54 @@ public abstract class TutorialState {
     }
   }
 
+  /** Set the Intersections which a Token may move to in a given TutorialState. */
+  public abstract void setLegalIntersections();
+
+  /** Enqueue the Actions required for a given Tutorial. */
+  public abstract void setActionQueue();
+
+  /** Set the Player order for a given Tutorial. */
+  public abstract void setPlayerQueue();
+
+  /** Set a caption for the Tutorial to inform the Player of what they are being taught. */
+  public abstract void setCaption();
+
+  /**
+   * Getter method for the Game the TutorialState plays.
+   *
+   * @return The Game being played.
+   */
   public Game getCurrentGame() {
     return this.currentGame;
   }
 
+  /**
+   * Getter method for the GameBoard the TutorialState plays on.
+   *
+   * @return The GameBoard being played on.
+   */
   public GameBoardGui getCurrentGameBoard() {
     return this.currentGameBoard;
   }
 
+  /**
+   * Set an Intersection as legally accessible in this Tutorial. This is necessary as Tutorials do
+   * not instantiate every Intersection in a GameBoard found in a normal game, but only the ones
+   * that will be used for this game.
+   *
+   * @param indexes The indexes in the GameBoard COORDINATES list of the Intersections to be set as
+   *     accessible. Refer to the 9mm_coordinates.png in rough_work for a visual guide.
+   */
   public void setAsTutorialLegal(int[] indexes) {
     HashMap<String, Intersection> intersectionHashMap = this.currentGameBoard.getIntersectionMap();
-    for (int i = 0; i < indexes.length; i++) {
-      String intersectionKey = this.currentGameBoard.getIntersectionKey(indexes[i]);
+    for (int index : indexes) {
+      String intersectionKey = this.currentGameBoard.getIntersectionKey(index);
       Intersection current = intersectionHashMap.get(intersectionKey);
       current.unlockTutorialState();
     }
   }
 
+  /** Set all existing Intersections as legally accessible in this Tutorial. */
   public void setAllAsLegal() {
     HashMap<String, Intersection> intersectionHashMap = this.currentGameBoard.getIntersectionMap();
     for (String key : intersectionHashMap.keySet()) {
@@ -107,6 +141,10 @@ public abstract class TutorialState {
     }
   }
 
+  /**
+   * Set all existing Intersections as both legally accessible and open for immediate Action in this
+   * Tutorial.
+   */
   public void setAllAsOpen() {
     HashMap<String, Intersection> intersectionHashMap = this.currentGameBoard.getIntersectionMap();
     for (String key : intersectionHashMap.keySet()) {
@@ -116,6 +154,7 @@ public abstract class TutorialState {
     }
   }
 
+  /** Highlight a set of accessible Intersections for a Tutorial. */
   public void highLightIntersection(int[] indexes) {
     HashMap<String, Intersection> intersectionHashMap = this.currentGameBoard.getIntersectionMap();
     for (int i = 0; i < indexes.length; i++) {
@@ -129,6 +168,15 @@ public abstract class TutorialState {
     }
   }
 
+  /**
+   * Sets the PlayerQueue up for the tutorial to determine who goes first.
+   *
+   * @param isWhiteFirst Whether Player1 with white Tokens will play first.
+   * @param whiteTokenCount The number of Tokens player 1 (white) has on the board, both in terms of
+   *     real Tokens and any that are illustrated in the background image.
+   * @param blackTokenCount The number of Tokens player 2 (black) has on the board, both in terms of
+   *     real Tokens and any that are illustrated in the background image.
+   */
   public void updatePlayerQueue(boolean isWhiteFirst, int whiteTokenCount, int blackTokenCount) {
     Queue<Player> players = this.currentGame.getPlayerQueue();
     Player player1 = players.remove();
