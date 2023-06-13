@@ -34,13 +34,29 @@ public class GameBoardGui extends JPanel {
   private final Game currentGame;
 
   private final int[][] COORDINATES = {
-    {0, 0, 3, 3, 0}, {0, 3, 1, 3, 1}, {0, 6, 3, 3, 2}, {1, 1, 2, 2, 3}, {1, 3, 1, 2, 4},
+    {0, 0, 3, 3, 0},
+    {0, 3, 1, 3, 1},
+    {0, 6, 3, 3, 2},
+    {1, 1, 2, 2, 3},
+    {1, 3, 1, 2, 4},
     {1, 5, 2, 2, 5},
-    {2, 2, 1, 1, 6}, {2, 3, 1, 1, 7}, {2, 4, 1, 1, 8}, {3, 0, 3, 1, 9}, {6, 0, 3, 3, 10},
+    {2, 2, 1, 1, 6},
+    {2, 3, 1, 1, 7},
+    {2, 4, 1, 1, 8},
+    {3, 0, 3, 1, 9},
+    {6, 0, 3, 3, 10},
     {4, 3, 1, 1, 11},
-    {5, 3, 1, 2, 12}, {6, 3, 1, 3, 13}, {3, 1, 2, 1, 14}, {3, 2, 1, 1, 15}, {4, 2, 1, 1, 16},
+    {5, 3, 1, 2, 12},
+    {6, 3, 1, 3, 13},
+    {3, 1, 2, 1, 14},
+    {3, 2, 1, 1, 15},
+    {4, 2, 1, 1, 16},
     {4, 4, 1, 1, 17},
-    {3, 4, 1, 1, 18}, {3, 5, 2, 1, 19}, {3, 6, 3, 1, 20}, {6, 6, 3, 3, 21}, {5, 5, 2, 2, 22},
+    {3, 4, 1, 1, 18},
+    {3, 5, 2, 1, 19},
+    {3, 6, 3, 1, 20},
+    {6, 6, 3, 3, 21},
+    {5, 5, 2, 2, 22},
     {5, 1, 2, 2, 23}
   };
   // public void addIntialBlackCovers(int xBound, int yBound, int width, int height)
@@ -616,12 +632,17 @@ public class GameBoardGui extends JPanel {
     }
   }
 
+  /**
+   * Adds a specific set of Intersections to the GameBoard.
+   *
+   * @param indexes The indexes of the Intersections to be added, where each is an index of
+   *     COORDINATES.
+   */
   public void addNewIntersections(int[] indexes) {
-    for (int i = 0; i < indexes.length; i++) {
-      int currentIndex = indexes[i];
+    for (int currentIndex : indexes) {
       String intersectionKey =
           String.valueOf(COORDINATES[currentIndex][0]) + COORDINATES[currentIndex][1];
-      System.out.println(intersectionKey);
+      System.out.println("Adding intersection at:" + intersectionKey);
 
       Intersection button = this.newButton(X[currentIndex], Y[currentIndex], COORDINATES[2]);
       this.intersectionMap.put(intersectionKey, button);
