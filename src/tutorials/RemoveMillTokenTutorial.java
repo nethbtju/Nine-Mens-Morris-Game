@@ -14,6 +14,7 @@ public class RemoveMillTokenTutorial extends RemoveTokenTutorial {
     super(currentGame, currentGameBoard, backgroundImagePath);
   }
 
+  /** Create the required Intersections to be used by the TutorialState. */
   @Override
   public void setIntersections() {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();
@@ -24,6 +25,7 @@ public class RemoveMillTokenTutorial extends RemoveTokenTutorial {
     getCurrentGame().initialiseMillObservers();
   }
 
+  /** Set the required Tokens onto the required Intersections for the given TutorialState. */
   @Override
   public void setTokens() {
     int[][] coordinates = {
@@ -32,6 +34,7 @@ public class RemoveMillTokenTutorial extends RemoveTokenTutorial {
     super.setTokens(coordinates);
   }
 
+  /** Set the Intersections which a Token may move to in a given TutorialState. */
   @Override
   public void setLegalIntersections() {
     int[] coordinates = {12, 23, 0, 1, 2, 20, 21};
@@ -40,6 +43,7 @@ public class RemoveMillTokenTutorial extends RemoveTokenTutorial {
     super.highLightIntersection(highlightCoordinates);
   }
 
+  /** Set the Player order for a given Tutorial. */
   @Override
   public void setPlayerQueue() {
     super.updatePlayerQueue(false, 5, 4);

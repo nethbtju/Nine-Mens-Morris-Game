@@ -17,6 +17,7 @@ public class JumpTokenTutorial extends TutorialState {
     super(currentGame, currentGameBoard, backgroundImagePath);
   }
 
+  /** Create the required Intersections to be used by the TutorialState. */
   @Override
   public void setIntersections() {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();
@@ -25,12 +26,14 @@ public class JumpTokenTutorial extends TutorialState {
     getCurrentGame().initialiseMillObservers();
   }
 
+  /** Set the required Tokens onto the required Intersections for the given TutorialState. */
   @Override
   public void setTokens() {
     int[][] coordinates = {{3, 0}, {22, 0}, {0, 0}, {13, 1}, {10, 1}, {5, 1}, {4, 1}};
     super.setTokens(coordinates);
   }
 
+  /** Set the Intersections which a Token may move to in a given TutorialState. */
   @Override
   public void setLegalIntersections() {
     int[] highlightCoordinates = {22};
@@ -38,12 +41,14 @@ public class JumpTokenTutorial extends TutorialState {
     super.highLightIntersection(highlightCoordinates);
   }
 
+  /** Enqueue the Actions required for a given Tutorial. */
   @Override
   public void setActionQueue() {
     Action[] actionList = {new SelectTokenAction(), new MoveTokenAction()};
     this.getCurrentGame().updateActionQueue(actionList);
   }
 
+  /** Set the Player order for a given Tutorial. */
   @Override
   public void setPlayerQueue() {
     super.updatePlayerQueue(true, 3, 4);

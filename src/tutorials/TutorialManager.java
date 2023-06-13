@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/** Tutorial manager class that manages tutorial as doubly linked list. */
 public class TutorialManager {
 
     private List<TutorialState> tutorialList = new ArrayList<>();
