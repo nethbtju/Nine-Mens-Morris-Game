@@ -121,7 +121,7 @@ public abstract class TutorialState {
     }
   }
 
-  public void updatePlayerQueue(boolean isWhiteFirst) {
+  public void updatePlayerQueue(boolean isWhiteFirst, int whiteTokenCount, int blackTokenCount) {
     Queue<Player> players = this.currentGame.getPlayerQueue();
     Player player1 = players.remove();
     Player player2 = players.remove();
@@ -133,7 +133,10 @@ public abstract class TutorialState {
     }
 
     player1.setTutorialState();
+    player1.setTokenCount(whiteTokenCount);
     player2.setTutorialState();
+    player2.setTokenCount(blackTokenCount);
+
     if (isWhiteFirst) {
       this.currentGame.updatePlayerQueue(player1, player2);
     } else {

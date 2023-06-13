@@ -39,4 +39,9 @@ public class RemoveMillTokenTutorial extends RemoveTokenTutorial {
     super.setAsTutorialLegal(coordinates);
     super.highLightIntersection(highlightCoordinates);
   }
+
+  @Override
+  public void setPlayerQueue() {
+    super.updatePlayerQueue(false, 4, 5);
+  }
 }

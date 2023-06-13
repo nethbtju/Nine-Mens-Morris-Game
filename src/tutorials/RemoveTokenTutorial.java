@@ -46,7 +46,7 @@ public class RemoveTokenTutorial extends TutorialState {
 
   @Override
   public void setPlayerQueue() {
-    super.updatePlayerQueue(false);
+    super.updatePlayerQueue(false, 8, 9);
   }
 
   @Override

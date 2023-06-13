@@ -40,7 +40,7 @@ public class PlaceTokenTutorial extends TutorialState{
 
     @Override
     public void setPlayerQueue() {
-        super.updatePlayerQueue(true);
+        super.updatePlayerQueue(true, 0, 0);
     }
 
     @Override
