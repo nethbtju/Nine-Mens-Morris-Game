@@ -10,16 +10,28 @@ public class TutorialManager {
 
     private int currentIndex = -1;
 
+    public boolean isPastEnd = false;
+
+    /**
+     * Append tutorial to tutorial list
+     * @param newTutorial
+     */
     public void add(TutorialState newTutorial){
         this.tutorialList.add(newTutorial);
     }
 
+    /**
+     * Get tutorial at specific index
+     * @param index index of interest
+     * @return TutorialState tutorial instance
+     */
     public TutorialState getAtIndex(int index){
         return this.tutorialList.get(index);
     }
 
-    public boolean isPastEnd = false;
-
+    /**
+     * Retrieve next tutorial in list and execute the tutorial
+     */
     public void executeNext(){
         System.out.println("current idnex");
         System.out.println(currentIndex);
@@ -37,6 +49,9 @@ public class TutorialManager {
 
     }
 
+    /**
+     * Retrieve previous tutorial in the list execute the tutorial
+     */
     public void executePrevious(){
         this.isPastEnd = false;
         if(currentIndex > 0){
@@ -46,10 +61,18 @@ public class TutorialManager {
 
     }
 
+    /**
+     * Check if current index is pointing at last tutorial
+     * @return boolean if index is pointing at last tutorial
+     */
     public boolean isAtEnd(){
         return (this.currentIndex == this.tutorialList.size() - 2);
     }
 
+    /**
+     * Check if current index is pointing past the last tutorial
+     * @return boolean if index is pointing past last tutorial
+     */
     public boolean isPastEnd(){
         return  this.isPastEnd;
     }
