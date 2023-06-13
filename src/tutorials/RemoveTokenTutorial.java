@@ -7,9 +7,9 @@ import gameengine.Game;
 import gameengine.GameBoardGui;
 
 /** The Tutorial to remove a Token from a mill in the case that Tokens exist outside a mill. */
-public class BasicMillToRemoveTokenTutorial extends TutorialState {
+public class RemoveTokenTutorial extends TutorialState {
 
-  public BasicMillToRemoveTokenTutorial(
+  public RemoveTokenTutorial(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     super(currentGame, currentGameBoard, backgroundImagePath);
   }

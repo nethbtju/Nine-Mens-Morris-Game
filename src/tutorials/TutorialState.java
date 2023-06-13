@@ -117,7 +117,9 @@ public abstract class TutorialState {
    * not instantiate every Intersection in a GameBoard found in a normal game, but only the ones
    * that will be used for this game.
    *
-   * @param indexes // TODO work out why these aren't Coordinates.
+   * @param indexes The indexes in the GameBoard COORDINATES list of the Intersections to be
+   *                set as accessible. Refer to the 9mm_coordinates.png in rough_work for a
+   *                visual guide.
    */
   public void setAsTutorialLegal(int[] indexes) {
     HashMap<String, Intersection> intersectionHashMap = this.currentGameBoard.getIntersectionMap();

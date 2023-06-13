@@ -351,15 +351,11 @@ public class Game {
     this.playerQueue.add(player2);
   }
 
-  private void tutorialGameMode() {}
-
   public GameState getGameState() {
     return this.currentGamestate;
   }
 
   private void initialiseTutorials() {
-    // this.newManager.add(new PlaceTokenTutorial(this, this.gameBoard,
-    // "/resources/META-INF/img/BoardImages/board600pxls.png"));
     this.newManager.add(
         new PlaceTokenTutorial(
             this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
@@ -367,8 +363,11 @@ public class Game {
         new MoveTokenTutorial(
             this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameBoardSaturated.png"));
     this.newManager.add(
-        new BasicMillToRemoveTokenTutorial(
+        new RemoveTokenTutorial(
             this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameBoardSaturated.png"));
+    this.newManager.add(
+        new RemoveMillTokenTutorial(
+            this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
 
     if (this.currentGamestate == GameState.TUTORIAL) {
       this.newManager.executeNext();
