@@ -129,6 +129,10 @@ public class GameBoardGui extends JPanel {
     this.setLayout(null);
   }
 
+  /**
+   * Set up the initial caption for the GUI to load when the game first launches and Swing
+   * draws the interface
+   */
   private void initialiseCaption() {
     JLabel label = new JLabel();
     label.setHorizontalAlignment(SwingConstants.CENTER);
@@ -145,15 +149,29 @@ public class GameBoardGui extends JPanel {
     this.captionLabel = label;
   }
 
+  /**
+   * Changes the caption displayed on the GUI
+   *
+   * @param newText - string of new caption text
+   */
   public void changeCaptionString(String newText) {
     this.captionLabel.setText(
         "<html><div style='text-align: center;'>" + newText + "</div></html>");
   }
 
+  // TODO: Do we need this?
   public void changeCaptionReplace(JLabel newCaption) {
     this.captionLabel = newCaption;
   }
 
+  /**
+   * Add the initial Jlabel of the black token covers on the GUI when it initialises
+   *
+   * @param xBound - x axis position
+   * @param yBound - y axis position
+   * @param width - width of the label
+   * @param height - height of the label
+   */
   public void addIntialBlackCovers(int xBound, int yBound, int width, int height) {
     System.out.println("Adding Black Cover");
 
@@ -171,6 +189,14 @@ public class GameBoardGui extends JPanel {
     add(blackCoverLabel, 1);
   }
 
+  /**
+   * Add the initial Jlabel of the white token covers on the GUI when it initialises
+   *
+   * @param xBound - x axis position
+   * @param yBound - y axis position
+   * @param width - width of the label
+   * @param height - height of the label
+   */
   public void addIntialWhiteCovers(int xBound, int yBound, int width, int height) {
     System.out.println("Adding white Cover");
 
@@ -187,6 +213,14 @@ public class GameBoardGui extends JPanel {
     add(whiteCoverLabel, 0);
   }
 
+  /**
+   * When a new token is placed the cover image path gets replaced with another to
+   * get rid of another token
+   *
+   * @param player - The player whos token was just placed
+   *
+   * @throws IOException - If the image path could not be found
+   */
   public void updateCover(Player player) throws IOException {
     System.out.println("Updating cover");
     TokenType currentPlayer = player.getTokenType();
@@ -219,6 +253,9 @@ public class GameBoardGui extends JPanel {
     }
   }
 
+  /**
+   * Adds all the intersections to the game map
+   */
   public void addAllIntersections() {
     for (int i = 0; i < X.length; i++) {
 
@@ -278,10 +315,17 @@ public class GameBoardGui extends JPanel {
     frame.setVisible(true);
   }
 
+  /**
+   * Sets the toggle image from enable/disable when the user clicks it
+   * @param toggleImage
+   */
   public void setToggleImage(Image toggleImage) {
     this.toggleImage = toggleImage;
   }
 
+  /**
+   * Initialise the toggle buttong the GUI launches
+   */
   private void initialiseToggleHintButton() {
 
     JButton button = new JButton();
@@ -324,8 +368,6 @@ public class GameBoardGui extends JPanel {
       this.enableMoveHinting();
     }
   }
-
-  private void initialiseTutorialMode() {}
 
   /**
    * Adds the image path to the winner display and shows it on the GUI
@@ -537,6 +579,12 @@ public class GameBoardGui extends JPanel {
     return hasLegalMoves;
   }
 
+  /**
+   * Remove highlighted tokens off the GUI board
+   *
+   * @param attackedTokenType - the type of token that was attacked
+   * @param isMillRemove - whether it is in a mill to be removed
+   */
   public void highlightRemoveTokens(TokenType attackedTokenType, boolean isMillRemove) {
     if (this.hasMoveHinting) {
       for (String key : intersectionMap.keySet()) {
@@ -551,6 +599,12 @@ public class GameBoardGui extends JPanel {
     }
   }
 
+  /**
+   * When the user chooses to, they can turn off hinting by toggling on or
+   * off the button
+   *
+   * @param button - toggle hinting button
+   */
   public void changeMoveHintSettings(JButton button) {
     System.out.println("settings have been changed");
     this.hasMoveHinting = !this.hasMoveHinting;
@@ -579,14 +633,21 @@ public class GameBoardGui extends JPanel {
     }
   }
 
+  /**
+   * Enable hinting
+   */
   public void enableMoveHinting() {
     this.hasMoveHinting = true;
   }
 
+  /**
+   * disable hinting
+   */
   public void disableMoveHinting() {
     this.hasMoveHinting = false;
   }
 
+  //TODO: get rid of this?
   public void test(Player currentplayer) {
     this.killGame();
 
@@ -624,6 +685,7 @@ public class GameBoardGui extends JPanel {
   // remove all tokens, set tokens specifically, set moveable intersections, set next player, set
   // actions
 
+  // TODO: get rid of this?
   public void populateGameBoard() {
 
     this.updateBackgroundImage("/resources/META-INF/img/BoardImages/board600pxls.png");
@@ -647,6 +709,9 @@ public class GameBoardGui extends JPanel {
 
   }
 
+  /**
+   * Removes all intersections off the map
+   */
   public void removeAllIntersections() {
     for (String key : this.intersectionMap.keySet()) {
       Intersection current = this.intersectionMap.get(key);
@@ -676,6 +741,11 @@ public class GameBoardGui extends JPanel {
     super.repaint();
   }
 
+  /**
+   * When a new tutorial is toggled, the background image can be updated to show a new game state
+   *
+   * @param imagePath - The new image path
+   */
   public void updateBackgroundImage(String imagePath) {
 
     Image image = null;
@@ -690,13 +760,24 @@ public class GameBoardGui extends JPanel {
     super.repaint();
   }
 
+  /**
+   * Getter for the intersection map
+   *
+   * @return hashmap of all the intersections
+   */
   public HashMap<String, Intersection> getIntersectionMap() {
     return this.intersectionMap;
   }
 
+  /**
+   *
+   * @param index
+   * @return
+   */
   public String getIntersectionKey(int index) {
     return String.valueOf(COORDINATES[index][0]) + COORDINATES[index][1];
   }
+
 
   public void setAllAsTutorialLocked() {
     for (String key : this.intersectionMap.keySet()) {

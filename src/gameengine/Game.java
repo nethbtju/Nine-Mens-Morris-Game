@@ -120,13 +120,18 @@ public class Game {
     this.playerQueue.add(attackedPlayer);
   }
 
+  /**
+   * Updates the moving sequence of the player if the intersection they select has a token
+   *
+   * @param currentPlayer - the player that is playing the move
+   * @param selectedIntersection - the intersection they have selected
+   */
   private void updateMoveSequence(Player currentPlayer, Intersection selectedIntersection) {
 
     if (selectedIntersection.peekToken() != null) {
       if (selectedIntersection.peekToken().getTokenType() == currentPlayer.getTokenType()
           && currentPlayer.hasTokenInHand()) {
         System.out.println(currentPlayer.hasTokenInHand());
-        System.out.println("yo");
         this.actionQueue.remove();
         this.actionQueue.add(new SelectTokenAction());
         this.actionQueue.add(new MoveTokenAction());
@@ -310,6 +315,11 @@ public class Game {
     }
   }
 
+  /**
+   * Getter for the player's queue
+   *
+   * @return player queue
+   */
   public Queue<Player> getPlayerQueue() {
     return this.playerQueue;
   }
@@ -320,6 +330,11 @@ public class Game {
     this.playerQueue.add(player2);
   }
 
+  /**
+   * Gets the current game's state
+   *
+   * @return game state
+   */
   public GameState getGameState() {
     return this.currentGamestate;
   }
@@ -352,6 +367,11 @@ public class Game {
     }
   }
 
+  /**
+   * Gets the game's tutorial manager
+   *
+   * @return instance of the tutorial manager
+   */
   public TutorialManager getTutorialManager() {
     return this.newManager;
   }

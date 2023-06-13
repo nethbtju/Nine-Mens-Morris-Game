@@ -54,6 +54,14 @@ public class SelectTokenAction implements Action {
     return result;
   }
 
+  /**
+   * Allows for the right action to be added to the intersection for the player
+   * clicking it by seeing if it has legal moves
+   *
+   * @param selectedIntersection - The intersection the player has selected
+   * @param player - The player that has selected the intersection
+   * @return Bool - Whether the intersection can set legal moves or not
+   */
   private boolean setForRelevantAction(Intersection selectedIntersection, Player player) {
     boolean result;
     Capable currentCapability = player.getCurrentCapability();
@@ -67,6 +75,13 @@ public class SelectTokenAction implements Action {
     return result;
   }
 
+  /**
+   * Allows for the tokens to be highlighted to show the user certain indications
+   *
+   * @param result Bool - if the intersection needs to be highlighted
+   * @param selectedIntersection - The intersection that needs to be highlighted or not
+   *
+   */
   private void highlightRelevantTokens(boolean result, Intersection selectedIntersection) {
     selectedIntersection.unhighlightTokens();
     if (result) {
