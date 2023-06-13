@@ -8,6 +8,13 @@ import gameengine.GameBoardGui;
 /** Tutorial that demonstrates basic move token action. */
 public class MoveTokenTutorial extends TutorialState {
 
+  /**
+   * moving tutorial initialisation
+   *
+   * @param currentGame the current game for the tutorial
+   * @param currentGameBoard the current game board for the tutorial
+   * @param backgroundImagePath background image path
+   */
   public MoveTokenTutorial(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     super(currentGame, currentGameBoard, backgroundImagePath);
@@ -53,6 +60,7 @@ public class MoveTokenTutorial extends TutorialState {
     super.updatePlayerQueue(false, 7, 8);
   }
 
+  /** Set a caption for the Tutorial to inform the Player of what they are being taught. */
   @Override
   public void setCaption() {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();

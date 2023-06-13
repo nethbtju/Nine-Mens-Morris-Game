@@ -9,6 +9,13 @@ import gameengine.GameBoardGui;
 /** The Tutorial to remove a Token from a mill in the case that Tokens exist outside a mill. */
 public class RemoveTokenTutorial extends TutorialState {
 
+  /**
+   * removing tokens tutorial initialisation
+   *
+   * @param currentGame the current game for the tutorial
+   * @param currentGameBoard the current game board for the tutorial
+   * @param backgroundImagePath background image path
+   */
   public RemoveTokenTutorial(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     super(currentGame, currentGameBoard, backgroundImagePath);
@@ -54,6 +61,7 @@ public class RemoveTokenTutorial extends TutorialState {
     super.updatePlayerQueue(false, 8, 9);
   }
 
+  /** Set a caption for the Tutorial to inform the Player of what they are being taught. */
   @Override
   public void setCaption() {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();

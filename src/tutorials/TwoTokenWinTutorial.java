@@ -10,6 +10,13 @@ import gameengine.GameBoardGui;
 /** A Tutorial for winning the game by reducing the opponent's tokenCount to 2. */
 public class TwoTokenWinTutorial extends TutorialState {
 
+  /**
+   * winning with 2 tokens on the opponent side tutorial initialisation
+   *
+   * @param currentGame the current game for the tutorial
+   * @param currentGameBoard the current game board for the tutorial
+   * @param backgroundImagePath background image path
+   */
   public TwoTokenWinTutorial(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     super(currentGame, currentGameBoard, backgroundImagePath);
@@ -55,6 +62,8 @@ public class TwoTokenWinTutorial extends TutorialState {
     super.updatePlayerQueue(true, 4, 3);
   }
 
+
+  /** Set a caption for the Tutorial to inform the Player of what they are being taught. */
   @Override
   public void setCaption() {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();

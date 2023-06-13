@@ -12,6 +12,13 @@ import gameengine.GameBoardGui;
  */
 public class JumpTokenTutorial extends TutorialState {
 
+  /**
+   * Jumping tutorial initialisation
+   *
+   * @param currentGame the current game for the tutorial
+   * @param currentGameBoard the current game board for the tutorial
+   * @param backgroundImagePath background image path
+   */
   public JumpTokenTutorial(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     super(currentGame, currentGameBoard, backgroundImagePath);
@@ -54,6 +61,7 @@ public class JumpTokenTutorial extends TutorialState {
     super.updatePlayerQueue(true, 3, 4);
   }
 
+  /** Set a caption for the Tutorial to inform the Player of what they are being taught. */
   @Override
   public void setCaption() {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();

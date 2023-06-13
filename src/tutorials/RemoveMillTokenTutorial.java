@@ -9,6 +9,13 @@ import gameengine.GameBoardGui;
  */
 public class RemoveMillTokenTutorial extends RemoveTokenTutorial {
 
+  /**
+   * removing tokens in a mill tutorial initialisation
+   *
+   * @param currentGame the current game for the tutorial
+   * @param currentGameBoard the current game board for the tutorial
+   * @param backgroundImagePath background image path
+   */
   public RemoveMillTokenTutorial(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     super(currentGame, currentGameBoard, backgroundImagePath);

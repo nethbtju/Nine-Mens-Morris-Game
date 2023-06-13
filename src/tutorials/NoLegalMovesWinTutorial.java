@@ -9,6 +9,13 @@ import gameengine.GameBoardGui;
 /** A Tutorial for winning the game by blocking the opponent from making any legal moves. */
 public class NoLegalMovesWinTutorial extends TutorialState {
 
+  /**
+   * no legal moves tutorial initialisation
+   *
+   * @param currentGame the current game for the tutorial
+   * @param currentGameBoard the current game board for the tutorial
+   * @param backgroundImagePath background image path
+   */
   public NoLegalMovesWinTutorial(
       Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
     super(currentGame, currentGameBoard, backgroundImagePath);
@@ -52,6 +59,7 @@ public class NoLegalMovesWinTutorial extends TutorialState {
     super.updatePlayerQueue(false, 4, 4);
   }
 
+  /** Set a caption for the Tutorial to inform the Player of what they are being taught. */
   @Override
   public void setCaption() {
     GameBoardGui currentGameBoard = this.getCurrentGameBoard();

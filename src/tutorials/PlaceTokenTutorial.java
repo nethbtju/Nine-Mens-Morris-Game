@@ -6,6 +6,14 @@ import gameengine.Game;
 import gameengine.GameBoardGui;
 /** Tutorial that demonstrates place token action. */
 public class PlaceTokenTutorial extends TutorialState{
+
+    /**
+     * placing tokens tutorial initialisation
+     *
+     * @param currentGame the current game for the tutorial
+     * @param currentGameBoard the current game board for the tutorial
+     * @param backgroundImagePath background image path
+     */
     public PlaceTokenTutorial(Game currentGame, GameBoardGui currentGameBoard, String backgroundImagePath) {
         super(currentGame, currentGameBoard, backgroundImagePath);
     }
@@ -19,9 +27,9 @@ public class PlaceTokenTutorial extends TutorialState{
 
     }
 
+    /** Set the required Tokens onto the required Intersections for the given TutorialState. */
     @Override
     public void setTokens() {
-
     }
 
     /** Set the Intersections which a Token may move to in a given TutorialState. */
@@ -45,6 +53,7 @@ public class PlaceTokenTutorial extends TutorialState{
         super.updatePlayerQueue(true, 0, 0);
     }
 
+    /** Set a caption for the Tutorial to inform the Player of what they are being taught. */
     @Override
     public void setCaption() {
         GameBoardGui currentGameBoard = this.getCurrentGameBoard();

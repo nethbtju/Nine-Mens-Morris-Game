@@ -34,6 +34,11 @@ public class TokenStack {
     return null;
   }
 
+  /**
+   * get how many tokens are left in the player's token bank
+   *
+   * @return int of tokens left
+   */
   public int getTokensLeft() {
     int length = tokens.size();
     return length;
