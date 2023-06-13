@@ -23,12 +23,12 @@ public class PlaceTokenAction implements Action {
   }
 
   /**
-   * checks if the intersection already has a token on it
+   * Checks if the Intersection is valid to place a Token on.
    *
    * @param selectedIntersection The intersection selected by the user on the frontend.
    * @param player The player performing the action.
    *
-   * @return
+   * @return True if the Intersection is a valid placement, false if it is not.
    */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
@@ -36,8 +36,7 @@ public class PlaceTokenAction implements Action {
     if (!selectedIntersection.isEmpty()) {
       System.out.println("Intersection is occupied!");
       return false;
-    }
-    else if(player.getCurrentGameState() == GameState.TUTORIAL){
+    } else if (player.getCurrentGameState() == GameState.TUTORIAL) {
       return !selectedIntersection.isTutorialLockedState();
     }
     return true;
