@@ -51,6 +51,7 @@ public class RemoveTokenTutorial extends TutorialState {
 
   @Override
   public void setCaption() {
-
+    GameBoardGui currentGameBoard = this.getCurrentGameBoard();
+    currentGameBoard.changeCaptionString("Move selected token to form a mill, then remove enemy token");
   }
 }
