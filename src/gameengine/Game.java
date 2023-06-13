@@ -84,6 +84,7 @@ public class Game {
 
     if (this.actionQueue.isEmpty()) {
       System.out.println(x);
+      this.gameBoard.setAllAsTutorialLocked();
       this.playerQueue.add(this.playerQueue.remove());
     }
     this.updatePlayTurnDisplay();
@@ -244,6 +245,8 @@ public class Game {
    */
   public boolean checkPlayerLose(Player player) {
     int currentPlayerTokens = player.getTokenCount();
+    System.out.println("tutorial mode");
+    System.out.println(currentPlayerTokens);
     return (currentPlayerTokens < 3 && player.getTokenBank().isEmpty())
         || !this.gameBoard.hasAnyLegalMoves(player.getTokenType());
   }
