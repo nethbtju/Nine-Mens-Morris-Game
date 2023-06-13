@@ -331,14 +331,6 @@ public class Game {
     this.checkIfGameOver(attackedPlayer);
   }
 
-  public void wait(int ms) {
-    try {
-      Thread.sleep(ms);
-    } catch (InterruptedException ex) {
-      Thread.currentThread().interrupt();
-    }
-  }
-
   public void updateActionQueue(Action[] actions) {
     System.out.println("yessir");
     this.actionQueue.clear();
@@ -357,8 +349,6 @@ public class Game {
     this.playerQueue.add(player2);
   }
 
-  private void tutorialGameMode() {}
-
   public GameState getGameState() {
     return this.currentGamestate;
   }
@@ -375,6 +365,9 @@ public class Game {
             this, this.gameBoard, "/resources/META-INF/img/BoardImages/GameBoardSaturated.png"));
     this.newManager.add(
         new RemoveMillTokenTutorial(
+            this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
+    this.newManager.add(
+        new TwoTokenWinTutorial(
             this, this.gameBoard, "/resources/META-INF/img/BoardImages/board600pxls.png"));
 
     if (this.currentGamestate == GameState.TUTORIAL) {

@@ -42,6 +42,6 @@ public class RemoveMillTokenTutorial extends RemoveTokenTutorial {
 
   @Override
   public void setPlayerQueue() {
-    super.updatePlayerQueue(false, 4, 5);
+    super.updatePlayerQueue(false, 5, 4);
   }
 }
