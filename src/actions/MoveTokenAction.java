@@ -5,11 +5,15 @@ import gameplayers.GameState;
 import gameplayers.Player;
 import tokens.Token;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /** Moves a token from one intersection to another. */
 public class MoveTokenAction extends PlaceTokenAction implements Action {
 
   /**
    * Move the token from intersection to intersection
+   *
    * @param tokenDestination - Intersection that the token is to be moved to
    * @param player The player performing the Action.
    */
@@ -28,21 +32,21 @@ public class MoveTokenAction extends PlaceTokenAction implements Action {
    * @param selectedIntersection The intersection selected by the user on the frontend.
    * @param player The player performing the action.
    *
-   * @return
+   * @return True if the Intersection is valid to move to.
    */
   @Override
   public boolean isValid(Intersection selectedIntersection, Player player) {
-    System.out.println("bundos");
-    System.out.println(player.getSelectedIntersection().getCoordinates());
-    System.out.println(selectedIntersection.getCoordinates());
-    System.out.println(player.getSelectedIntersection().getKey() == selectedIntersection.getKey());
-    System.out.println("closebundos");
-  if(player.getCurrentGameState() == GameState.TUTORIAL){
-    return !(player.getSelectedIntersection().getKey() == selectedIntersection.getKey()) && !selectedIntersection.isTutorialLockedState();
-  }else {
+    System.out.println(Arrays.toString(player.getSelectedIntersection().getCoordinates()));
+    System.out.println(Arrays.toString(selectedIntersection.getCoordinates()));
+    System.out.println(
+        Objects.equals(player.getSelectedIntersection().getKey(), selectedIntersection.getKey()));
+    if (player.getCurrentGameState() == GameState.TUTORIAL) {
+      return !(Objects.equals(
+              player.getSelectedIntersection().getKey(), selectedIntersection.getKey()))
+          && !selectedIntersection.isTutorialLockedState();
+    } else {
 
-    return selectedIntersection.isLegalMove();
-  }
-
+      return selectedIntersection.isLegalMove();
+    }
   }
 }
