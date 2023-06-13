@@ -132,6 +132,7 @@ public class Game {
     Player currentPlayer = this.playerQueue.remove();
     Player attackedPlayer = this.playerQueue.remove();
 
+    System.out.println(this.gameBoard.getMillIntersectionCount(attackedPlayer.getTokenType()));
     if (this.gameBoard.getMillIntersectionCount(attackedPlayer.getTokenType())
         == attackedPlayer.getTokenCount()) {
       // highlight all tokens

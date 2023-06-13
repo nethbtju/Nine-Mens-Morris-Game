@@ -80,11 +80,10 @@ public class Intersection extends JButton implements ActionListener {
   /** Set the image of the Intersection to display a Token in a mill. */
   public void highlightMill() {
     Token token = this.peekToken();
-    if(token != null) {
+    if (token != null) {
       this.updateImagePath(token.getMillTokenImagePath());
     }
   }
-
 
   /** Set the image of the Intersection to display an empty and accessible intersection. */
   public void highlightAsOpen() {
@@ -148,13 +147,11 @@ public class Intersection extends JButton implements ActionListener {
     this.unhighlightTokens();
   }
 
-  /**
-   * Unhighlight the tokens once a move has been made
-   */
+  /** Unhighlight the tokens once a move has been made */
   public void unhighlightTokens() {
     this.currentGame.getGameBoard().unhighlightAllIntersections();
   }
-  
+
   /**
    * Checks whether the Intersection does not have a Token.
    *
@@ -173,9 +170,15 @@ public class Intersection extends JButton implements ActionListener {
         e.printStackTrace();
       }
       ImageIcon icon = new ImageIcon(image);
-      this.setIcon(new ImageIcon(icon.getImage().getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
+      this.setIcon(
+          new ImageIcon(
+              icon.getImage().getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
     } else {
-      this.setIcon(new ImageIcon(new ImageIcon(imagePath).getImage().getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
+      this.setIcon(
+          new ImageIcon(
+              new ImageIcon(imagePath)
+                  .getImage()
+                  .getScaledInstance(TOKEN_WIDTH, TOKEN_HEIGHT, Image.SCALE_SMOOTH)));
     }
   }
 
@@ -197,16 +200,12 @@ public class Intersection extends JButton implements ActionListener {
     return this.legalMoveState && this.isEmpty();
   }
 
-  /**
-   * Setter for the legal move state
-   */
+  /** Setter for the legal move state */
   public void setLegalMoveState() {
     this.legalMoveState = true;
   }
 
-  /**
-   * Setter for the illegal move state
-   */
+  /** Setter for the illegal move state */
   public void setIllegalMoveState() {
     this.legalMoveState = false;
   }
@@ -231,40 +230,37 @@ public class Intersection extends JButton implements ActionListener {
 
   /**
    * Sets the game board to have legal jumps on the intersection
+   *
    * @return boolean whether it can be done or not
    */
   public boolean setLegalJumpMoves() {
     return this.currentGame.getGameBoard().setLegalJumpIntersections();
   }
 
-  /**
-   * Remove the attacked player token off the board
-   *
-   */
-  public void removeAttackedPlayerToken(){
+  /** Remove the attacked player token off the board */
+  public void removeAttackedPlayerToken() {
     this.currentGame.decrementOpposingPlayerTokenCount();
   }
 
-  public boolean isTutorialLockedState(){
+  public boolean isTutorialLockedState() {
     return this.tutorialLockedState;
   }
 
-  public void lockTutorialState(){
+  public void lockTutorialState() {
     this.tutorialLockedState = true;
   }
 
-  public void unlockTutorialState(){
+  public void unlockTutorialState() {
     this.tutorialLockedState = false;
   }
 
-  public String getKey(){
+  public String getKey() {
     return String.valueOf(this.coordinates[0]) + this.coordinates[1];
   }
-  public boolean equals(Intersection target){
+
+  public boolean equals(Intersection target) {
     System.out.println(target.getKey());
     System.out.println(this.getKey());
     return target.getKey() == this.getKey();
   }
-
-
 }
